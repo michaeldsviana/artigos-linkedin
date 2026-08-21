@@ -1,0 +1,280 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Bioinsumos no Brasil: crescimento recorde, mercado ainda pequeno</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,300;9..144,500;9..144,600&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg: #14170F;
+    --bg-panel: #1B1F15;
+    --ink: #EDEAE0;
+    --ink-dim: #A9AC9E;
+    --lime: #B4D65B;
+    --clay: #A8703F;
+    --teal: #7FA6A0;
+    --line: #33362B;
+    --maxw: 720px;
+  }
+  *{box-sizing:border-box;}
+  html{scroll-behavior:smooth;}
+  body{
+    margin:0;
+    background:var(--bg);
+    color:var(--ink);
+    font-family:'IBM Plex Sans', sans-serif;
+    line-height:1.65;
+    -webkit-font-smoothing:antialiased;
+  }
+  a{color:var(--lime);}
+
+  .wordmark{
+    font-family:'IBM Plex Mono', monospace;
+    font-size:13px;
+    letter-spacing:0.14em;
+    text-transform:uppercase;
+    color:var(--ink-dim);
+  }
+  header.top{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    max-width:var(--maxw);
+    margin:0 auto;
+    padding:32px 24px 0;
+  }
+  header.top .tag{
+    font-family:'IBM Plex Mono', monospace;
+    font-size:12px;
+    color:var(--lime);
+    border:1px solid var(--line);
+    padding:4px 10px;
+    border-radius:100px;
+  }
+
+  .hero{
+    max-width:var(--maxw);
+    margin:0 auto;
+    padding:56px 24px 24px;
+  }
+  .eyebrow{
+    font-family:'IBM Plex Mono', monospace;
+    font-size:13px;
+    color:var(--teal);
+    letter-spacing:0.06em;
+    margin-bottom:18px;
+  }
+  h1{
+    font-family:'Fraunces', serif;
+    font-weight:500;
+    font-optical-sizing:auto;
+    font-size:clamp(32px, 5.4vw, 50px);
+    line-height:1.08;
+    letter-spacing:-0.01em;
+    margin:0 0 22px;
+  }
+  .dek{
+    color:var(--ink-dim);
+    font-size:18px;
+    max-width:56ch;
+    margin:0 0 36px;
+  }
+
+  .stat-strip{
+    display:grid;
+    grid-template-columns:repeat(3, 1fr);
+    border-top:1px solid var(--line);
+    border-bottom:1px solid var(--line);
+    margin:0 auto 8px;
+    max-width:var(--maxw);
+  }
+  .stat{
+    padding:22px 20px;
+    border-right:1px solid var(--line);
+  }
+  .stat:last-child{border-right:none;}
+  .stat .num{
+    font-family:'Fraunces', serif;
+    font-size:clamp(24px, 4vw, 34px);
+    color:var(--lime);
+    display:block;
+    line-height:1.1;
+  }
+  .stat .label{
+    font-family:'IBM Plex Mono', monospace;
+    font-size:11.5px;
+    color:var(--ink-dim);
+    text-transform:uppercase;
+    letter-spacing:0.04em;
+    display:block;
+    margin-top:6px;
+  }
+
+  article{
+    max-width:var(--maxw);
+    margin:0 auto;
+    padding:48px 24px 20px;
+  }
+  article h2{
+    font-family:'Fraunces', serif;
+    font-weight:500;
+    font-size:26px;
+    margin:44px 0 16px;
+    color:var(--ink);
+  }
+  article p{
+    font-size:17px;
+    color:#DEDBCF;
+    margin:0 0 18px;
+  }
+  .note{
+    display:flex;
+    gap:16px;
+    background:var(--bg-panel);
+    border-left:2px solid var(--clay);
+    padding:18px 20px;
+    margin:28px 0;
+    border-radius:2px;
+  }
+  .note .mark{
+    font-family:'IBM Plex Mono', monospace;
+    font-size:11px;
+    color:var(--clay);
+    text-transform:uppercase;
+    letter-spacing:0.08em;
+    white-space:nowrap;
+    padding-top:2px;
+  }
+  .note p{margin:0; font-size:15.5px; color:var(--ink-dim);}
+
+  .takeaway{
+    max-width:var(--maxw);
+    margin:52px auto 0;
+    padding:32px 24px;
+    border-top:1px solid var(--line);
+  }
+  .takeaway .eyebrow{color:var(--lime);}
+  .takeaway p{font-size:17px; color:#DEDBCF;}
+
+  footer{
+    max-width:var(--maxw);
+    margin:0 auto;
+    padding:40px 24px 64px;
+  }
+  .sig{
+    display:flex;
+    align-items:center;
+    gap:16px;
+    border-top:1px solid var(--line);
+    padding-top:28px;
+  }
+  .sig .initials{
+    width:46px; height:46px;
+    border-radius:100px;
+    background:var(--lime);
+    color:#14170F;
+    font-family:'IBM Plex Mono', monospace;
+    font-weight:600;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    flex-shrink:0;
+  }
+  .sig .name{
+    font-family:'Fraunces', serif;
+    font-size:17px;
+    color:var(--ink);
+  }
+  .sig .role{
+    font-family:'IBM Plex Mono', monospace;
+    font-size:12px;
+    color:var(--ink-dim);
+    margin-top:2px;
+  }
+  .sources{
+    font-family:'IBM Plex Mono', monospace;
+    font-size:11.5px;
+    color:var(--ink-dim);
+    margin-top:28px;
+    line-height:1.8;
+  }
+
+  @media (max-width:520px){
+    .stat-strip{grid-template-columns:1fr; }
+    .stat{border-right:none; border-bottom:1px solid var(--line);}
+    .stat:last-child{border-bottom:none;}
+  }
+  @media (prefers-reduced-motion: reduce){
+    html{scroll-behavior:auto;}
+  }
+</style>
+</head>
+<body>
+
+<header class="top">
+  <span class="wordmark">COGNY · Inteligência de Mercado</span>
+  <span class="tag">Semana 34 · 2026</span>
+</header>
+
+<div class="hero">
+  <div class="eyebrow">MERCADO &amp; REGULAÇÃO — BIOINSUMOS</div>
+  <h1>Crescimento recorde, mercado ainda pequeno: o gargalo regulatório dos bioinsumos</h1>
+  <p class="dek">O Brasil já é o maior mercado de bioinsumos do mundo — e ainda assim representa uma fração pequena dos gastos totais com defensivos. Os números da safra 2025/26 e o debate que tomou o III Fórum Bioinsumos no Agro ajudam a entender por quê.</p>
+</div>
+
+<div class="stat-strip">
+  <div class="stat">
+    <span class="num">R$ 7 bi</span>
+    <span class="label">Movimentados em 2025</span>
+  </div>
+  <div class="stat">
+    <span class="num">~46%</span>
+    <span class="label">Crescimento projetado até 2030</span>
+  </div>
+  <div class="stat">
+    <span class="num">~6%</span>
+    <span class="label">Fatia do total de defensivos</span>
+  </div>
+</div>
+
+<article>
+  <p>A expansão dos bioinsumos no campo brasileiro deixou de ser discurso e virou planilha. Segundo levantamento da Anpii-Bio apresentado nesta semana na XXII Reunião da Relare, em Curitiba, o setor movimentou cerca de R$ 7 bilhões em 2025 somando biocontrole, bioinoculantes, mobilizadores de nutrientes e biofertilizantes — com projeção de chegar perto de R$ 10 bilhões até 2030. Cálculos da Embrapa também associam o uso crescente desses produtos a uma economia da ordem de US$ 28 bilhões e à redução de 280 milhões de toneladas de CO₂ na atmosfera no último ano.</p>
+
+  <h2>Crescendo três vezes mais rápido que a área plantada</h2>
+  <p>O dado que melhor ilustra o momento não é o valor absoluto, e sim a velocidade. Enquanto a área agrícola brasileira avançou entre 3% e 4% ao ano nas últimas cinco safras, a área tratada com produtos biológicos cresceu mais de 30% ao ano — dado apresentado pela Kynetec no Fórum Bioinsumos no Agro, realizado em 18 de agosto em São Paulo. Ainda assim, os biológicos ocupam hoje algo em torno de 6% do que é gasto em defensivos e inoculantes no país, com os biodefensivos cobrindo 107 milhões de hectares.</p>
+
+  <div class="note">
+    <span class="mark">Leitura de campo</span>
+    <p>Isso significa que o mercado ainda tem enorme espaço para crescer dentro da base já convertida ao biológico — o desafio deixou de ser convencer o produtor a testar e passou a ser ampliar a participação dos biológicos no receituário de cada talhão.</p>
+  </div>
+
+  <h2>O que trava a expansão: segurança jurídica</h2>
+  <p>O painel de encerramento do Fórum, reunindo indústria, academia e representantes do setor produtivo, apontou a falta de um marco regulatório claro e próprio para bioinsumos como o principal risco à consolidação do setor. Regras dispersas e sujeitas a interpretação afastam investimento e dificultam a fiscalização — o que pesa justamente no momento em que agtechs e grandes players globais de química agrícola vêm redirecionando parte relevante de seus orçamentos de P&amp;D para fusões e aquisições no segmento.</p>
+
+  <h2>O que isso significa para quem decide o receituário</h2>
+  <p>Para quem está na ponta — agrônomo, cooperativa, distribuidor — o recado é duplo: o biológico já não é nicho, é linha de produto estratégica; mas a régua de decisão de compra vai continuar dependendo de previsibilidade regulatória tanto quanto de performance agronômica. Empresas que conseguirem traduzir dados de eficácia em linguagem clara para o produtor, e ao mesmo tempo acompanhar de perto a evolução do marco legal, saem na frente na disputa por esses 94% do mercado que ainda não migraram para o biológico.</p>
+</article>
+
+<div class="takeaway">
+  <div class="eyebrow">O que fica</div>
+  <p>O mercado de bioinsumos brasileiro já é o maior do mundo, cresce em ritmo de tecnologia disruptiva e ainda assim é minúsculo perto do potencial total. A janela de crescimento está aberta — mas depende de segurança jurídica para não travar no meio do caminho.</p>
+</div>
+
+<footer>
+  <div class="sig">
+    <div class="initials">MV</div>
+    <div>
+      <div class="name">Michael Viana</div>
+      <div class="role">Marketing Estratégico Cerrado · COGNY</div>
+    </div>
+  </div>
+  <div class="sources">
+    FONTES: Anpii-Bio (Relare, ago/2026) · Embrapa · Kynetec Brasil · III Fórum Bioinsumos no Agro (Araiby, SRB, Sistema Ocesp, Embrapa)
+  </div>
+</footer>
+
+</body>
+</html>
