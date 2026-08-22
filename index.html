@@ -5,395 +5,207 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta name="color-scheme" content="light only">
 <meta name="supported-color-schemes" content="light">
-<title>Bioinsumos no Brasil: crescimento recorde, mercado ainda pequeno | AGROMV Semanal</title>
+<title>AGROMV Semanal | Michael Viana · Inteligência de mercado em bioinsumos</title>
+<meta name="description" content="Análises semanais de mercado e conteúdo técnico sobre bioinsumos, por Michael Viana, Marketing Estratégico Cerrado na COGNY.">
+<meta property="og:title" content="AGROMV Semanal | Inteligência de mercado em bioinsumos">
+<meta property="og:description" content="Análises semanais de mercado e conteúdo técnico sobre bioinsumos.">
+<meta property="og:image" content="https://agromv.net/assets/linkedin-cover.png">
+<meta property="og:type" content="website">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Archivo:wght@500;600;700&family=Source+Serif+4:opsz,wght@8..60,400;8..60,600&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
 <style>
   :root{
     color-scheme: only light;
-    --bg:      #FFFFFF;
-    --panel:   #F4F6F8;
-    --navy:    #0E2338;
-    --navy-mid:#1B3B5A;
-    --blue:    #1E6FA8;
-    --green:   #3E7C43;
-    --ink:     #16212C;
-    --ink-dim: #5B6773;
-    --grey:    #8A94A0;
-    --line:    #DDE3E9;
-    --maxw:    720px;
+    --bg:#FFFFFF; --panel:#F4F6F8; --navy:#0E2338; --navy-mid:#1B3B5A;
+    --blue:#1E6FA8; --green:#3E7C43; --ink:#16212C; --ink-dim:#5B6773;
+    --grey:#8A94A0; --line:#DDE3E9; --maxw:860px;
   }
   *{box-sizing:border-box;}
-  html{
-    scroll-behavior:smooth;
-    background:#FFFFFF;
-    -webkit-text-size-adjust:100%;
-  }
+  html{scroll-behavior:smooth; background:#FFF; -webkit-text-size-adjust:100%;}
   body{
-    margin:0;
-    background:#FFFFFF;
-    color:var(--ink);
-    font-family:'Inter', -apple-system, sans-serif;
-    line-height:1.68;
-    -webkit-font-smoothing:antialiased;
-    forced-color-adjust:none;
+    margin:0; background:#FFF; color:var(--ink);
+    font-family:'Inter',-apple-system,sans-serif; line-height:1.68;
+    -webkit-font-smoothing:antialiased; forced-color-adjust:none;
   }
   img{max-width:100%; display:block;}
   a{color:var(--blue);}
 
-  /* ---------- HEADER ---------- */
-  header.site{
-    position:sticky; top:0; z-index:20;
-    background:var(--navy);
-  }
+  /* HEADER */
+  header.site{position:sticky; top:0; z-index:20; background:var(--navy);}
   header.site .bar{
-    display:flex;
-    justify-content:space-between;
-    align-items:center;
-    max-width:var(--maxw);
-    margin:0 auto;
-    padding:14px 24px;
+    display:flex; justify-content:space-between; align-items:center;
+    max-width:var(--maxw); margin:0 auto; padding:14px 24px;
   }
-  .brand{
-    display:flex;
-    align-items:center;
-    font-family:'Archivo', sans-serif;
+  .brand{display:flex; align-items:center; font-family:'Archivo',sans-serif; text-decoration:none;}
+  .brand .mark{font-weight:700; font-size:16px; color:#FFF; padding-right:10px; letter-spacing:0.02em;}
+  .brand .sub{
+    font-weight:500; font-size:11px; letter-spacing:0.16em; text-transform:uppercase;
+    color:#DCE8F2; padding-left:10px; border-left:1px solid #4A6A86;
+  }
+  .navlinks{display:flex; gap:20px;}
+  .navlinks a + a{margin-left:20px;}
+  .navlinks a{
+    font-size:12.5px; font-weight:500; color:#EAF1F7; text-decoration:none;
     letter-spacing:0.02em;
   }
-  .brand .mark{
-    font-weight:700;
-    font-size:16px;
-    color:#FFFFFF;
-    padding-right:10px;
-  }
-  .brand .sub{
-    font-weight:500;
-    font-size:11px;
-    letter-spacing:0.16em;
-    text-transform:uppercase;
-    color:#DCE8F2;
-    padding-left:10px;
-    border-left:1px solid #4A6A86;
-  }
-  header.site .issue{
-    font-family:'Inter', sans-serif;
-    font-size:11.5px;
-    font-weight:500;
-    letter-spacing:0.06em;
-    color:#EAF1F7;
-    text-transform:uppercase;
-  }
+  .navlinks a:hover{color:#9FC7E4;}
   .rule-accent{height:3px; background:var(--blue);}
 
-  /* ---------- HERO ---------- */
-  .hero-stage{
-    position:relative;
-    overflow:hidden;
-    background:#FFFFFF;
-  }
+  /* HERO */
+  .hero-stage{position:relative; overflow:hidden; background:#FFF; border-bottom:1px solid var(--line);}
   .hero-portrait{
-    position:absolute;
-    right:calc(50% - 580px);
-    top:0;
-    width:470px;
-    pointer-events:none;
-    user-select:none;
-    z-index:0;
-    opacity:1;
+    position:absolute; right:calc(50% - 620px); top:0; width:440px;
+    pointer-events:none; user-select:none; z-index:0;
   }
-  .hero{
-    position:relative;
-    z-index:1;
-    max-width:var(--maxw);
-    margin:0 auto;
-    padding:46px 24px 0;
-    background:transparent;
+  .hero{position:relative; z-index:1; max-width:var(--maxw); margin:0 auto; padding:64px 24px 56px;}
+  .hero .tagline{
+    display:inline-block; font-size:11.5px; font-weight:600; letter-spacing:0.1em;
+    text-transform:uppercase; color:var(--blue); border-left:3px solid var(--blue);
+    padding-left:10px; margin-bottom:22px;
   }
   .hero h1{
-    max-width:30ch;
+    font-family:'Archivo',sans-serif; font-weight:700;
+    font-size:clamp(30px,4.6vw,44px); line-height:1.14; letter-spacing:-0.018em;
+    color:var(--navy); margin:0 0 18px; max-width:20ch;
   }
-  .hero .dek{max-width:44ch;}
+  .hero .lead{
+    font-family:'Source Serif 4',serif; font-size:19px; line-height:1.6;
+    color:var(--ink-dim); max-width:42ch; margin:0 0 26px;
+  }
+  .hero .who{font-size:14px; color:var(--grey);}
+  .hero .who strong{color:var(--navy); font-weight:600;}
 
-  @media (max-width:1180px){
-    .hero-portrait{
-      right:-60px;
-      width:390px;
-      opacity:0.85;
-    }
-    .hero h1{max-width:22ch;}
-    .hero .dek{max-width:34ch;}
+  /* SEÇÕES */
+  section{max-width:var(--maxw); margin:0 auto; padding:56px 24px;}
+  section + section{border-top:1px solid var(--line);}
+  .sec-label{
+    font-size:11.5px; font-weight:600; letter-spacing:0.1em; text-transform:uppercase;
+    color:var(--blue); margin-bottom:14px;
   }
-  @media (max-width:820px){
-    .hero-stage{
-      display:flex;
-      flex-direction:column;
-    }
+  section h2{
+    font-family:'Archivo',sans-serif; font-weight:600; font-size:27px;
+    line-height:1.25; letter-spacing:-0.012em; color:var(--navy); margin:0 0 18px;
+  }
+  section p{
+    font-family:'Source Serif 4',serif; font-size:18px; line-height:1.72;
+    color:var(--ink); margin:0 0 18px; max-width:64ch;
+  }
+
+  /* O RELATÓRIO */
+  .pillars{
+    display:grid; grid-template-columns:repeat(3,1fr); gap:1px;
+    background:var(--line); border:1px solid var(--line); margin-top:28px;
+  }
+  .pillar{background:#FFF; padding:22px 20px;}
+  .pillar .n{
+    font-family:'Archivo',sans-serif; font-weight:700; font-size:13px;
+    color:var(--blue); letter-spacing:0.08em; display:block; margin-bottom:8px;
+  }
+  .pillar h3{
+    font-family:'Archivo',sans-serif; font-weight:600; font-size:16px;
+    color:var(--navy); margin:0 0 6px;
+  }
+  .pillar p{font-family:'Inter',sans-serif; font-size:14px; line-height:1.6; color:var(--ink-dim); margin:0;}
+
+  /* HISTÓRIA */
+  .history{display:flex; gap:32px; align-items:flex-start;}
+  .history .txt{flex:1; min-width:0;}
+  .history img{
+    width:200px; border-radius:4px; flex-shrink:0; border:1px solid var(--line);
+  }
+
+  /* TENDÊNCIAS */
+  .trend{
+    display:flex; gap:18px; padding:20px 0; border-bottom:1px solid var(--line);
+  }
+  .trend:last-of-type{border-bottom:none;}
+  .trend .idx{
+    font-family:'Archivo',sans-serif; font-weight:700; font-size:14px;
+    color:var(--blue); padding-top:3px; white-space:nowrap; margin-right:18px;
+  }
+  .trend h3{
+    font-family:'Archivo',sans-serif; font-weight:600; font-size:17px;
+    color:var(--navy); margin:0 0 5px;
+  }
+  .trend p{font-family:'Inter',sans-serif; font-size:15px; line-height:1.62; color:var(--ink-dim); margin:0; max-width:none;}
+
+  /* EDIÇÕES */
+  .editions-wrap{background:var(--panel); border-top:1px solid var(--line);}
+  .editions-wrap section{border-top:none;}
+  .ed-card{
+    display:block; background:#FFF; border:1px solid var(--line); border-radius:4px;
+    padding:24px 26px; text-decoration:none; margin-bottom:14px; transition:border-color .15s;
+  }
+  .ed-card:hover{border-color:var(--blue);}
+  .ed-meta{
+    display:flex; gap:12px; align-items:center; font-size:11.5px; font-weight:600;
+    letter-spacing:0.07em; text-transform:uppercase; color:var(--blue); margin-bottom:10px;
+  }
+  .ed-meta .date{color:var(--grey); font-weight:500; letter-spacing:0.02em; text-transform:none; margin-left:12px;}
+  .ed-card h3{
+    font-family:'Archivo',sans-serif; font-weight:600; font-size:20px; line-height:1.3;
+    color:var(--navy); margin:0 0 8px;
+  }
+  .ed-card p{
+    font-family:'Source Serif 4',serif; font-size:16px; line-height:1.6;
+    color:var(--ink-dim); margin:0; max-width:60ch;
+  }
+  .ed-next{
+    border:1px dashed var(--line); border-radius:4px; padding:20px 26px;
+    font-size:14.5px; color:var(--grey);
+  }
+
+  /* FOOTER */
+  footer{background:var(--navy); color:#E8EEF4;}
+  .foot{
+    max-width:var(--maxw); margin:0 auto; padding:40px 24px;
+    display:flex; align-items:center; gap:18px;
+  }
+  .foot img{width:60px; height:60px; border-radius:100%; object-fit:cover; object-position:center;}
+  .foot .name{font-family:'Archivo',sans-serif; font-weight:600; font-size:18px; color:#FFF;}
+  .foot .role{font-size:13.5px; color:#B7CBDC; margin-top:2px;}
+  .foot .pub{
+    margin-left:auto; font-family:'Archivo',sans-serif; font-size:11px; font-weight:600;
+    letter-spacing:0.14em; text-transform:uppercase; color:#8FB6D4; white-space:nowrap;
+  }
+
+  @media (max-width:900px){
+    .hero-portrait{right:-80px; width:340px; opacity:0.6;}
+    .hero h1{max-width:16ch;}
+  }
+  @media (max-width:760px){
+    .pillars{grid-template-columns:1fr;}
+    .history{flex-direction:column;}
+    .history img{width:100%; max-width:280px;}
+    .navlinks{display:none;}
+    .hero-stage{display:flex; flex-direction:column;}
     .hero-portrait{
-      position:relative;
-      right:auto;
-      width:78%;
-      max-width:330px;
-      margin:14px auto -10px;
-      opacity:1;
-      align-self:center;
+      position:relative; right:auto; width:78%; max-width:320px;
+      margin:14px auto -10px; opacity:1; align-self:center;
     }
     .hero{padding-top:20px;}
-    .hero h1, .hero .dek{max-width:none;}
+    .hero h1, .hero .lead{max-width:none;}
+    .foot{flex-wrap:wrap;}
+    .foot .pub{display:none;}
   }
-  .kicker{
-    display:inline-block;
-    font-family:'Inter', sans-serif;
-    font-size:11.5px;
-    font-weight:600;
-    letter-spacing:0.1em;
-    text-transform:uppercase;
-    color:var(--blue);
-    border-left:3px solid var(--blue);
-    padding-left:10px;
-    margin-bottom:20px;
-  }
-  h1{
-    font-family:'Archivo', sans-serif;
-    font-weight:700;
-    font-size:clamp(29px, 4.8vw, 44px);
-    line-height:1.14;
-    letter-spacing:-0.018em;
-    color:var(--navy);
-    margin:0 0 20px;
-  }
-  .dek{
-    font-family:'Source Serif 4', serif;
-    color:var(--ink-dim);
-    font-size:19px;
-    line-height:1.6;
-    max-width:56ch;
-    margin:0 0 30px;
-  }
-
-  .byline{
-    display:flex;
-    align-items:center;
-    gap:14px;
-    padding:16px 0;
-    border-top:1px solid var(--line);
-    border-bottom:1px solid var(--line);
-    margin-bottom:36px;
-  }
-  .byline .name{
-    font-family:'Archivo', sans-serif;
-    font-weight:600;
-    font-size:15px;
-    color:var(--navy);
-    line-height:1.35;
-  }
-  .byline .role{
-    font-size:12.5px;
-    color:var(--ink-dim);
-  }
-  .byline .meta{
-    margin-left:auto;
-    text-align:right;
-    font-size:12px;
-    color:var(--grey);
-    line-height:1.6;
-    white-space:nowrap;
-  }
-
-  /* ---------- STAT STRIP ---------- */
-  .stat-wrap{
-    background:var(--panel);
-    border-top:1px solid var(--line);
-    border-bottom:1px solid var(--line);
-  }
-  .stat-strip{
-    display:grid;
-    grid-template-columns:repeat(3, 1fr);
-    max-width:var(--maxw);
-    margin:0 auto;
-    padding:0 8px;
-  }
-  .stat{
-    padding:24px 16px;
-    border-right:1px solid var(--line);
-  }
-  .stat:last-child{border-right:none;}
-  .stat .num{
-    font-family:'Archivo', sans-serif;
-    font-weight:700;
-    font-size:clamp(23px, 3.6vw, 31px);
-    color:var(--navy);
-    display:block;
-    line-height:1.1;
-    letter-spacing:-0.01em;
-  }
-  .stat .label{
-    font-size:11.5px;
-    color:var(--ink-dim);
-    letter-spacing:0.02em;
-    display:block;
-    margin-top:7px;
-    line-height:1.45;
-  }
-
-  /* ---------- ARTICLE ---------- */
-  article{
-    max-width:var(--maxw);
-    margin:0 auto;
-    padding:44px 24px 8px;
-    background:#FFFFFF;
-  }
-  article h2{
-    font-family:'Archivo', sans-serif;
-    font-weight:600;
-    font-size:23px;
-    line-height:1.3;
-    letter-spacing:-0.01em;
-    color:var(--navy);
-    margin:44px 0 14px;
-  }
-  article p{
-    font-family:'Source Serif 4', serif;
-    font-size:18px;
-    line-height:1.72;
-    color:var(--ink);
-    margin:0 0 20px;
-  }
-
-  figure.chart{margin:34px 0; padding:0;}
-  figure.chart img{
-    border:1px solid var(--line);
-    border-radius:4px;
-  }
-  figure.chart figcaption{
-    font-family:'Inter', sans-serif;
-    font-size:12.5px;
-    color:var(--ink-dim);
-    margin-top:10px;
-    line-height:1.6;
-    padding-left:12px;
-    border-left:2px solid var(--line);
-  }
-  figure.chart figcaption .src{color:var(--grey);}
-
-  .callout{
-    background:var(--panel);
-    border-left:3px solid var(--green);
-    padding:20px 22px;
-    margin:32px 0;
-  }
-  .callout .mark{
-    display:block;
-    font-family:'Inter', sans-serif;
-    font-size:11px;
-    font-weight:600;
-    color:var(--green);
-    text-transform:uppercase;
-    letter-spacing:0.09em;
-    margin-bottom:8px;
-  }
-  .callout p{
-    margin:0;
-    font-family:'Source Serif 4', serif;
-    font-size:17px;
-    line-height:1.65;
-    color:var(--ink);
-  }
-
-  .takeaway-wrap{
-    background:var(--navy);
-    margin-top:50px;
-  }
-  .takeaway{
-    max-width:var(--maxw);
-    margin:0 auto;
-    padding:38px 24px;
-  }
-  .takeaway .kicker{
-    color:#FFFFFF;
-    border-left-color:#5AA7DE;
-  }
-  .takeaway p{
-    font-family:'Source Serif 4', serif;
-    font-size:18.5px;
-    line-height:1.68;
-    color:#FBFDFE;
-    margin:0;
-  }
-
-  /* ---------- FOOTER ---------- */
-  footer{
-    max-width:var(--maxw);
-    margin:0 auto;
-    padding:40px 24px 60px;
-    background:#FFFFFF;
-  }
-  .sig{
-    display:flex;
-    align-items:center;
-    gap:16px;
-    padding-bottom:24px;
-    border-bottom:1px solid var(--line);
-  }
-  .sig img{
-    width:58px; height:58px;
-    border-radius:100%;
-    object-fit:cover;
-    object-position:center center;
-  }
-  .sig .name{
-    font-family:'Archivo', sans-serif;
-    font-weight:600;
-    font-size:17px;
-    color:var(--navy);
-  }
-  .sig .role{
-    font-size:13px;
-    color:var(--ink-dim);
-    margin-top:2px;
-  }
-  .sig .pub{
-    margin-left:auto;
-    font-family:'Archivo', sans-serif;
-    font-size:11px;
-    font-weight:600;
-    letter-spacing:0.14em;
-    text-transform:uppercase;
-    color:var(--grey);
-    white-space:nowrap;
-  }
-  .sources{
-    font-size:12px;
-    color:var(--grey);
-    margin-top:22px;
-    line-height:1.8;
-  }
-  .sources strong{
-    color:var(--ink-dim);
-    font-weight:600;
-    letter-spacing:0.04em;
-  }
-
-  @media (max-width:540px){
-    .stat-strip{grid-template-columns:1fr;}
-    .stat{border-right:none; border-bottom:1px solid var(--line);}
-    .stat:last-child{border-bottom:none;}
-    .byline .meta{display:none;}
-    .sig .pub{display:none;}
-    .brand .sub{display:none;}
-  }
-  @media (prefers-reduced-motion: reduce){ html{scroll-behavior:auto;} }
+  @media (prefers-reduced-motion: reduce){html{scroll-behavior:auto;}}
 </style>
 </head>
 <body>
 
 <header class="site">
   <div class="bar">
-    <span class="brand">
+    <a class="brand" href="/">
       <span class="mark">AGROMV</span>
       <span class="sub">Semanal</span>
-    </span>
-    <span class="issue">Ed. 01 · Ago 2026</span>
+    </a>
+    <nav class="navlinks">
+      <a href="#relatorio">O Relatório</a>
+      <a href="#historia">Minha história</a>
+      <a href="#tendencias">Tendências</a>
+      <a href="#edicoes">Edições</a>
+    </nav>
   </div>
 </header>
 <div class="rule-accent"></div>
@@ -401,83 +213,115 @@
 <div class="hero-stage">
   <img class="hero-portrait" src="assets/hero-portrait.png" alt="" aria-hidden="true">
   <div class="hero">
-  <span class="kicker">Mercado &amp; Regulação · Bioinsumos</span>
-  <h1>Crescimento recorde, mercado ainda pequeno: o gargalo regulatório dos bioinsumos</h1>
-  <p class="dek">O Brasil já é o maior mercado de bioinsumos do mundo e ainda assim representa uma fração pequena dos gastos totais com defensivos. Os números da safra 2025/26 e o debate que tomou o III Fórum Bioinsumos no Agro ajudam a entender por quê.</p>
+    <span class="tagline">Inteligência de mercado · Bioinsumos</span>
+    <h1>Dados e leitura técnica do mercado de biológicos, toda semana</h1>
+    <p class="lead">Uma análise por semana sobre bioinsumos: números de mercado, movimentos regulatórios e o que isso significa na prática para quem decide no campo.</p>
+    <p class="who">Por <strong>Michael Viana</strong> · Marketing Estratégico Cerrado · COGNY</p>
+  </div>
+</div>
 
-  <div class="byline">
+<section id="relatorio">
+  <div class="sec-label">O Relatório</div>
+  <h2>Por que existe o AGROMV Semanal</h2>
+  <p>O mercado de biológicos cresce mais rápido do que a capacidade da maioria das equipes de acompanhar o que está acontecendo. Dados chegam picotados: um número em um evento, um estudo em outro, uma mudança regulatória em uma terceira fonte. Quem está na ponta acaba decidindo com informação incompleta.</p>
+  <p>Este relatório junta essas pontas uma vez por semana. Não é conteúdo promocional nem release de produto: é leitura de mercado com fonte citada, gráfico próprio e uma conclusão prática sobre o que muda para quem trabalha com bioinsumos no Cerrado e no restante do país.</p>
+
+  <div class="pillars">
+    <div class="pillar">
+      <span class="n">01</span>
+      <h3>Dado com fonte</h3>
+      <p>Todo número vem com origem citada e data. Sem estimativa solta e sem projeção sem lastro.</p>
+    </div>
+    <div class="pillar">
+      <span class="n">02</span>
+      <h3>Leitura de campo</h3>
+      <p>O que o dado significa para receituário, distribuição e planejamento de safra.</p>
+    </div>
+    <div class="pillar">
+      <span class="n">03</span>
+      <h3>Formato direto</h3>
+      <p>Uma edição por semana, leitura de seis minutos, com os gráficos que importam.</p>
+    </div>
+  </div>
+</section>
+
+<section id="historia">
+  <div class="sec-label">Um pouco da minha história</div>
+  <h2>Michael Viana</h2>
+  <div class="history">
+    <div class="txt">
+      <p>Atuo em Marketing Estratégico na COGNY, com foco na região do Cerrado, acompanhando de perto o avanço dos bioinsumos no maior mercado de biológicos do mundo.</p>
+      <p>O trabalho me coloca no meio de uma conversa que ainda está se formando: entre a indústria que desenvolve as tecnologias, o produtor que precisa de resultado no talhão e um ambiente regulatório em construção. É desse ponto de vista que escrevo aqui.</p>
+      <p>O AGROMV Semanal nasceu da vontade de organizar publicamente essa leitura, em vez de deixá-la restrita a apresentações internas e conversas de corredor.</p>
+    </div>
+    <img src="assets/author.jpg" alt="Michael Viana">
+  </div>
+</section>
+
+<section id="tendencias">
+  <div class="sec-label">Tendências do biológico</div>
+  <h2>O que está em movimento no setor</h2>
+  <p>Os vetores que venho acompanhando e que devem pautar as próximas edições:</p>
+
+  <div class="trend">
+    <span class="idx">01</span>
     <div>
-      <div class="name">Michael Viana</div>
-      <div class="role">Marketing Estratégico Cerrado · COGNY</div>
-    </div>
-    <div class="meta">21 ago 2026<br>6 min de leitura</div>
-  </div>
-</div>
-</div>
-
-<div class="stat-wrap">
-  <div class="stat-strip">
-    <div class="stat">
-      <span class="num">R$ 7 bi</span>
-      <span class="label">Movimentados em 2025</span>
-    </div>
-    <div class="stat">
-      <span class="num">~46%</span>
-      <span class="label">Crescimento projetado até 2030</span>
-    </div>
-    <div class="stat">
-      <span class="num">~6%</span>
-      <span class="label">Fatia do mercado total de defensivos</span>
+      <h3>Adoção deixou de ser o gargalo</h3>
+      <p>Com 107 milhões de hectares já cobertos por biodefensivos, a discussão migrou de convencer o produtor a testar para ampliar a participação do biológico dentro do receituário de cada talhão.</p>
     </div>
   </div>
-</div>
 
-<article>
-  <p>A expansão dos bioinsumos no campo brasileiro deixou de ser discurso e virou planilha. Segundo levantamento da Anpii-Bio apresentado nesta semana na XXII Reunião da Relare, em Curitiba, o setor movimentou cerca de R$ 7 bilhões em 2025 somando biocontrole, bioinoculantes, mobilizadores de nutrientes e biofertilizantes, com projeção de chegar perto de R$ 10 bilhões até 2030. Cálculos da Embrapa também associam o uso crescente desses produtos a uma economia da ordem de US$ 28 bilhões e à redução de 280 milhões de toneladas de CO₂ na atmosfera no último ano.</p>
-
-  <figure class="chart">
-    <img src="assets/chart-market.png" alt="Gráfico de linha mostrando a trajetória do mercado de bioinsumos de R$ 7 bilhões em 2025 a aproximadamente R$ 10 bilhões em 2030">
-    <figcaption>Trajetória estimada do mercado de bioinsumos no Brasil, em R$ bi/ano. <span class="src">Fonte: Anpii-Bio, 2026.</span></figcaption>
-  </figure>
-
-  <h2>Crescendo três vezes mais rápido que a área plantada</h2>
-  <p>O dado que melhor ilustra o momento não é o valor absoluto, e sim a velocidade. Enquanto a área agrícola brasileira avançou entre 3% e 4% ao ano nas últimas cinco safras, a área tratada com produtos biológicos cresceu mais de 30% ao ano, segundo dado apresentado pela Kynetec no Fórum Bioinsumos no Agro, realizado em 18 de agosto em São Paulo. Ainda assim, os biológicos ocupam hoje algo em torno de 6% do que é gasto em defensivos e inoculantes no país, com os biodefensivos cobrindo 107 milhões de hectares.</p>
-
-  <figure class="chart">
-    <img src="assets/chart-growth.png" alt="Gráfico de barras comparando o crescimento anual da área agrícola total, área tratada com defensivos e área tratada com biológicos">
-    <figcaption>Crescimento anual por categoria de área tratada. <span class="src">Fonte: Kynetec Brasil, III Fórum Bioinsumos no Agro (ago/2026).</span></figcaption>
-  </figure>
-
-  <div class="callout">
-    <span class="mark">Leitura de campo</span>
-    <p>O mercado ainda tem enorme espaço para crescer dentro da base já convertida ao biológico. O desafio deixou de ser convencer o produtor a testar e passou a ser ampliar a participação dos biológicos no receituário de cada talhão.</p>
+  <div class="trend">
+    <span class="idx">02</span>
+    <div>
+      <h3>Marco regulatório como fator de risco</h3>
+      <p>A ausência de regras próprias e consolidadas para bioinsumos aparece hoje como o principal risco à consolidação do setor, afastando investimento e dificultando a fiscalização.</p>
+    </div>
   </div>
 
-  <h2>O que trava a expansão: segurança jurídica</h2>
-  <p>O painel de encerramento do Fórum, reunindo indústria, academia e representantes do setor produtivo, apontou a falta de um marco regulatório claro e próprio para bioinsumos como o principal risco à consolidação do setor. Regras dispersas e sujeitas a interpretação afastam investimento e dificultam a fiscalização, e isso pesa justamente no momento em que agtechs e grandes players globais de química agrícola vêm redirecionando parte relevante de seus orçamentos de P&amp;D para fusões e aquisições no segmento.</p>
-
-  <h2>O que isso significa para quem decide o receituário</h2>
-  <p>Para quem está na ponta, seja agrônomo, cooperativa ou distribuidor, o recado é duplo: o biológico já não é nicho, é linha de produto estratégica; mas a régua de decisão de compra vai continuar dependendo de previsibilidade regulatória tanto quanto de performance agronômica. Empresas que conseguirem traduzir dados de eficácia em linguagem clara para o produtor, e ao mesmo tempo acompanhar de perto a evolução do marco legal, saem na frente na disputa por esses 94% do mercado que ainda não migraram para o biológico.</p>
-</article>
-
-<div class="takeaway-wrap">
-  <div class="takeaway">
-    <span class="kicker">O que fica</span>
-    <p>O mercado de bioinsumos brasileiro já é o maior do mundo, cresce em ritmo de tecnologia disruptiva e ainda assim é pequeno perto do potencial total. A janela de crescimento está aberta, mas depende de segurança jurídica para não travar no meio do caminho.</p>
+  <div class="trend">
+    <span class="idx">03</span>
+    <div>
+      <h3>Consolidação e movimento de capital</h3>
+      <p>Grandes players globais de química agrícola vêm redirecionando orçamento de P&amp;D para fusões e aquisições no segmento de biológicos, reorganizando o mapa competitivo.</p>
+    </div>
   </div>
+
+  <div class="trend">
+    <span class="idx">04</span>
+    <div>
+      <h3>Evidência técnica como argumento comercial</h3>
+      <p>A régua de decisão do produtor combina performance agronômica comprovada com previsibilidade de fornecimento. Traduzir dado de eficácia em linguagem clara virou diferencial de venda.</p>
+    </div>
+  </div>
+</section>
+
+<div class="editions-wrap">
+  <section id="edicoes">
+    <div class="sec-label">Edições</div>
+    <h2>Todas as análises publicadas</h2>
+
+    <a class="ed-card" href="/edicoes/01-bioinsumos-regulacao/">
+      <div class="ed-meta">
+        <span>Ed. 01 · Mercado &amp; Regulação</span>
+        <span class="date">21 ago 2026</span>
+      </div>
+      <h3>Crescimento recorde, mercado ainda pequeno: o gargalo regulatório dos bioinsumos</h3>
+      <p>O Brasil já é o maior mercado de bioinsumos do mundo e ainda assim representa uma fração pequena dos gastos totais com defensivos. Os números da safra 2025/26 e o debate do III Fórum Bioinsumos no Agro.</p>
+    </a>
+
+    <div class="ed-next">Próxima edição em breve.</div>
+  </section>
 </div>
 
 <footer>
-  <div class="sig">
+  <div class="foot">
     <img src="assets/author.jpg" alt="Michael Viana">
     <div>
       <div class="name">Michael Viana</div>
       <div class="role">Marketing Estratégico Cerrado · COGNY</div>
     </div>
     <span class="pub">AGROMV Semanal</span>
-  </div>
-  <div class="sources">
-    <strong>FONTES:</strong> Anpii-Bio (Relare, ago/2026) · Embrapa · Kynetec Brasil · III Fórum Bioinsumos no Agro (Araiby, SRB, Sistema Ocesp, Embrapa)
   </div>
 </footer>
 
