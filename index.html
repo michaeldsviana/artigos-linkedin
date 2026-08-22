@@ -87,11 +87,50 @@
   .rule-accent{height:3px; background:var(--blue);}
 
   /* ---------- HERO ---------- */
+  .hero-stage{
+    position:relative;
+    overflow:hidden;
+    background:#FFFFFF;
+  }
+  .hero-portrait{
+    position:absolute;
+    right:calc(50% - 560px);
+    top:0;
+    width:430px;
+    pointer-events:none;
+    user-select:none;
+    z-index:0;
+    opacity:0.95;
+  }
   .hero{
+    position:relative;
+    z-index:1;
     max-width:var(--maxw);
     margin:0 auto;
     padding:46px 24px 0;
-    background:#FFFFFF;
+    background:transparent;
+  }
+  .hero h1{
+    max-width:30ch;
+  }
+  .hero .dek{max-width:44ch;}
+
+  @media (max-width:1180px){
+    .hero-portrait{
+      right:-70px;
+      width:360px;
+      opacity:0.5;
+    }
+    .hero h1{max-width:22ch;}
+    .hero .dek{max-width:34ch;}
+  }
+  @media (max-width:820px){
+    .hero-portrait{
+      right:-110px;
+      width:290px;
+      opacity:0.14;
+    }
+    .hero h1, .hero .dek{max-width:none;}
   }
   .kicker{
     display:inline-block;
@@ -136,7 +175,7 @@
     width:50px; height:50px;
     border-radius:100%;
     object-fit:cover;
-    object-position:50% 18%;
+    object-position:center center;
     flex-shrink:0;
   }
   .byline .name{
@@ -298,7 +337,7 @@
     width:58px; height:58px;
     border-radius:100%;
     object-fit:cover;
-    object-position:50% 18%;
+    object-position:center center;
   }
   .sig .name{
     font-family:'Archivo', sans-serif;
@@ -357,10 +396,12 @@
 </header>
 <div class="rule-accent"></div>
 
-<div class="hero">
+<div class="hero-stage">
+  <img class="hero-portrait" src="assets/hero-portrait.png" alt="" aria-hidden="true">
+  <div class="hero">
   <span class="kicker">Mercado &amp; Regulação · Bioinsumos</span>
   <h1>Crescimento recorde, mercado ainda pequeno: o gargalo regulatório dos bioinsumos</h1>
-  <p class="dek">O Brasil já é o maior mercado de bioinsumos do mundo — e ainda assim representa uma fração pequena dos gastos totais com defensivos. Os números da safra 2025/26 e o debate que tomou o III Fórum Bioinsumos no Agro ajudam a entender por quê.</p>
+  <p class="dek">O Brasil já é o maior mercado de bioinsumos do mundo e ainda assim representa uma fração pequena dos gastos totais com defensivos. Os números da safra 2025/26 e o debate que tomou o III Fórum Bioinsumos no Agro ajudam a entender por quê.</p>
 
   <div class="byline">
     <img src="assets/author.jpg" alt="Michael Viana">
@@ -370,6 +411,7 @@
     </div>
     <div class="meta">21 ago 2026<br>6 min de leitura</div>
   </div>
+</div>
 </div>
 
 <div class="stat-wrap">
@@ -390,7 +432,7 @@
 </div>
 
 <article>
-  <p>A expansão dos bioinsumos no campo brasileiro deixou de ser discurso e virou planilha. Segundo levantamento da Anpii-Bio apresentado nesta semana na XXII Reunião da Relare, em Curitiba, o setor movimentou cerca de R$ 7 bilhões em 2025 somando biocontrole, bioinoculantes, mobilizadores de nutrientes e biofertilizantes — com projeção de chegar perto de R$ 10 bilhões até 2030. Cálculos da Embrapa também associam o uso crescente desses produtos a uma economia da ordem de US$ 28 bilhões e à redução de 280 milhões de toneladas de CO₂ na atmosfera no último ano.</p>
+  <p>A expansão dos bioinsumos no campo brasileiro deixou de ser discurso e virou planilha. Segundo levantamento da Anpii-Bio apresentado nesta semana na XXII Reunião da Relare, em Curitiba, o setor movimentou cerca de R$ 7 bilhões em 2025 somando biocontrole, bioinoculantes, mobilizadores de nutrientes e biofertilizantes, com projeção de chegar perto de R$ 10 bilhões até 2030. Cálculos da Embrapa também associam o uso crescente desses produtos a uma economia da ordem de US$ 28 bilhões e à redução de 280 milhões de toneladas de CO₂ na atmosfera no último ano.</p>
 
   <figure class="chart">
     <img src="assets/chart-market.png" alt="Gráfico de linha mostrando a trajetória do mercado de bioinsumos de R$ 7 bilhões em 2025 a aproximadamente R$ 10 bilhões em 2030">
@@ -398,7 +440,7 @@
   </figure>
 
   <h2>Crescendo três vezes mais rápido que a área plantada</h2>
-  <p>O dado que melhor ilustra o momento não é o valor absoluto, e sim a velocidade. Enquanto a área agrícola brasileira avançou entre 3% e 4% ao ano nas últimas cinco safras, a área tratada com produtos biológicos cresceu mais de 30% ao ano — dado apresentado pela Kynetec no Fórum Bioinsumos no Agro, realizado em 18 de agosto em São Paulo. Ainda assim, os biológicos ocupam hoje algo em torno de 6% do que é gasto em defensivos e inoculantes no país, com os biodefensivos cobrindo 107 milhões de hectares.</p>
+  <p>O dado que melhor ilustra o momento não é o valor absoluto, e sim a velocidade. Enquanto a área agrícola brasileira avançou entre 3% e 4% ao ano nas últimas cinco safras, a área tratada com produtos biológicos cresceu mais de 30% ao ano, segundo dado apresentado pela Kynetec no Fórum Bioinsumos no Agro, realizado em 18 de agosto em São Paulo. Ainda assim, os biológicos ocupam hoje algo em torno de 6% do que é gasto em defensivos e inoculantes no país, com os biodefensivos cobrindo 107 milhões de hectares.</p>
 
   <figure class="chart">
     <img src="assets/chart-growth.png" alt="Gráfico de barras comparando o crescimento anual da área agrícola total, área tratada com defensivos e área tratada com biológicos">
@@ -411,16 +453,16 @@
   </div>
 
   <h2>O que trava a expansão: segurança jurídica</h2>
-  <p>O painel de encerramento do Fórum, reunindo indústria, academia e representantes do setor produtivo, apontou a falta de um marco regulatório claro e próprio para bioinsumos como o principal risco à consolidação do setor. Regras dispersas e sujeitas a interpretação afastam investimento e dificultam a fiscalização — o que pesa justamente no momento em que agtechs e grandes players globais de química agrícola vêm redirecionando parte relevante de seus orçamentos de P&amp;D para fusões e aquisições no segmento.</p>
+  <p>O painel de encerramento do Fórum, reunindo indústria, academia e representantes do setor produtivo, apontou a falta de um marco regulatório claro e próprio para bioinsumos como o principal risco à consolidação do setor. Regras dispersas e sujeitas a interpretação afastam investimento e dificultam a fiscalização, e isso pesa justamente no momento em que agtechs e grandes players globais de química agrícola vêm redirecionando parte relevante de seus orçamentos de P&amp;D para fusões e aquisições no segmento.</p>
 
   <h2>O que isso significa para quem decide o receituário</h2>
-  <p>Para quem está na ponta — agrônomo, cooperativa, distribuidor — o recado é duplo: o biológico já não é nicho, é linha de produto estratégica; mas a régua de decisão de compra vai continuar dependendo de previsibilidade regulatória tanto quanto de performance agronômica. Empresas que conseguirem traduzir dados de eficácia em linguagem clara para o produtor, e ao mesmo tempo acompanhar de perto a evolução do marco legal, saem na frente na disputa por esses 94% do mercado que ainda não migraram para o biológico.</p>
+  <p>Para quem está na ponta, seja agrônomo, cooperativa ou distribuidor, o recado é duplo: o biológico já não é nicho, é linha de produto estratégica; mas a régua de decisão de compra vai continuar dependendo de previsibilidade regulatória tanto quanto de performance agronômica. Empresas que conseguirem traduzir dados de eficácia em linguagem clara para o produtor, e ao mesmo tempo acompanhar de perto a evolução do marco legal, saem na frente na disputa por esses 94% do mercado que ainda não migraram para o biológico.</p>
 </article>
 
 <div class="takeaway-wrap">
   <div class="takeaway">
     <span class="kicker">O que fica</span>
-    <p>O mercado de bioinsumos brasileiro já é o maior do mundo, cresce em ritmo de tecnologia disruptiva e ainda assim é pequeno perto do potencial total. A janela de crescimento está aberta — mas depende de segurança jurídica para não travar no meio do caminho.</p>
+    <p>O mercado de bioinsumos brasileiro já é o maior do mundo, cresce em ritmo de tecnologia disruptiva e ainda assim é pequeno perto do potencial total. A janela de crescimento está aberta, mas depende de segurança jurídica para não travar no meio do caminho.</p>
   </div>
 </div>
 
