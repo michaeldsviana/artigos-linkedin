@@ -6,10 +6,11 @@
 <meta name="color-scheme" content="light only">
 <meta name="supported-color-schemes" content="light">
 <title>AGROMV Semanal | Michael Viana · Inteligência de mercado em bioinsumos</title>
-<meta name="description" content="Análises semanais de mercado e conteúdo técnico sobre bioinsumos, por Michael Viana, Marketing Estratégico Cerrado na COGNY.">
+<meta name="description" content="Informação semanal sobre o mercado de bioinsumos: números, movimentos e o que isso significa na prática para quem decide no campo.">
 <meta property="og:title" content="AGROMV Semanal | Inteligência de mercado em bioinsumos">
-<meta property="og:description" content="Análises semanais de mercado e conteúdo técnico sobre bioinsumos.">
-<meta property="og:image" content="https://agromv.net/assets/linkedin-cover.png">
+<meta property="og:description" content="Informação semanal sobre o mercado de bioinsumos: números, movimentos e o que isso significa na prática para quem decide no campo.">
+<meta property="og:image" content="https://mvagro.net/assets/linkedin-cover.png">
+<meta property="og:url" content="https://mvagro.net/">
 <meta property="og:type" content="website">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -28,11 +29,12 @@
     font-family:'Inter',-apple-system,sans-serif; line-height:1.68;
     -webkit-font-smoothing:antialiased; forced-color-adjust:none;
   }
+  body.nav-open{overflow:hidden;}
   img{max-width:100%; display:block;}
   a{color:var(--blue);}
 
-  /* HEADER */
-  header.site{position:sticky; top:0; z-index:20; background:var(--navy);}
+  /* ---------- HEADER ---------- */
+  header.site{position:sticky; top:0; z-index:60; background:var(--navy);}
   header.site .bar{
     display:flex; justify-content:space-between; align-items:center;
     max-width:var(--maxw); margin:0 auto; padding:14px 24px;
@@ -43,19 +45,66 @@
     font-weight:500; font-size:11px; letter-spacing:0.16em; text-transform:uppercase;
     color:#DCE8F2; padding-left:10px; border-left:1px solid #4A6A86;
   }
-  .navlinks{display:flex; gap:20px;}
-  .navlinks a + a{margin-left:20px;}
-  .navlinks a{
-    font-size:12.5px; font-weight:500; color:#EAF1F7; text-decoration:none;
-    letter-spacing:0.02em;
-  }
-  .navlinks a:hover{color:#9FC7E4;}
   .rule-accent{height:3px; background:var(--blue);}
 
-  /* HERO */
+  /* botão hambúrguer */
+  .nav-toggle{
+    display:block; width:42px; height:42px; padding:9px;
+    background:none; border:none; cursor:pointer; margin-right:-9px;
+  }
+  .nav-toggle span{
+    display:block; width:24px; height:2px; margin:5px 0;
+    background:#EAF1F7; border-radius:2px;
+    transition:transform .22s ease, opacity .18s ease;
+  }
+  body.nav-open .nav-toggle span:nth-child(1){transform:translateY(7px) rotate(45deg);}
+  body.nav-open .nav-toggle span:nth-child(2){opacity:0;}
+  body.nav-open .nav-toggle span:nth-child(3){transform:translateY(-7px) rotate(-45deg);}
+
+  /* gaveta lateral */
+  .nav-overlay{
+    position:fixed; inset:0; background:rgba(14,35,56,0.55);
+    opacity:0; visibility:hidden; transition:opacity .22s ease, visibility .22s;
+    z-index:70;
+  }
+  body.nav-open .nav-overlay{opacity:1; visibility:visible;}
+  .nav-drawer{
+    position:fixed; top:0; right:0; height:100%; width:300px; max-width:84vw;
+    background:var(--navy); z-index:80; padding:26px 28px;
+    transform:translateX(100%); transition:transform .26s cubic-bezier(.4,0,.2,1);
+    display:flex; flex-direction:column;
+  }
+  body.nav-open .nav-drawer{transform:translateX(0);}
+  .nav-drawer .head{
+    display:flex; justify-content:space-between; align-items:center;
+    padding-bottom:22px; border-bottom:1px solid #2A4560; margin-bottom:10px;
+  }
+  .nav-drawer .head .t{
+    font-family:'Archivo',sans-serif; font-size:11px; font-weight:600;
+    letter-spacing:0.14em; text-transform:uppercase; color:#8FB6D4;
+  }
+  .nav-close{
+    background:none; border:none; color:#EAF1F7; font-size:26px; line-height:1;
+    cursor:pointer; padding:0 4px;
+  }
+  .nav-drawer nav a{
+    display:block; padding:15px 0; border-bottom:1px solid #1E3A55;
+    font-family:'Archivo',sans-serif; font-weight:600; font-size:17px;
+    color:#EAF1F7; text-decoration:none;
+  }
+  .nav-drawer nav a span{
+    display:block; font-family:'Inter',sans-serif; font-weight:400;
+    font-size:12.5px; color:#8FB6D4; margin-top:3px;
+  }
+  .nav-drawer nav a:hover{color:#9FC7E4;}
+  .nav-drawer .foot-note{
+    margin-top:auto; font-size:12px; color:#6E8CA8; line-height:1.6;
+  }
+
+  /* ---------- HERO ---------- */
   .hero-stage{position:relative; overflow:hidden; background:#FFF; border-bottom:1px solid var(--line);}
   .hero-portrait{
-    position:absolute; right:calc(50% - 620px); top:0; width:440px;
+    position:absolute; right:0; top:0; width:430px;
     pointer-events:none; user-select:none; z-index:0;
   }
   .hero{position:relative; z-index:1; max-width:var(--maxw); margin:0 auto; padding:64px 24px 56px;}
@@ -67,16 +116,16 @@
   .hero h1{
     font-family:'Archivo',sans-serif; font-weight:700;
     font-size:clamp(30px,4.6vw,44px); line-height:1.14; letter-spacing:-0.018em;
-    color:var(--navy); margin:0 0 18px; max-width:20ch;
+    color:var(--navy); margin:0 0 18px; max-width:19ch;
   }
   .hero .lead{
     font-family:'Source Serif 4',serif; font-size:19px; line-height:1.6;
-    color:var(--ink-dim); max-width:42ch; margin:0 0 26px;
+    color:var(--ink-dim); max-width:40ch; margin:0 0 26px;
   }
   .hero .who{font-size:14px; color:var(--grey);}
   .hero .who strong{color:var(--navy); font-weight:600;}
 
-  /* SEÇÕES */
+  /* ---------- SEÇÕES ---------- */
   section{max-width:var(--maxw); margin:0 auto; padding:56px 24px;}
   section + section{border-top:1px solid var(--line);}
   .sec-label{
@@ -92,7 +141,6 @@
     color:var(--ink); margin:0 0 18px; max-width:64ch;
   }
 
-  /* O RELATÓRIO */
   .pillars{
     display:grid; grid-template-columns:repeat(3,1fr); gap:1px;
     background:var(--line); border:1px solid var(--line); margin-top:28px;
@@ -102,35 +150,10 @@
     font-family:'Archivo',sans-serif; font-weight:700; font-size:13px;
     color:var(--blue); letter-spacing:0.08em; display:block; margin-bottom:8px;
   }
-  .pillar h3{
-    font-family:'Archivo',sans-serif; font-weight:600; font-size:16px;
-    color:var(--navy); margin:0 0 6px;
-  }
+  .pillar h3{font-family:'Archivo',sans-serif; font-weight:600; font-size:16px; color:var(--navy); margin:0 0 6px;}
   .pillar p{font-family:'Inter',sans-serif; font-size:14px; line-height:1.6; color:var(--ink-dim); margin:0;}
 
-  /* HISTÓRIA */
-  .history{display:flex; gap:32px; align-items:flex-start;}
-  .history .txt{flex:1; min-width:0;}
-  .history img{
-    width:200px; border-radius:4px; flex-shrink:0; border:1px solid var(--line);
-  }
-
-  /* TENDÊNCIAS */
-  .trend{
-    display:flex; gap:18px; padding:20px 0; border-bottom:1px solid var(--line);
-  }
-  .trend:last-of-type{border-bottom:none;}
-  .trend .idx{
-    font-family:'Archivo',sans-serif; font-weight:700; font-size:14px;
-    color:var(--blue); padding-top:3px; white-space:nowrap; margin-right:18px;
-  }
-  .trend h3{
-    font-family:'Archivo',sans-serif; font-weight:600; font-size:17px;
-    color:var(--navy); margin:0 0 5px;
-  }
-  .trend p{font-family:'Inter',sans-serif; font-size:15px; line-height:1.62; color:var(--ink-dim); margin:0; max-width:none;}
-
-  /* EDIÇÕES */
+  /* ---------- PUBLICAÇÕES ---------- */
   .editions-wrap{background:var(--panel); border-top:1px solid var(--line);}
   .editions-wrap section{border-top:none;}
   .ed-card{
@@ -153,30 +176,55 @@
   }
   .ed-next{
     border:1px dashed var(--line); border-radius:4px; padding:20px 26px;
-    font-size:14.5px; color:var(--grey);
+    font-size:14.5px; color:var(--grey); background:#FFF;
   }
 
-  /* FOOTER */
+  /* ---------- RELATÓRIOS ---------- */
+  .soon-box{
+    border:1px solid var(--line); border-left:3px solid var(--green);
+    background:var(--panel); padding:24px 26px; border-radius:4px; margin-top:8px;
+  }
+  .soon-box .tag{
+    display:inline-block; font-size:10.5px; font-weight:600; letter-spacing:0.1em;
+    text-transform:uppercase; color:var(--green); margin-bottom:10px;
+  }
+  .soon-box p{font-family:'Inter',sans-serif; font-size:15px; color:var(--ink-dim); margin:0; max-width:60ch;}
+
+  /* ---------- CONTATO ---------- */
+  .contact-grid{display:grid; grid-template-columns:repeat(2,1fr); gap:12px; margin-top:8px;}
+  .contact-card{
+    display:flex; align-items:center; gap:14px; padding:18px 20px;
+    border:1px solid var(--line); border-radius:4px; text-decoration:none;
+    background:#FFF; transition:border-color .15s, background .15s;
+  }
+  .contact-card:hover{border-color:var(--blue); background:var(--panel);}
+  .contact-card .ico{
+    width:40px; height:40px; border-radius:100%; background:var(--navy);
+    display:flex; align-items:center; justify-content:center; flex-shrink:0;
+  }
+  .contact-card svg{width:19px; height:19px; fill:#FFF;}
+  .contact-card .txt{display:block; min-width:0;}
+  .contact-card .t{
+    display:block;
+    font-family:'Archivo',sans-serif; font-weight:600; font-size:15px; color:var(--navy);
+  }
+  .contact-card .h{display:block; font-size:13px; color:var(--ink-dim); margin-top:1px; word-break:break-all;}
+
+  /* ---------- FOOTER ---------- */
   footer{background:var(--navy); color:#E8EEF4;}
   .foot{
-    max-width:var(--maxw); margin:0 auto; padding:40px 24px;
+    max-width:var(--maxw); margin:0 auto; padding:36px 24px 26px;
     display:flex; align-items:center; gap:18px;
   }
-  .foot img{width:60px; height:60px; border-radius:100%; object-fit:cover; object-position:center;}
+  .foot img{width:56px; height:56px; border-radius:100%; object-fit:cover; object-position:center;}
   .foot .name{font-family:'Archivo',sans-serif; font-weight:600; font-size:18px; color:#FFF;}
   .foot .role{font-size:13.5px; color:#B7CBDC; margin-top:2px;}
   .foot .pub{
     margin-left:auto; font-family:'Archivo',sans-serif; font-size:11px; font-weight:600;
     letter-spacing:0.14em; text-transform:uppercase; color:#8FB6D4; white-space:nowrap;
   }
-  .social{
-    max-width:var(--maxw); margin:0 auto; padding:0 24px 40px;
-  }
-  .social .divider{height:1px; background:#2A4560; margin-bottom:24px;}
-  .social .label{
-    font-size:11px; font-weight:600; letter-spacing:0.12em; text-transform:uppercase;
-    color:#8FB6D4; margin-bottom:14px;
-  }
+  .social{max-width:var(--maxw); margin:0 auto; padding:0 24px 36px;}
+  .social .divider{height:1px; background:#2A4560; margin-bottom:22px;}
   .social .icons{display:flex; gap:12px; flex-wrap:wrap;}
   .social a{
     display:flex; align-items:center; justify-content:center;
@@ -184,29 +232,31 @@
     background:#1B3B5A; border:1px solid #2F5478;
     transition:background .15s, border-color .15s;
   }
+  .social a + a{margin-left:12px;}
   .social a:hover{background:var(--blue); border-color:var(--blue);}
   .social svg{width:20px; height:20px; fill:#E8EEF4;}
 
   @media (max-width:900px){
-    .hero-portrait{right:-80px; width:340px; opacity:0.6;}
-    .hero h1{max-width:16ch;}
+    .hero-portrait{right:-40px; width:330px; opacity:0.55;}
+    .hero h1{max-width:15ch;}
   }
   @media (max-width:760px){
     .pillars{grid-template-columns:1fr;}
-    .history{flex-direction:column;}
-    .history img{width:100%; max-width:280px;}
-    .navlinks{display:none;}
+    .contact-grid{grid-template-columns:1fr;}
     .hero-stage{display:flex; flex-direction:column;}
     .hero-portrait{
-      position:relative; right:auto; width:78%; max-width:320px;
-      margin:14px auto -10px; opacity:1; align-self:center;
+      position:relative; right:0; width:66%; max-width:280px;
+      margin:10px 0 -8px auto; opacity:1;
     }
-    .hero{padding-top:20px;}
+    .hero{padding-top:18px;}
     .hero h1, .hero .lead{max-width:none;}
     .foot{flex-wrap:wrap;}
     .foot .pub{display:none;}
   }
-  @media (prefers-reduced-motion: reduce){html{scroll-behavior:auto;}}
+  @media (prefers-reduced-motion: reduce){
+    html{scroll-behavior:auto;}
+    .nav-drawer, .nav-overlay, .nav-toggle span{transition:none;}
+  }
 </style>
 </head>
 <body>
@@ -217,22 +267,34 @@
       <span class="mark">AGROMV</span>
       <span class="sub">Semanal</span>
     </a>
-    <nav class="navlinks">
-      <a href="#relatorio">O Relatório</a>
-      <a href="#historia">Minha história</a>
-      <a href="#tendencias">Tendências</a>
-      <a href="#edicoes">Edições</a>
-    </nav>
+    <button class="nav-toggle" id="navToggle" aria-label="Abrir menu" aria-expanded="false" aria-controls="navDrawer">
+      <span></span><span></span><span></span>
+    </button>
   </div>
 </header>
 <div class="rule-accent"></div>
 
-<div class="hero-stage">
+<div class="nav-overlay" id="navOverlay"></div>
+<aside class="nav-drawer" id="navDrawer" aria-hidden="true">
+  <div class="head">
+    <span class="t">Navegação</span>
+    <button class="nav-close" id="navClose" aria-label="Fechar menu">&times;</button>
+  </div>
+  <nav>
+    <a href="#topo">Home<span>Início</span></a>
+    <a href="#publicacoes">Publicações<span>Análises semanais</span></a>
+    <a href="#relatorios">Relatórios<span>Materiais aprofundados</span></a>
+    <a href="#contato">Contato<span>Redes e acesso direto</span></a>
+  </nav>
+  <div class="foot-note">AGROMV Semanal<br>Michael Viana · COGNY</div>
+</aside>
+
+<div class="hero-stage" id="topo">
   <img class="hero-portrait" src="assets/hero-portrait.png" alt="" aria-hidden="true">
   <div class="hero">
     <span class="tagline">Inteligência de mercado · Bioinsumos</span>
     <h1>Dados e leitura técnica do mercado de biológicos, toda semana</h1>
-    <p class="lead">Uma análise por semana sobre bioinsumos: números de mercado, movimentos regulatórios e o que isso significa na prática para quem decide no campo.</p>
+    <p class="lead">Informação semanal sobre o mercado de bioinsumos: números, movimentos, e o que isso significa na prática para quem decide no campo.</p>
     <p class="who">Por <strong>Michael Viana</strong> · Marketing Estratégico Cerrado · COGNY</p>
   </div>
 </div>
@@ -265,58 +327,14 @@
 <section id="historia">
   <div class="sec-label">Um pouco da minha história</div>
   <h2>Michael Viana</h2>
-  <div class="history">
-    <div class="txt">
-      <p>Atuo em Marketing Estratégico na COGNY, com foco na região do Cerrado, acompanhando de perto o avanço dos bioinsumos no maior mercado de biológicos do mundo.</p>
-      <p>O trabalho me coloca no meio de uma conversa que ainda está se formando: entre a indústria que desenvolve as tecnologias, o produtor que precisa de resultado no talhão e um ambiente regulatório em construção. É desse ponto de vista que escrevo aqui.</p>
-      <p>O AGROMV Semanal nasceu da vontade de organizar publicamente essa leitura, em vez de deixá-la restrita a apresentações internas e conversas de corredor.</p>
-    </div>
-    <img src="assets/author.jpg" alt="Michael Viana">
-  </div>
-</section>
-
-<section id="tendencias">
-  <div class="sec-label">Tendências do biológico</div>
-  <h2>O que está em movimento no setor</h2>
-  <p>Os vetores que venho acompanhando e que devem pautar as próximas edições:</p>
-
-  <div class="trend">
-    <span class="idx">01</span>
-    <div>
-      <h3>Adoção deixou de ser o gargalo</h3>
-      <p>Com 107 milhões de hectares já cobertos por biodefensivos, a discussão migrou de convencer o produtor a testar para ampliar a participação do biológico dentro do receituário de cada talhão.</p>
-    </div>
-  </div>
-
-  <div class="trend">
-    <span class="idx">02</span>
-    <div>
-      <h3>Marco regulatório como fator de risco</h3>
-      <p>A ausência de regras próprias e consolidadas para bioinsumos aparece hoje como o principal risco à consolidação do setor, afastando investimento e dificultando a fiscalização.</p>
-    </div>
-  </div>
-
-  <div class="trend">
-    <span class="idx">03</span>
-    <div>
-      <h3>Consolidação e movimento de capital</h3>
-      <p>Grandes players globais de química agrícola vêm redirecionando orçamento de P&amp;D para fusões e aquisições no segmento de biológicos, reorganizando o mapa competitivo.</p>
-    </div>
-  </div>
-
-  <div class="trend">
-    <span class="idx">04</span>
-    <div>
-      <h3>Evidência técnica como argumento comercial</h3>
-      <p>A régua de decisão do produtor combina performance agronômica comprovada com previsibilidade de fornecimento. Traduzir dado de eficácia em linguagem clara virou diferencial de venda.</p>
-    </div>
-  </div>
+  <p>Atuo em Marketing Estratégico na COGNY, com foco na região do Cerrado, acompanhando de perto o avanço dos bioinsumos no maior mercado de biológicos do mundo.</p>
+  <p>O AGROMV Semanal nasceu da vontade de organizar publicamente essa leitura, em vez de deixá-la restrita a apresentações internas e conversas de corredor.</p>
 </section>
 
 <div class="editions-wrap">
-  <section id="edicoes">
-    <div class="sec-label">Edições</div>
-    <h2>Todas as análises publicadas</h2>
+  <section id="publicacoes">
+    <div class="sec-label">Publicações</div>
+    <h2>Últimas análises publicadas</h2>
 
     <a class="ed-card" href="/edicoes/01-bioinsumos-regulacao/">
       <div class="ed-meta">
@@ -331,6 +349,56 @@
   </section>
 </div>
 
+<section id="relatorios">
+  <div class="sec-label">Relatórios</div>
+  <h2>Materiais aprofundados</h2>
+  <p>Além das análises semanais, esta seção vai reunir relatórios completos em PDF, com recortes por cultura, região e categoria de bioinsumo.</p>
+  <div class="soon-box">
+    <span class="tag">Em breve</span>
+    <p>Os primeiros relatórios estão em produção. Para ser avisado quando forem publicados, entre em contato por qualquer um dos canais abaixo.</p>
+  </div>
+</section>
+
+<section id="contato">
+  <div class="sec-label">Contato</div>
+  <h2>Vamos conversar</h2>
+  <p>Dúvidas sobre alguma análise, sugestões de pauta ou interesse nos relatórios: escolha o canal que preferir.</p>
+
+  <div class="contact-grid">
+    <a class="contact-card" href="https://wa.me/qr/6EAR6CM5LRXLA1" target="_blank" rel="noopener">
+      <span class="ico"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M17.47 14.38c-.3-.15-1.76-.87-2.03-.97-.27-.1-.47-.15-.67.15-.2.3-.77.97-.94 1.17-.17.2-.35.22-.65.07-.3-.15-1.25-.46-2.39-1.47-.88-.79-1.48-1.76-1.65-2.06-.17-.3-.02-.46.13-.61.13-.13.3-.35.45-.52.15-.17.2-.3.3-.5.1-.2.05-.37-.02-.52-.07-.15-.67-1.61-.92-2.21-.24-.58-.49-.5-.67-.51h-.57c-.2 0-.52.07-.79.37-.27.3-1.04 1.02-1.04 2.48s1.07 2.88 1.22 3.08c.15.2 2.1 3.2 5.08 4.49.71.31 1.26.49 1.69.63.71.23 1.36.19 1.87.12.57-.09 1.76-.72 2.01-1.41.25-.7.25-1.29.17-1.42-.07-.13-.27-.2-.57-.35zM12.04 21.5h-.01a9.44 9.44 0 0 1-4.81-1.32l-.35-.2-3.58.94.96-3.49-.23-.36a9.42 9.42 0 0 1-1.44-5.03c0-5.2 4.24-9.44 9.46-9.44 2.53 0 4.9.99 6.68 2.77a9.38 9.38 0 0 1 2.77 6.68c0 5.2-4.24 9.45-9.45 9.45zM20.5 3.49A11.82 11.82 0 0 0 12.04 0C5.46 0 .1 5.35.1 11.93c0 2.1.55 4.15 1.6 5.96L0 24l6.25-1.64a11.9 11.9 0 0 0 5.79 1.47h.01c6.58 0 11.93-5.35 11.94-11.93a11.86 11.86 0 0 0-3.49-8.41z"/></svg></span>
+      <span class="txt">
+        <span class="t">WhatsApp</span>
+        <span class="h">Mensagem direta</span>
+      </span>
+    </a>
+
+    <a class="contact-card" href="https://www.linkedin.com/in/michael-viana-85a1b2169" target="_blank" rel="noopener">
+      <span class="ico"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M20.45 20.45h-3.56v-5.57c0-1.33-.02-3.04-1.85-3.04-1.85 0-2.14 1.45-2.14 2.94v5.67H9.35V9h3.41v1.56h.05c.48-.9 1.63-1.85 3.36-1.85 3.59 0 4.25 2.36 4.25 5.44v6.3zM5.34 7.43a2.06 2.06 0 1 1 0-4.13 2.06 2.06 0 0 1 0 4.13zM7.12 20.45H3.55V9h3.57v11.45zM22.22 0H1.77C.79 0 0 .77 0 1.72v20.55C0 23.23.79 24 1.77 24h20.45c.98 0 1.78-.77 1.78-1.73V1.72C24 .77 23.2 0 22.22 0z"/></svg></span>
+      <span class="txt">
+        <span class="t">LinkedIn</span>
+        <span class="h">michael-viana</span>
+      </span>
+    </a>
+
+    <a class="contact-card" href="https://www.instagram.com/viana_michael" target="_blank" rel="noopener">
+      <span class="ico"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2.16c3.2 0 3.58.01 4.85.07 1.17.05 1.8.25 2.23.41.56.22.96.48 1.38.9.42.42.68.82.9 1.38.16.42.36 1.06.41 2.23.06 1.27.07 1.65.07 4.85s-.01 3.58-.07 4.85c-.05 1.17-.25 1.8-.41 2.23-.22.56-.48.96-.9 1.38-.42.42-.82.68-1.38.9-.42.16-1.06.36-2.23.41-1.27.06-1.65.07-4.85.07s-3.58-.01-4.85-.07c-1.17-.05-1.8-.25-2.23-.41-.56-.22-.96-.48-1.38-.9-.42-.42-.68-.82-.9-1.38-.16-.42-.36-1.06-.41-2.23C2.17 15.58 2.16 15.2 2.16 12s.01-3.58.07-4.85c.05-1.17.25-1.8.41-2.23.22-.56.48-.96.9-1.38.42-.42.82-.68 1.38-.9.42-.16 1.06-.36 2.23-.41C8.42 2.17 8.8 2.16 12 2.16zM12 0C8.74 0 8.33.01 7.05.07c-1.28.06-2.15.26-2.91.56-.79.3-1.46.72-2.13 1.38A5.9 5.9 0 0 0 .63 4.14c-.3.76-.5 1.63-.56 2.91C.01 8.33 0 8.74 0 12s.01 3.67.07 4.95c.06 1.28.26 2.15.56 2.91.3.79.72 1.46 1.38 2.13a5.9 5.9 0 0 0 2.13 1.38c.76.3 1.63.5 2.91.56C8.33 23.99 8.74 24 12 24s3.67-.01 4.95-.07c1.28-.06 2.15-.26 2.91-.56a5.9 5.9 0 0 0 2.13-1.38 5.9 5.9 0 0 0 1.38-2.13c.3-.76.5-1.63.56-2.91.06-1.28.07-1.69.07-4.95s-.01-3.67-.07-4.95c-.06-1.28-.26-2.15-.56-2.91a5.9 5.9 0 0 0-1.38-2.13A5.9 5.9 0 0 0 19.86.63c-.76-.3-1.63-.5-2.91-.56C15.67.01 15.26 0 12 0zm0 5.84a6.16 6.16 0 1 0 0 12.32 6.16 6.16 0 0 0 0-12.32zm0 10.16a4 4 0 1 1 0-8 4 4 0 0 1 0 8zm7.85-10.4a1.44 1.44 0 1 1-2.88 0 1.44 1.44 0 0 1 2.88 0z"/></svg></span>
+      <span class="txt">
+        <span class="t">Instagram</span>
+        <span class="h">@viana_michael</span>
+      </span>
+    </a>
+
+    <a class="contact-card" href="https://youtube.com/@agr.michaelviana" target="_blank" rel="noopener">
+      <span class="ico"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M23.5 6.19a3.02 3.02 0 0 0-2.12-2.14C19.5 3.55 12 3.55 12 3.55s-7.5 0-9.38.5A3.02 3.02 0 0 0 .5 6.19C0 8.08 0 12 0 12s0 3.92.5 5.81a3.02 3.02 0 0 0 2.12 2.14c1.88.5 9.38.5 9.38.5s7.5 0 9.38-.5a3.02 3.02 0 0 0 2.12-2.14C24 15.92 24 12 24 12s0-3.92-.5-5.81zM9.55 15.57V8.43L15.82 12l-6.27 3.57z"/></svg></span>
+      <span class="txt">
+        <span class="t">YouTube</span>
+        <span class="h">@agr.michaelviana</span>
+      </span>
+    </a>
+  </div>
+</section>
+
 <footer>
   <div class="foot">
     <img src="assets/author.jpg" alt="Michael Viana">
@@ -343,7 +411,6 @@
 
   <div class="social">
     <div class="divider"></div>
-    <div class="label">Vamos conversar</div>
     <div class="icons">
       <a href="https://www.linkedin.com/in/michael-viana-85a1b2169" target="_blank" rel="noopener" aria-label="LinkedIn" title="LinkedIn">
         <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M20.45 20.45h-3.56v-5.57c0-1.33-.02-3.04-1.85-3.04-1.85 0-2.14 1.45-2.14 2.94v5.67H9.35V9h3.41v1.56h.05c.48-.9 1.63-1.85 3.36-1.85 3.59 0 4.25 2.36 4.25 5.44v6.3zM5.34 7.43a2.06 2.06 0 1 1 0-4.13 2.06 2.06 0 0 1 0 4.13zM7.12 20.45H3.55V9h3.57v11.45zM22.22 0H1.77C.79 0 0 .77 0 1.72v20.55C0 23.23.79 24 1.77 24h20.45c.98 0 1.78-.77 1.78-1.73V1.72C24 .77 23.2 0 22.22 0z"/></svg>
@@ -360,6 +427,41 @@
     </div>
   </div>
 </footer>
+
+<script>
+(function(){
+  var body = document.body;
+  var toggle = document.getElementById('navToggle');
+  var overlay = document.getElementById('navOverlay');
+  var closeBtn = document.getElementById('navClose');
+  var drawer = document.getElementById('navDrawer');
+
+  function open(){
+    body.classList.add('nav-open');
+    toggle.setAttribute('aria-expanded','true');
+    drawer.setAttribute('aria-hidden','false');
+    toggle.setAttribute('aria-label','Fechar menu');
+  }
+  function close(){
+    body.classList.remove('nav-open');
+    toggle.setAttribute('aria-expanded','false');
+    drawer.setAttribute('aria-hidden','true');
+    toggle.setAttribute('aria-label','Abrir menu');
+  }
+
+  toggle.addEventListener('click', function(){
+    body.classList.contains('nav-open') ? close() : open();
+  });
+  overlay.addEventListener('click', close);
+  closeBtn.addEventListener('click', close);
+  drawer.querySelectorAll('nav a').forEach(function(a){
+    a.addEventListener('click', close);
+  });
+  document.addEventListener('keydown', function(e){
+    if(e.key === 'Escape' && body.classList.contains('nav-open')) close();
+  });
+})();
+</script>
 
 </body>
 </html>
