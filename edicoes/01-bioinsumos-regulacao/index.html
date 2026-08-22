@@ -384,6 +384,51 @@
     .brand .sub{display:none;}
   }
   @media (prefers-reduced-motion: reduce){ html{scroll-behavior:auto;} }
+
+  body.nav-open{overflow:hidden;}
+  .nav-toggle{
+    display:block; width:42px; height:42px; padding:9px;
+    background:none; border:none; cursor:pointer; margin-right:-9px;
+  }
+  .nav-toggle span{
+    display:block; width:24px; height:2px; margin:5px 0;
+    background:#EAF1F7; border-radius:2px;
+    transition:transform .22s ease, opacity .18s ease;
+  }
+  body.nav-open .nav-toggle span:nth-child(1){transform:translateY(7px) rotate(45deg);}
+  body.nav-open .nav-toggle span:nth-child(2){opacity:0;}
+  body.nav-open .nav-toggle span:nth-child(3){transform:translateY(-7px) rotate(-45deg);}
+  .nav-overlay{
+    position:fixed; inset:0; background:rgba(14,35,56,0.55);
+    opacity:0; visibility:hidden; transition:opacity .22s ease, visibility .22s; z-index:70;
+  }
+  body.nav-open .nav-overlay{opacity:1; visibility:visible;}
+  .nav-drawer{
+    position:fixed; top:0; right:0; height:100%; width:300px; max-width:84vw;
+    background:#0E2338; z-index:80; padding:26px 28px;
+    transform:translateX(100%); transition:transform .26s cubic-bezier(.4,0,.2,1);
+    display:flex; flex-direction:column;
+  }
+  body.nav-open .nav-drawer{transform:translateX(0);}
+  .nav-drawer .head{
+    display:flex; justify-content:space-between; align-items:center;
+    padding-bottom:22px; border-bottom:1px solid #2A4560; margin-bottom:10px;
+  }
+  .nav-drawer .head .t{
+    font-family:'Archivo',sans-serif; font-size:11px; font-weight:600;
+    letter-spacing:0.14em; text-transform:uppercase; color:#8FB6D4;
+  }
+  .nav-close{background:none; border:none; color:#EAF1F7; font-size:26px; line-height:1; cursor:pointer; padding:0 4px;}
+  .nav-drawer nav a{
+    display:block; padding:15px 0; border-bottom:1px solid #1E3A55;
+    font-family:'Archivo',sans-serif; font-weight:600; font-size:17px;
+    color:#EAF1F7; text-decoration:none;
+  }
+  .nav-drawer nav a span{
+    display:block; font-family:'Inter',sans-serif; font-weight:400;
+    font-size:12.5px; color:#8FB6D4; margin-top:3px;
+  }
+  .nav-drawer .foot-note{margin-top:auto; font-size:12px; color:#6E8CA8; line-height:1.6;}
 </style>
 </head>
 <body>
@@ -394,10 +439,25 @@
       <span class="mark">AGROMV</span>
       <span class="sub">Semanal</span>
     </a>
-    <span class="issue">Ed. 01 · Ago 2026</span>
+    <button class="nav-toggle" id="navToggle" aria-label="Abrir menu" aria-expanded="false" aria-controls="navDrawer"><span></span><span></span><span></span></button>
   </div>
 </header>
 <div class="rule-accent"></div>
+
+<div class="nav-overlay" id="navOverlay"></div>
+<aside class="nav-drawer" id="navDrawer" aria-hidden="true">
+  <div class="head">
+    <span class="t">Navegação</span>
+    <button class="nav-close" id="navClose" aria-label="Fechar menu">&times;</button>
+  </div>
+  <nav>
+    <a href="/">Home<span>Início</span></a>
+    <a href="/#publicacoes">Publicações<span>Análises semanais</span></a>
+    <a href="/#relatorios">Relatórios<span>Materiais aprofundados</span></a>
+    <a href="/#contato">Contato<span>Redes e acesso direto</span></a>
+  </nav>
+  <div class="foot-note">AGROMV Semanal<br>Michael Viana · COGNY</div>
+</aside>
 
 <div class="hero-stage">
   <img class="hero-portrait" src="../../assets/hero-portrait.png" alt="" aria-hidden="true">
@@ -485,5 +545,17 @@
   </p>
 </footer>
 
+<script>
+(function(){
+  var body=document.body,t=document.getElementById('navToggle'),o=document.getElementById('navOverlay'),
+      c=document.getElementById('navClose'),d=document.getElementById('navDrawer');
+  function open(){body.classList.add('nav-open');t.setAttribute('aria-expanded','true');d.setAttribute('aria-hidden','false');}
+  function close(){body.classList.remove('nav-open');t.setAttribute('aria-expanded','false');d.setAttribute('aria-hidden','true');}
+  t.addEventListener('click',function(){body.classList.contains('nav-open')?close():open();});
+  o.addEventListener('click',close); c.addEventListener('click',close);
+  d.querySelectorAll('nav a').forEach(function(a){a.addEventListener('click',close);});
+  document.addEventListener('keydown',function(e){if(e.key==='Escape')close();});
+})();
+</script>
 </body>
 </html>
