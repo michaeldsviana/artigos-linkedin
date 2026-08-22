@@ -94,13 +94,13 @@
   }
   .hero-portrait{
     position:absolute;
-    right:calc(50% - 560px);
+    right:calc(50% - 580px);
     top:0;
-    width:430px;
+    width:470px;
     pointer-events:none;
     user-select:none;
     z-index:0;
-    opacity:0.95;
+    opacity:1;
   }
   .hero{
     position:relative;
@@ -117,19 +117,28 @@
 
   @media (max-width:1180px){
     .hero-portrait{
-      right:-70px;
-      width:360px;
-      opacity:0.5;
+      right:-60px;
+      width:390px;
+      opacity:0.85;
     }
     .hero h1{max-width:22ch;}
     .hero .dek{max-width:34ch;}
   }
   @media (max-width:820px){
-    .hero-portrait{
-      right:-110px;
-      width:290px;
-      opacity:0.14;
+    .hero-stage{
+      display:flex;
+      flex-direction:column;
     }
+    .hero-portrait{
+      position:relative;
+      right:auto;
+      width:78%;
+      max-width:330px;
+      margin:14px auto -10px;
+      opacity:1;
+      align-self:center;
+    }
+    .hero{padding-top:20px;}
     .hero h1, .hero .dek{max-width:none;}
   }
   .kicker{
@@ -166,17 +175,10 @@
     display:flex;
     align-items:center;
     gap:14px;
-    padding:18px 0;
+    padding:16px 0;
     border-top:1px solid var(--line);
     border-bottom:1px solid var(--line);
     margin-bottom:36px;
-  }
-  .byline img{
-    width:50px; height:50px;
-    border-radius:100%;
-    object-fit:cover;
-    object-position:center center;
-    flex-shrink:0;
   }
   .byline .name{
     font-family:'Archivo', sans-serif;
@@ -391,7 +393,7 @@
       <span class="mark">AGROMV</span>
       <span class="sub">Semanal</span>
     </span>
-    <span class="issue">Ed. 34 · Ago 2026</span>
+    <span class="issue">Ed. 01 · Ago 2026</span>
   </div>
 </header>
 <div class="rule-accent"></div>
@@ -404,7 +406,6 @@
   <p class="dek">O Brasil já é o maior mercado de bioinsumos do mundo e ainda assim representa uma fração pequena dos gastos totais com defensivos. Os números da safra 2025/26 e o debate que tomou o III Fórum Bioinsumos no Agro ajudam a entender por quê.</p>
 
   <div class="byline">
-    <img src="assets/author.jpg" alt="Michael Viana">
     <div>
       <div class="name">Michael Viana</div>
       <div class="role">Marketing Estratégico Cerrado · COGNY</div>
