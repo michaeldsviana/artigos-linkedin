@@ -1,7 +1,9 @@
 {
-  "atualizado_em": "29/08/2026 às 18:02",
-  "fontes": "Banco Central do Brasil · IBGE (LSPA) · Banco Mundial, Commodity Markets (CC BY 4.0)",
-  "falhas": [],
+  "atualizado_em": "29/08/2026 às 18:32",
+  "fontes": "CONAB (preços das culturas) · Banco Central do Brasil (câmbio) · IBGE/LSPA (safra) · Banco Mundial, Commodity Markets, CC BY 4.0 (fertilizantes)",
+  "falhas": [
+    "precos/culturas_conab"
+  ],
   "grupos": {
     "precos": {
       "dolar": {
@@ -18,7 +20,7 @@
         "detalhe": "Média de 07/2026 · Banco Mundial",
         "variacao": "-1,1%",
         "sentido": "baixa",
-        "atualizado": true
+        "atualizado": false
       },
       "Milho": {
         "rotulo": "Milho",
@@ -26,7 +28,7 @@
         "detalhe": "Média de 07/2026 · Banco Mundial",
         "variacao": "+8,3%",
         "sentido": "alta",
-        "atualizado": true
+        "atualizado": false
       },
       "Algodão": {
         "rotulo": "Algodão",
@@ -34,30 +36,42 @@
         "detalhe": "Média de 07/2026 · Banco Mundial",
         "variacao": "+3,2%",
         "sentido": "alta",
-        "atualizado": true
+        "atualizado": false
       },
       "Ureia": {
         "rotulo": "Ureia",
-        "valor": "US$ 400,00",
-        "detalhe": "Média de 07/2026 · Banco Mundial",
+        "valor": "US$ 400,00/t",
+        "detalhe": "Por tonelada · média de 07/2026 · Banco Mundial",
+        "unidade": "mt",
         "variacao": "-11,7%",
         "sentido": "baixa",
         "atualizado": true
       },
       "DAP": {
         "rotulo": "DAP",
-        "valor": "US$ 781,30",
-        "detalhe": "Média de 07/2026 · Banco Mundial",
+        "valor": "US$ 781,30/t",
+        "detalhe": "Por tonelada · média de 07/2026 · Banco Mundial",
+        "unidade": "mt",
         "variacao": "-0,3%",
         "sentido": "baixa",
         "atualizado": true
       },
       "Fosfato (rocha)": {
         "rotulo": "Fosfato (rocha)",
-        "valor": "US$ 170,00",
-        "detalhe": "Média de 07/2026 · Banco Mundial",
+        "valor": "US$ 170,00/t",
+        "detalhe": "Por tonelada · média de 07/2026 · Banco Mundial",
+        "unidade": "mt",
         "variacao": "+8,3%",
         "sentido": "alta",
+        "atualizado": true
+      },
+      "Potássio (KCl)": {
+        "rotulo": "Potássio (KCl)",
+        "valor": "US$ 396,50/t",
+        "detalhe": "Por tonelada · média de 07/2026 · Banco Mundial",
+        "unidade": "mt",
+        "variacao": "-1,5%",
+        "sentido": "baixa",
         "atualizado": true
       }
     },
