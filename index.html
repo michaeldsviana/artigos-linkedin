@@ -240,6 +240,42 @@
     color:var(--ink); margin:0 0 18px; max-width:64ch;
   }
 
+
+  /* ---------- PAINEL DE MERCADO ---------- */
+  .painel-wrap{background:var(--panel); border-top:1px solid var(--line); border-bottom:1px solid var(--line);}
+  .painel-wrap section{border-top:none;}
+  .painel-topo{display:flex; align-items:baseline; flex-wrap:wrap; margin-bottom:16px;}
+  .painel-topo .quando{
+    margin-left:auto; font-size:12.5px; color:var(--grey);
+  }
+  .painel-grid{
+    display:grid; grid-template-columns:repeat(auto-fit, minmax(160px,1fr));
+    gap:1px; background:var(--line); border:1px solid var(--line); border-radius:4px; overflow:hidden;
+  }
+  .ind{background:#FFF; padding:18px 18px 16px;}
+  .ind .r{
+    font-size:11.5px; font-weight:600; letter-spacing:0.05em; text-transform:uppercase;
+    color:var(--ink-dim); margin-bottom:8px;
+  }
+  .ind .v{
+    font-family:'Archivo',sans-serif; font-weight:700; font-size:23px;
+    color:var(--navy); line-height:1.1; letter-spacing:-0.01em;
+  }
+  .ind .d{font-size:12px; color:var(--grey); margin-top:6px; line-height:1.45;}
+  .ind .var{
+    display:inline-block; font-family:'Archivo',sans-serif; font-weight:600;
+    font-size:12.5px; margin-top:7px; padding:2px 8px; border-radius:100px;
+  }
+  .ind .var.alta{color:#8A3B2E; background:#FBEDEA;}
+  .ind .var.baixa{color:var(--green); background:#ECF5E9;}
+  .ind .var.estavel{color:var(--ink-dim); background:var(--panel);}
+  .ind.velho .v{color:var(--ink-dim);}
+  .ind .aviso{font-size:11px; color:#A07A3B; margin-top:6px;}
+  .painel-fonte{font-size:12px; color:var(--grey); margin-top:14px; line-height:1.6;}
+  .painel-carregando{
+    font-size:14px; color:var(--grey); padding:22px 0;
+  }
+
   /* ---------- PUBLICAÇÕES ---------- */
   .editions-wrap{background:var(--panel); border-top:1px solid var(--line);}
   .editions-wrap section{border-top:none;}
@@ -385,6 +421,7 @@
   </div>
   <nav>
     <a href="#topo">Home<span>Início</span></a>
+    <a href="#mercado">Mercado<span>Indicadores do dia</span></a>
     <a href="#publicacoes">Publicações<span>Análises semanais</span></a>
     <a href="#relatorios">Relatórios<span>Materiais aprofundados</span></a>
     <a href="#contato">Contato<span>Redes e acesso direto</span></a>
@@ -444,6 +481,23 @@
   <p>Atuo em Marketing Estratégico na COGNY, com foco na região do Cerrado, acompanhando de perto o avanço dos bioinsumos no maior mercado de biológicos do mundo.</p>
   <p>O AGROMV Semanal nasceu da vontade de organizar publicamente essa leitura, em vez de deixá-la restrita a apresentações internas e conversas de corredor.</p>
 </section>
+
+
+<div class="painel-wrap">
+  <section id="mercado">
+    <div class="painel-topo">
+      <div>
+        <div class="sec-label reveal">Painel de mercado</div>
+        <h2 class="reveal d1">Indicadores de hoje</h2>
+      </div>
+      <span class="quando reveal d1" id="painelQuando"></span>
+    </div>
+
+    <div id="painelGrid" class="painel-carregando">Carregando indicadores...</div>
+
+    <p class="painel-fonte reveal d2" id="painelFonte"></p>
+  </section>
+</div>
 
 <div class="editions-wrap">
   <section id="publicacoes">
@@ -633,6 +687,66 @@
   } catch(e){
     mostrarTodos();
   }
+})();
+</script>
+
+<script>
+(function(){
+  var grid  = document.getElementById('painelGrid');
+  var quando= document.getElementById('painelQuando');
+  var fonte = document.getElementById('painelFonte');
+  if(!grid) return;
+
+  function esc(t){
+    return String(t).replace(/[&<>"]/g, function(c){
+      return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c];
+    });
+  }
+
+  function desenhar(d){
+    var itens = d.indicadores || {};
+    var chaves = Object.keys(itens);
+    if(!chaves.length){
+      grid.className = 'painel-carregando';
+      grid.textContent = 'Indicadores serão exibidos após a primeira atualização automática.';
+      return;
+    }
+    var html = '';
+    for (var i=0; i<chaves.length; i++){
+      var it = itens[chaves[i]];
+      html += '<div class="ind' + (it.atualizado === false ? ' velho' : '') + '">';
+      html += '<div class="r">' + esc(it.rotulo) + '</div>';
+      html += '<div class="v">' + esc(it.valor) + '</div>';
+      if (it.variacao){
+        html += '<span class="var ' + esc(it.sentido || 'estavel') + '">' + esc(it.variacao) + '</span>';
+      }
+      if (it.detalhe){ html += '<div class="d">' + esc(it.detalhe) + '</div>'; }
+      if (it.atualizado === false){
+        html += '<div class="aviso">Fonte indisponível na última consulta</div>';
+      }
+      html += '</div>';
+    }
+    grid.className = 'painel-grid';
+    grid.innerHTML = html;
+
+    if (quando && d.atualizado_em){ quando.textContent = 'Atualizado em ' + d.atualizado_em; }
+    if (fonte && d.fontes){
+      fonte.textContent = 'Fontes: ' + d.fontes + '. Atualização automática diária, às 10h.';
+    }
+  }
+
+  var req = new XMLHttpRequest();
+  req.open('GET', 'data/mercado.json?v=' + Date.now(), true);
+  req.onreadystatechange = function(){
+    if (req.readyState !== 4) return;
+    if (req.status >= 200 && req.status < 300){
+      try { desenhar(JSON.parse(req.responseText)); }
+      catch(e){ grid.textContent = 'Não foi possível carregar os indicadores agora.'; }
+    } else {
+      grid.textContent = 'Não foi possível carregar os indicadores agora.';
+    }
+  };
+  req.send();
 })();
 </script>
 </body>
