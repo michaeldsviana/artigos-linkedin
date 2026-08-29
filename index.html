@@ -103,41 +103,41 @@
     margin-top:auto; font-size:12px; color:#6E8CA8; line-height:1.6;
   }
 
-  /* ---------- HERO CLARO ---------- */
+  /* ---------- HERO TECH ---------- */
   .hero-stage{
-    position:relative; background:#FFFFFF;
-    border-bottom:1px solid var(--line);
+    position:relative; overflow:hidden;
+    background:
+      radial-gradient(120% 90% at 78% 8%, rgba(99,170,70,0.22) 0%, rgba(99,170,70,0) 55%),
+      radial-gradient(100% 80% at 12% 92%, rgba(30,111,168,0.30) 0%, rgba(30,111,168,0) 60%),
+      linear-gradient(160deg, #0B1B2C 0%, #0E2338 55%, #10293D 100%);
+  }
+  .hero-stage::before{
+    content:""; position:absolute; inset:0;
+    background-image:
+      linear-gradient(rgba(255,255,255,0.045) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(255,255,255,0.045) 1px, transparent 1px);
+    background-size:64px 64px;
+    -webkit-mask-image:radial-gradient(105% 85% at 50% 20%, #000 35%, transparent 78%);
+    mask-image:radial-gradient(105% 85% at 50% 20%, #000 35%, transparent 78%);
+    pointer-events:none;
   }
   .hero{
-    position:relative; max-width:var(--maxw); margin:0 auto;
-    padding:62px 24px 44px; background:#FFFFFF;
-  }
-  /* rótulo com degradê */
-  .hero .tagline{
-    display:inline-flex; align-items:center;
-    font-size:11.5px; font-weight:600; letter-spacing:0.1em; text-transform:uppercase;
-    color:#FFFFFF;
-    background:linear-gradient(96deg, var(--green-brand) 0%, #2E8F6E 52%, var(--blue) 100%);
-    border-radius:100px; padding:8px 17px; margin-bottom:24px;
-    box-shadow:0 2px 10px rgba(30,111,168,0.18);
-  }
-  .hero .tagline .dot{
-    width:6px; height:6px; border-radius:100%; background:rgba(255,255,255,0.9);
-    display:inline-block; margin-right:9px;
+    position:relative; z-index:2; max-width:var(--maxw); margin:0 auto;
+    padding:72px 24px 40px; background:transparent;
   }
   .hero h1{
     font-family:'Archivo',sans-serif; font-weight:700;
-    font-size:clamp(32px,5vw,48px); line-height:1.10; letter-spacing:-0.022em;
-    color:var(--navy); margin:0 0 20px; max-width:19ch;
+    font-size:clamp(32px,5vw,50px); line-height:1.10; letter-spacing:-0.022em;
+    color:#FFFFFF; margin:0 0 20px; max-width:18ch;
   }
   .hero h1 em{
     font-style:normal;
-    background:linear-gradient(94deg, var(--green) 0%, var(--green-brand) 55%, var(--blue) 100%);
+    background:linear-gradient(92deg, var(--green-brand) 0%, #8ED26B 100%);
     -webkit-background-clip:text; background-clip:text; color:transparent;
   }
   .hero .lead{
     font-family:'Source Serif 4',serif; font-size:19px; line-height:1.62;
-    color:var(--ink-dim); max-width:46ch; margin:0 0 30px;
+    color:#B9CBDC; max-width:46ch; margin:0 0 30px;
   }
   .hero-actions{display:flex; gap:12px; flex-wrap:wrap; margin-bottom:34px;}
   .btn{
@@ -149,44 +149,44 @@
   .btn .arrow{margin-left:9px; font-size:16px; line-height:1;}
   .btn-primary{
     background:linear-gradient(96deg, var(--green-brand) 0%, #3E9E62 100%);
-    color:#FFFFFF; border:none;
-    box-shadow:0 3px 12px rgba(62,124,67,0.26);
+    color:#0B1B2C; border:none;
   }
-  .btn-ghost{background:#FFF; color:var(--navy); border:1px solid var(--line);}
-  .btn-ghost:hover{border-color:var(--navy);}
+  .btn-ghost{background:transparent; color:#E4EDF5; border:1px solid rgba(255,255,255,0.24);}
+  .btn-ghost:hover{border-color:rgba(255,255,255,0.55); background:rgba(255,255,255,0.05);}
   .hero-meta{
     display:flex; align-items:center; padding-top:24px;
-    border-top:1px solid var(--line); font-size:13.5px; color:var(--grey);
+    border-top:1px solid rgba(255,255,255,0.12); font-size:13.5px; color:#8FA6BC;
   }
   .hero-meta img{
-    width:38px; height:38px; border-radius:100%; object-fit:cover;
-    object-position:center; margin-right:12px;
+    width:38px; height:38px; border-radius:100%; object-fit:cover; object-position:center;
+    border:1px solid rgba(255,255,255,0.18); margin-right:12px;
   }
-  .hero-meta strong{color:var(--navy); font-weight:600; display:block; font-size:14px;}
+  .hero-meta strong{color:#FFFFFF; font-weight:600; display:block; font-size:14px;}
 
-  /* foto em cartão */
+  /* foto em cartão sobre o fundo escuro */
   .hero-photo{
-    max-width:var(--maxw); margin:0 auto; padding:0 24px 56px; background:#FFFFFF;
+    position:relative; z-index:2;
+    max-width:var(--maxw); margin:0 auto; padding:0 24px 60px;
   }
   .hero-photo img{
     width:100%; height:auto; border-radius:16px;
-    box-shadow:0 14px 40px rgba(14,35,56,0.14);
+    box-shadow:0 18px 46px rgba(0,0,0,0.38);
+    border:1px solid rgba(255,255,255,0.10);
   }
 
-  /* faixa de indicadores clara */
-  .kpi-strip{background:var(--panel); border-top:1px solid var(--line); border-bottom:1px solid var(--line);}
+  .kpi-strip{background:#0A1727; border-top:1px solid rgba(255,255,255,0.08);}
   .kpi-inner{
     max-width:var(--maxw); margin:0 auto; padding:0 24px;
     display:grid; grid-template-columns:repeat(3,1fr);
   }
-  .kpi{padding:22px 18px; border-right:1px solid var(--line);}
+  .kpi{padding:22px 18px; border-right:1px solid rgba(255,255,255,0.08);}
   .kpi:first-child{padding-left:0;}
   .kpi:last-child{border-right:none;}
   .kpi .v{
     font-family:'Archivo',sans-serif; font-weight:700; font-size:23px;
-    color:var(--navy); line-height:1.1; letter-spacing:-0.01em;
+    color:var(--green-brand); line-height:1.1; letter-spacing:-0.01em;
   }
-  .kpi .l{font-size:12.5px; color:var(--ink-dim); margin-top:5px; line-height:1.45;}
+  .kpi .l{font-size:12.5px; color:#8FA6BC; margin-top:5px; line-height:1.45;}
 
   /* ---------- REVEAL AO ROLAR ---------- */
   .reveal{
@@ -200,8 +200,6 @@
 
   .ed-card{transition:border-color .18s ease, transform .18s ease, box-shadow .18s ease;}
   .ed-card:hover{border-color:var(--green-brand); transform:translateY(-3px); box-shadow:0 10px 28px rgba(14,35,56,0.10);}
-  .pillar{transition:transform .18s ease;}
-  .pillar:hover{transform:translateY(-3px);}
   .contact-card{transition:border-color .16s ease, background .16s ease, transform .16s ease;}
   .contact-card:hover{transform:translateY(-2px);}
 
@@ -220,18 +218,6 @@
     font-family:'Source Serif 4',serif; font-size:18px; line-height:1.72;
     color:var(--ink); margin:0 0 18px; max-width:64ch;
   }
-
-  .pillars{
-    display:grid; grid-template-columns:repeat(3,1fr); gap:1px;
-    background:var(--line); border:1px solid var(--line); margin-top:28px;
-  }
-  .pillar{background:#FFF; padding:22px 20px;}
-  .pillar .n{
-    font-family:'Archivo',sans-serif; font-weight:700; font-size:13px;
-    color:var(--blue); letter-spacing:0.08em; display:block; margin-bottom:8px;
-  }
-  .pillar h3{font-family:'Archivo',sans-serif; font-weight:600; font-size:16px; color:var(--navy); margin:0 0 6px;}
-  .pillar p{font-family:'Inter',sans-serif; font-size:14px; line-height:1.6; color:var(--ink-dim); margin:0;}
 
   /* ---------- PUBLICAÇÕES ---------- */
   .editions-wrap{background:var(--panel); border-top:1px solid var(--line);}
@@ -320,7 +306,6 @@
     .hero h1{max-width:none;}
   }
   @media (max-width:760px){
-    .pillars{grid-template-columns:1fr;}
     .contact-grid{grid-template-columns:1fr;}
     .kpi-inner{grid-template-columns:1fr;}
     .kpi{border-right:none; border-bottom:1px solid rgba(255,255,255,0.08); padding-left:0;}
@@ -337,7 +322,7 @@
     html{scroll-behavior:auto;}
     .nav-drawer, .nav-overlay, .nav-toggle span{transition:none;}
     .reveal{opacity:1 !important; transform:none !important; transition:none;}
-    .btn:hover, .ed-card:hover, .pillar:hover, .contact-card:hover{transform:none;}
+    .btn:hover, .ed-card:hover, .contact-card:hover{transform:none;}
   }
   .legal-bar{
     border-top:1px solid rgba(255,255,255,0.10);
@@ -387,7 +372,6 @@
 
 <div class="hero-stage" id="topo">
   <div class="hero">
-    <span class="tagline reveal"><span class="dot"></span>Inteligência de mercado · Bioinsumos</span>
     <h1 class="reveal d1">Dados e leitura técnica do mercado de <em>biológicos</em>, toda semana</h1>
     <p class="lead reveal d2">Informação semanal sobre o mercado de bioinsumos: números, movimentos, e o que isso significa na prática para quem decide no campo.</p>
     <div class="hero-actions reveal d2">
@@ -430,24 +414,6 @@
   <h2 class="reveal d1">Por que existe o AGROMV Semanal</h2>
   <p>O mercado de biológicos cresce mais rápido do que a capacidade da maioria das equipes de acompanhar o que está acontecendo. Dados chegam picotados: um número em um evento, um estudo em outro, uma mudança regulatória em uma terceira fonte. Quem está na ponta acaba decidindo com informação incompleta.</p>
   <p>Este relatório junta essas pontas uma vez por semana. Não é conteúdo promocional nem release de produto: é leitura de mercado com fonte citada, gráfico próprio e uma conclusão prática sobre o que muda para quem trabalha com bioinsumos no Cerrado e no restante do país.</p>
-
-  <div class="pillars reveal d2">
-    <div class="pillar">
-      <span class="n">01</span>
-      <h3>Dado com fonte</h3>
-      <p>Todo número vem com origem citada e data. Sem estimativa solta e sem projeção sem lastro.</p>
-    </div>
-    <div class="pillar">
-      <span class="n">02</span>
-      <h3>Leitura de campo</h3>
-      <p>O que o dado significa para receituário, distribuição e planejamento de safra.</p>
-    </div>
-    <div class="pillar">
-      <span class="n">03</span>
-      <h3>Formato direto</h3>
-      <p>Uma edição por semana, leitura de seis minutos, com os gráficos que importam.</p>
-    </div>
-  </div>
 </section>
 
 <section id="historia">
