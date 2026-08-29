@@ -73,7 +73,7 @@
     letter-spacing:0.02em;
     text-decoration:none;
   }
-  .brand .logo{height:26px; width:auto; display:block; padding-right:11px;}
+  .brand .logo{height:27px; width:auto; display:block; padding-right:11px;}
   .brand .sub{
     font-weight:500;
     font-size:11px;
@@ -90,6 +90,21 @@
     letter-spacing:0.06em;
     color:#EAF1F7;
     text-transform:uppercase;
+  }
+  .brand .edicao{
+    display:flex; flex-direction:column; padding-left:11px;
+    border-left:1px solid #4A6A86; line-height:1.25;
+  }
+  .brand .edicao .n{
+    font-family:'Archivo',sans-serif; font-weight:600; font-size:12px;
+    color:var(--green-brand); letter-spacing:0.06em; white-space:nowrap;
+  }
+  .brand .edicao .t{
+    font-family:'Inter',sans-serif; font-weight:500; font-size:10.5px;
+    color:#B7CBDC; letter-spacing:0.04em; text-transform:uppercase; white-space:nowrap;
+  }
+  @media (max-width:420px){
+    .brand .edicao .t{display:none;}
   }
   .rule-accent{height:3px; background:var(--green-brand);}
 
@@ -114,7 +129,7 @@
     z-index:1;
     max-width:var(--maxw);
     margin:0 auto;
-    padding:46px 24px 0;
+    padding:34px 24px 0;
     background:transparent;
   }
   .hero h1{
@@ -247,7 +262,7 @@
   article{
     max-width:var(--maxw);
     margin:0 auto;
-    padding:44px 24px 8px;
+    padding:34px 24px 8px;
     background:#FFFFFF;
   }
   article h2{
@@ -257,7 +272,7 @@
     line-height:1.3;
     letter-spacing:-0.01em;
     color:var(--navy);
-    margin:44px 0 14px;
+    margin:34px 0 12px;
   }
   article p{
     font-family:'Source Serif 4', serif;
@@ -267,7 +282,7 @@
     margin:0 0 20px;
   }
 
-  figure.chart{margin:34px 0; padding:0;}
+  figure.chart{margin:26px 0; padding:0;}
   figure.chart img{
     border:1px solid var(--line);
     border-radius:4px;
@@ -453,7 +468,7 @@
   <div class="bar">
     <a class="brand" href="../../index.html">
       <img class="logo" src="../../assets/logo-agromv.png" alt="AGROMV">
-      <span class="sub">Semanal</span>
+      <span class="edicao"><span class="n">Ed. 01</span><span class="t">Mercado &amp; Regulação</span></span>
     </a>
     <button class="nav-toggle" id="navToggle" aria-label="Abrir menu" aria-expanded="false" aria-controls="navDrawer"><span></span><span></span><span></span></button>
   </div>
