@@ -164,28 +164,51 @@ COLETORES = [
 # para decidirmos qual usar na proxima versao.
 # A CONAB autoriza reproducao sem fins lucrativos com citacao da fonte.
 # ----------------------------------------------------------------------
-CANDIDATOS_CONAB = [
-    "https://portaldeinformacoes.conab.gov.br/downloads/arquivos/PrecosAgropecuarios.txt",
-    "https://portaldeinformacoes.conab.gov.br/precos-agropecuarios-serie-historica.json",
-    "https://dados.agricultura.gov.br/api/3/action/package_search?q=conab+precos",
-    "https://portaldeinformacoes.conab.gov.br/api/precos",
+CANDIDATOS = [
+    # 1. catalogo de dados abertos do Ministerio da Agricultura (CKAN)
+    ("CKAN busca 'conab'",
+     "https://dados.agricultura.gov.br/api/3/action/package_search?q=conab&rows=20"),
+    ("CKAN busca 'preco'",
+     "https://dados.agricultura.gov.br/api/3/action/package_search?q=pre%C3%A7os&rows=20"),
+    ("CKAN organizacoes",
+     "https://dados.agricultura.gov.br/api/3/action/organization_list"),
+
+    # 2. catalogo nacional de dados abertos
+    ("dados.gov.br busca conab",
+     "https://dados.gov.br/dados/api/publico/conjuntos-dados?nomeConjuntoDados=conab"),
+
+    # 3. planilha de commodities do Banco Mundial (licenca aberta CC BY 4.0)
+    #    traz soja, milho, ureia e DAP em dolar
+    ("Banco Mundial Pink Sheet",
+     "https://thedocs.worldbank.org/en/doc/18675f1d1639c7a34d463f59263ba0a2-0050012025/related/CMO-Historical-Data-Monthly.xlsx"),
 ]
 
 
-def sondar_conab():
-    print("\n--- sondagem CONAB (apenas diagnostico) ---")
-    for url in CANDIDATOS_CONAB:
+def sondar():
+    print("\n--- sondagem de fontes de preco (diagnostico) ---")
+    for nome, url in CANDIDATOS:
         try:
             req = urllib.request.Request(url, headers=CABECALHO)
-            with urllib.request.urlopen(req, timeout=20, context=CTX) as r:
-                corpo = r.read(400)
+            with urllib.request.urlopen(req, timeout=30, context=CTX) as r:
                 tipo = r.headers.get("Content-Type", "?")
-                print(f"[{r.status}] {url}")
+                corpo = r.read(700)
+                print(f"\n[{r.status}] {nome}")
+                print(f"      {url}")
                 print(f"      tipo: {tipo}")
-                print(f"      inicio: {corpo[:160]!r}")
+                if "json" in tipo:
+                    try:
+                        d = json.loads(corpo.decode("utf-8", "ignore") + "")
+                    except Exception:
+                        d = None
+                    print(f"      inicio: {corpo[:400].decode('utf-8','ignore')}")
+                elif "sheet" in tipo or "excel" in tipo or url.endswith(".xlsx"):
+                    print(f"      ARQUIVO BINARIO OK, {len(corpo)} bytes lidos "
+                          f"(assinatura: {corpo[:4]!r})")
+                else:
+                    print(f"      inicio: {corpo[:200].decode('utf-8','ignore')!r}")
         except Exception as e:
-            print(f"[erro] {url} -> {type(e).__name__}: {e}")
-    print("--- fim da sondagem ---\n")
+            print(f"\n[erro] {nome} -> {type(e).__name__}: {e}")
+    print("\n--- fim da sondagem ---\n")
 
 
 def carregar_anterior():
@@ -234,7 +257,7 @@ def main():
         print("fontes que falharam nesta execucao:", ", ".join(falhas))
 
     try:
-        sondar_conab()
+        sondar()
     except Exception as e:
         print("sondagem nao concluida:", e)
 
