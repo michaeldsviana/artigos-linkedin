@@ -47,21 +47,54 @@ def serie_bcb(codigo, n=1):
 
 
 def dolar():
-    """Dolar PTAX venda (serie 1), com variacao frente ao dia anterior."""
-    d = serie_bcb(1, n=2)
-    atual = float(d[-1]["valor"])
+    """Dolar PTAX de venda, com variacao frente ao dia anterior.
+
+    Tenta primeiro a serie 1 do SGS. Se falhar, cai para a API Olinda,
+    que expoe o mesmo PTAX por outro caminho.
+    """
+    try:
+        d = serie_bcb(1, n=2)
+        atual = float(d[-1]["valor"])
+        data_ref = d[-1]["data"]
+        anterior = float(d[-2]["valor"]) if len(d) > 1 else None
+        origem = "SGS"
+    except Exception as e:
+        print(f"        SGS indisponivel ({type(e).__name__}: {e}); tentando Olinda")
+        atual, anterior, data_ref = dolar_olinda()
+        origem = "Olinda"
+
     item = {
         "rotulo": "Dólar PTAX",
         "valor": f"R$ {atual:.4f}".replace(".", ","),
-        "detalhe": f"Cotação de venda · {d[-1]['data']}",
+        "detalhe": f"Cotação de venda · {data_ref}",
+        "origem": origem,
     }
-    if len(d) > 1:
-        anterior = float(d[-2]["valor"])
-        if anterior:
-            var = (atual - anterior) / anterior * 100
-            item["variacao"] = f"{var:+.2f}%".replace(".", ",")
-            item["sentido"] = "alta" if var > 0 else ("baixa" if var < 0 else "estavel")
+    if anterior:
+        var = (atual - anterior) / anterior * 100
+        item["variacao"] = f"{var:+.2f}%".replace(".", ",")
+        item["sentido"] = "alta" if var > 0 else ("baixa" if var < 0 else "estavel")
     return item
+
+
+def dolar_olinda():
+    """Rota alternativa: API Olinda do Banco Central (ultimos dias uteis)."""
+    hoje = datetime.now(FUSO)
+    inicio = (hoje - timedelta(days=12)).strftime("%m-%d-%Y")
+    fim = hoje.strftime("%m-%d-%Y")
+    url = (
+        "https://olinda.bcb.gov.br/olinda/servico/PTAX/versao/v1/odata/"
+        "CotacaoDolarPeriodo(dataInicial=@dataInicial,dataFinalCotacao=@dataFinalCotacao)"
+        f"?@dataInicial='{inicio}'&@dataFinalCotacao='{fim}'"
+        "&$top=10&$orderby=dataHoraCotacao%20desc&$format=json"
+    )
+    dados = buscar_json(url).get("value", [])
+    if not dados:
+        raise ValueError("Olinda retornou vazio")
+    atual = float(dados[0]["cotacaoVenda"])
+    anterior = float(dados[1]["cotacaoVenda"]) if len(dados) > 1 else None
+    data_ref = dados[0]["dataHoraCotacao"][:10]
+    a, m, dia = data_ref.split("-")
+    return atual, anterior, f"{dia}/{m}/{a}"
 
 
 def selic():
@@ -123,6 +156,38 @@ COLETORES = [
 ]
 
 
+
+
+# ----------------------------------------------------------------------
+# SONDAGEM: procura um caminho aberto para os precos da CONAB.
+# Nao altera o painel; apenas registra no log qual endereco responde,
+# para decidirmos qual usar na proxima versao.
+# A CONAB autoriza reproducao sem fins lucrativos com citacao da fonte.
+# ----------------------------------------------------------------------
+CANDIDATOS_CONAB = [
+    "https://portaldeinformacoes.conab.gov.br/downloads/arquivos/PrecosAgropecuarios.txt",
+    "https://portaldeinformacoes.conab.gov.br/precos-agropecuarios-serie-historica.json",
+    "https://dados.agricultura.gov.br/api/3/action/package_search?q=conab+precos",
+    "https://portaldeinformacoes.conab.gov.br/api/precos",
+]
+
+
+def sondar_conab():
+    print("\n--- sondagem CONAB (apenas diagnostico) ---")
+    for url in CANDIDATOS_CONAB:
+        try:
+            req = urllib.request.Request(url, headers=CABECALHO)
+            with urllib.request.urlopen(req, timeout=20, context=CTX) as r:
+                corpo = r.read(400)
+                tipo = r.headers.get("Content-Type", "?")
+                print(f"[{r.status}] {url}")
+                print(f"      tipo: {tipo}")
+                print(f"      inicio: {corpo[:160]!r}")
+        except Exception as e:
+            print(f"[erro] {url} -> {type(e).__name__}: {e}")
+    print("--- fim da sondagem ---\n")
+
+
 def carregar_anterior():
     try:
         with open(SAIDA, encoding="utf-8") as f:
@@ -144,7 +209,7 @@ def main():
             print(f"[ok]    {chave}: {item['valor']}")
         except Exception as e:
             falhas.append(chave)
-            print(f"[falha] {chave}: {e}")
+            print(f"[falha] {chave}: {type(e).__name__}: {e}")
             antigo = anterior.get("indicadores", {}).get(chave)
             if antigo:                      # mantem o ultimo valor conhecido
                 antigo["atualizado"] = False
@@ -167,6 +232,11 @@ def main():
     print(f"\ngravado: {SAIDA}")
     if falhas:
         print("fontes que falharam nesta execucao:", ", ".join(falhas))
+
+    try:
+        sondar_conab()
+    except Exception as e:
+        print("sondagem nao concluida:", e)
 
 
 if __name__ == "__main__":
