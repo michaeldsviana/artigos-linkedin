@@ -334,6 +334,22 @@ def commodities_banco_mundial():
     SIMBOLO = {"mt": "/t", "kg": "/kg", "bbl": "/bbl",
                "mmbtu": "/mmBTU", "dmtu": "/dmtu", "oz": "/oz"}
 
+    # A planilha vem em tonelada (ou quilo). Convertemos as culturas para a
+    # unidade usada na comercializacao no Brasil e deixamos os fertilizantes
+    # em tonelada, que e como sao negociados.
+    CONVERSAO = {
+        "Soja":    ("saca de 60 kg", 60, "/sc"),
+        "Milho":   ("saca de 60 kg", 60, "/sc"),
+        "Algodão": ("arroba de 15 kg", 15, "/@"),
+    }
+
+    def para_kg(valor, unidade):
+        if unidade == "mt":
+            return valor / 1000.0
+        if unidade == "kg":
+            return valor
+        return None
+
     def coluna_de(termos):
         for j, nome in enumerate(cabecalho):
             if all(t in nome for t in termos):
@@ -364,12 +380,24 @@ def commodities_banco_mundial():
         unidade = unidades.get(j, "")
         sufixo = SIMBOLO.get(unidade, "")
         por_extenso = NOMES_UNIDADE.get(unidade)
+        exibido = atual
 
-        detalhe = f"Média de {periodo} · Banco Mundial"
-        if por_extenso:
-            detalhe = f"Por {por_extenso} · média de {periodo} · Banco Mundial"
+        conversao = CONVERSAO.get(rotulo)
+        preco_kg = para_kg(atual, unidade) if conversao else None
 
-        item = {"rotulo": rotulo, "valor": "US$ " + br(atual) + sufixo,
+        if conversao and preco_kg is not None:
+            nome_alvo, kg_alvo, simbolo_alvo = conversao
+            exibido = preco_kg * kg_alvo
+            sufixo = simbolo_alvo
+            original = "US$ " + br(atual) + SIMBOLO.get(unidade, "")
+            detalhe = (f"Por {nome_alvo} · média de {periodo} · "
+                       f"Banco Mundial ({original})")
+        else:
+            detalhe = f"Média de {periodo} · Banco Mundial"
+            if por_extenso:
+                detalhe = f"Por {por_extenso} · média de {periodo} · Banco Mundial"
+
+        item = {"rotulo": rotulo, "valor": "US$ " + br(exibido) + sufixo,
                 "detalhe": detalhe}
         if unidade:
             item["unidade"] = unidade
