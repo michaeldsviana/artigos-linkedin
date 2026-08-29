@@ -1,40 +1,10 @@
 {
-  "atualizado_em": "29/08/2026 às 17:29",
-  "fontes": "Banco Central do Brasil (SGS) e IBGE (LSPA/SIDRA)",
+  "atualizado_em": "aguardando primeira atualização",
+  "fontes": "Banco Central do Brasil · IBGE (LSPA) · Banco Mundial, Commodity Markets (CC BY 4.0)",
   "falhas": [],
-  "indicadores": {
-    "dolar": {
-      "rotulo": "Dólar PTAX",
-      "valor": "R$ 5,2005",
-      "detalhe": "Cotação de venda · 28/08/2026",
-      "origem": "SGS",
-      "variacao": "+0,70%",
-      "sentido": "alta",
-      "atualizado": true
-    },
-    "selic": {
-      "rotulo": "Selic (meta)",
-      "valor": "14,00% a.a.",
-      "detalhe": "Vigente em 16/09/2026",
-      "atualizado": true
-    },
-    "ipca": {
-      "rotulo": "IPCA 12 meses",
-      "valor": "4,44%",
-      "detalhe": "Até 01/07/2026",
-      "atualizado": true
-    },
-    "soja": {
-      "rotulo": "Soja (produção nacional)",
-      "valor": "174,9 mi t",
-      "detalhe": "Estimativa LSPA · julho 2026",
-      "atualizado": true
-    },
-    "milho": {
-      "rotulo": "Milho (produção nacional)",
-      "valor": "29,9 mi t",
-      "detalhe": "Estimativa LSPA · julho 2026",
-      "atualizado": true
-    }
+  "grupos": {
+    "precos": {},
+    "macro": {},
+    "safra": {}
   }
 }
