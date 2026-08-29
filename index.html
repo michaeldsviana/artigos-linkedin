@@ -442,7 +442,7 @@
 <div class="rule-accent"></div>
 
 <div class="ticker vazio" id="ticker" aria-label="Indicadores de mercado">
-  <span class="marca">Mercado</span>
+  <a class="marca" href="mercado/" style="text-decoration:none">Mercado</a>
   <div class="ticker-track" id="tickerTrack"></div>
   <span class="fade"></span>
 </div>
@@ -455,6 +455,7 @@
   </div>
   <nav>
     <a href="#topo">Home<span>Início</span></a>
+    <a href="mercado/">Mercado<span>Cotações e safra</span></a>
     <a href="#publicacoes">Publicações<span>Análises semanais</span></a>
     <a href="#relatorios">Relatórios<span>Materiais aprofundados</span></a>
     <a href="#contato">Contato<span>Redes e acesso direto</span></a>
@@ -733,7 +734,7 @@
   }
 
   function montar(d){
-    var itens = d.indicadores || {};
+    var itens = (d.grupos && d.grupos.precos) || {};
     var chaves = Object.keys(itens);
     if(!chaves.length) return;            // sem dados, a faixa continua oculta
 
