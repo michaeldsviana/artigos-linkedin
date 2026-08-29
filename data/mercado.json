@@ -1,9 +1,7 @@
 {
-  "atualizado_em": "29/08/2026 às 17:52",
+  "atualizado_em": "29/08/2026 às 18:02",
   "fontes": "Banco Central do Brasil · IBGE (LSPA) · Banco Mundial, Commodity Markets (CC BY 4.0)",
-  "falhas": [
-    "precos/commodities"
-  ],
+  "falhas": [],
   "grupos": {
     "precos": {
       "dolar": {
@@ -11,6 +9,54 @@
         "valor": "R$ 5,2005",
         "detalhe": "PTAX venda · 28/08/2026",
         "variacao": "+0,70%",
+        "sentido": "alta",
+        "atualizado": true
+      },
+      "Soja": {
+        "rotulo": "Soja",
+        "valor": "US$ 459,00",
+        "detalhe": "Média de 07/2026 · Banco Mundial",
+        "variacao": "-1,1%",
+        "sentido": "baixa",
+        "atualizado": true
+      },
+      "Milho": {
+        "rotulo": "Milho",
+        "valor": "US$ 213,40",
+        "detalhe": "Média de 07/2026 · Banco Mundial",
+        "variacao": "+8,3%",
+        "sentido": "alta",
+        "atualizado": true
+      },
+      "Algodão": {
+        "rotulo": "Algodão",
+        "valor": "US$ 1,96",
+        "detalhe": "Média de 07/2026 · Banco Mundial",
+        "variacao": "+3,2%",
+        "sentido": "alta",
+        "atualizado": true
+      },
+      "Ureia": {
+        "rotulo": "Ureia",
+        "valor": "US$ 400,00",
+        "detalhe": "Média de 07/2026 · Banco Mundial",
+        "variacao": "-11,7%",
+        "sentido": "baixa",
+        "atualizado": true
+      },
+      "DAP": {
+        "rotulo": "DAP",
+        "valor": "US$ 781,30",
+        "detalhe": "Média de 07/2026 · Banco Mundial",
+        "variacao": "-0,3%",
+        "sentido": "baixa",
+        "atualizado": true
+      },
+      "Fosfato (rocha)": {
+        "rotulo": "Fosfato (rocha)",
+        "valor": "US$ 170,00",
+        "detalhe": "Média de 07/2026 · Banco Mundial",
+        "variacao": "+8,3%",
         "sentido": "alta",
         "atualizado": true
       }
@@ -30,69 +76,69 @@
       }
     },
     "safra": {
-      "1.1 Algodão herbáceo": {
-        "rotulo": "1.1 Algodão herbáceo",
-        "valor": "9,2 mi t",
-        "detalhe": "Estimativa LSPA · julho 2026",
-        "atualizado": true
-      },
-      "1.4 Arroz": {
-        "rotulo": "1.4 Arroz",
-        "valor": "11,2 mi t",
-        "detalhe": "Estimativa LSPA · julho 2026",
-        "atualizado": true
-      },
-      "1.9 Feijão": {
-        "rotulo": "1.9 Feijão",
-        "valor": "0,9 mi t",
-        "detalhe": "Estimativa LSPA · julho 2026",
-        "atualizado": true
-      },
-      "1.10 Feijão": {
-        "rotulo": "1.10 Feijão",
-        "valor": "1,1 mi t",
-        "detalhe": "Estimativa LSPA · julho 2026",
-        "atualizado": true
-      },
-      "1.11 Feijão": {
-        "rotulo": "1.11 Feijão",
-        "valor": "0,8 mi t",
-        "detalhe": "Estimativa LSPA · julho 2026",
-        "atualizado": true
-      },
-      "1.15 Milho": {
-        "rotulo": "1.15 Milho",
-        "valor": "29,9 mi t",
-        "detalhe": "Estimativa LSPA · julho 2026",
-        "atualizado": true
-      },
-      "1.16 Milho": {
-        "rotulo": "1.16 Milho",
-        "valor": "111,9 mi t",
-        "detalhe": "Estimativa LSPA · julho 2026",
-        "atualizado": true
-      },
-      "1.17 Soja": {
-        "rotulo": "1.17 Soja",
+      "Soja": {
+        "rotulo": "Soja",
         "valor": "174,9 mi t",
         "detalhe": "Estimativa LSPA · julho 2026",
         "atualizado": true
       },
-      "1.19 Trigo": {
-        "rotulo": "1.19 Trigo",
+      "Milho (2ª Safra)": {
+        "rotulo": "Milho (2ª Safra)",
+        "valor": "111,9 mi t",
+        "detalhe": "Estimativa LSPA · julho 2026",
+        "atualizado": true
+      },
+      "Milho (1ª Safra)": {
+        "rotulo": "Milho (1ª Safra)",
+        "valor": "29,9 mi t",
+        "detalhe": "Estimativa LSPA · julho 2026",
+        "atualizado": true
+      },
+      "Arroz": {
+        "rotulo": "Arroz",
+        "valor": "11,2 mi t",
+        "detalhe": "Estimativa LSPA · julho 2026",
+        "atualizado": true
+      },
+      "Algodão herbáceo": {
+        "rotulo": "Algodão herbáceo",
+        "valor": "9,2 mi t",
+        "detalhe": "Estimativa LSPA · julho 2026",
+        "atualizado": true
+      },
+      "Trigo": {
+        "rotulo": "Trigo",
         "valor": "6,4 mi t",
         "detalhe": "Estimativa LSPA · julho 2026",
         "atualizado": true
       },
-      "9 Café arábica": {
-        "rotulo": "9 Café arábica",
+      "Café arábica": {
+        "rotulo": "Café arábica",
         "valor": "2,7 mi t",
         "detalhe": "Estimativa LSPA · julho 2026",
         "atualizado": true
       },
-      "10 Café canephora": {
-        "rotulo": "10 Café canephora",
+      "Café canephora": {
+        "rotulo": "Café canephora",
         "valor": "1,3 mi t",
+        "detalhe": "Estimativa LSPA · julho 2026",
+        "atualizado": true
+      },
+      "Feijão (2ª Safra)": {
+        "rotulo": "Feijão (2ª Safra)",
+        "valor": "1,1 mi t",
+        "detalhe": "Estimativa LSPA · julho 2026",
+        "atualizado": true
+      },
+      "Feijão (1ª Safra)": {
+        "rotulo": "Feijão (1ª Safra)",
+        "valor": "0,9 mi t",
+        "detalhe": "Estimativa LSPA · julho 2026",
+        "atualizado": true
+      },
+      "Feijão (3ª Safra)": {
+        "rotulo": "Feijão (3ª Safra)",
+        "valor": "0,8 mi t",
         "detalhe": "Estimativa LSPA · julho 2026",
         "atualizado": true
       }
