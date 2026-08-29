@@ -6,6 +6,8 @@
 <meta name="color-scheme" content="light only">
 <meta name="supported-color-schemes" content="light">
 <title>Bioinsumos no Brasil: crescimento recorde, mercado ainda pequeno | AGROMV Semanal</title>
+<link rel="icon" type="image/png" href="../../assets/favicon.png">
+<link rel="apple-touch-icon" href="../../assets/favicon.png">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Archivo:wght@500;600;700&family=Source+Serif+4:opsz,wght@8..60,400;8..60,600&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
@@ -17,7 +19,8 @@
     --navy:    #0E2338;
     --navy-mid:#1B3B5A;
     --blue:    #1E6FA8;
-    --green:   #3E7C43;
+    --green:   #3F7A2E;
+    --green-brand: #63AA46;
     --ink:     #16212C;
     --ink-dim: #5B6773;
     --grey:    #8A94A0;
@@ -62,12 +65,7 @@
     letter-spacing:0.02em;
     text-decoration:none;
   }
-  .brand .mark{
-    font-weight:700;
-    font-size:16px;
-    color:#FFFFFF;
-    padding-right:10px;
-  }
+  .brand .logo{height:26px; width:auto; display:block; padding-right:11px;}
   .brand .sub{
     font-weight:500;
     font-size:11px;
@@ -85,7 +83,7 @@
     color:#EAF1F7;
     text-transform:uppercase;
   }
-  .rule-accent{height:3px; background:var(--blue);}
+  .rule-accent{height:3px; background:var(--green-brand);}
 
   /* ---------- HERO ---------- */
   .hero-stage{
@@ -416,7 +414,7 @@
   }
   .nav-drawer .head .t{
     font-family:'Archivo',sans-serif; font-size:11px; font-weight:600;
-    letter-spacing:0.14em; text-transform:uppercase; color:#8FB6D4;
+    letter-spacing:0.14em; text-transform:uppercase; color:var(--green-brand);
   }
   .nav-close{background:none; border:none; color:#EAF1F7; font-size:26px; line-height:1; cursor:pointer; padding:0 4px;}
   .nav-drawer nav a{
@@ -436,7 +434,7 @@
 <header class="site">
   <div class="bar">
     <a class="brand" href="/">
-      <span class="mark">AGROMV</span>
+      <img class="logo" src="../../assets/logo-agromv.png" alt="AGROMV">
       <span class="sub">Semanal</span>
     </a>
     <button class="nav-toggle" id="navToggle" aria-label="Abrir menu" aria-expanded="false" aria-controls="navDrawer"><span></span><span></span><span></span></button>
