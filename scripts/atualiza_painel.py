@@ -125,9 +125,42 @@ def ipca_12m():
 # 2. BANCO MUNDIAL - commodities e fertilizantes
 #    O arquivo e um .xlsx; lemos com zipfile + XML, sem instalar nada.
 # ======================================================================
-URL_BM = ("https://thedocs.worldbank.org/en/doc/"
-          "18675f1d1639c7a34d463f59263ba0a2-0050012025/related/"
-          "CMO-Historical-Data-Monthly.xlsx")
+URLS_BM = [
+    # edicao corrente (2026)
+    ("2026", "https://thedocs.worldbank.org/en/doc/"
+             "74e8be41ceb20fa0da750cda2f6b9e4e-0050012026/related/"
+             "CMO-Historical-Data-Monthly.xlsx"),
+    # edicao anterior (2025)
+    ("2025", "https://thedocs.worldbank.org/en/doc/"
+             "18675f1d1639c7a34d463f59263ba0a2-0050012025/related/"
+             "CMO-Historical-Data-Monthly.xlsx"),
+    # endereco antigo, mantido pelo Banco Mundial por compatibilidade
+    ("pubdocs", "https://pubdocs.worldbank.org/en/561011486076393416/"
+                "CMO-Historical-Data-Monthly.xlsx"),
+]
+
+
+def baixar_planilha():
+    """Tenta os enderecos conhecidos ate um responder com um .xlsx valido.
+
+    O caminho do arquivo muda a cada edicao anual, entao a lista precisa
+    ter alternativas. Um .xlsx sempre comeca com a assinatura PK.
+    """
+    erros = []
+    for nome, url in URLS_BM:
+        try:
+            with abrir(url, timeout=90) as r:
+                conteudo = r.read()
+            if conteudo[:2] != b"PK":
+                erros.append(f"{nome}: resposta nao e xlsx ({conteudo[:16]!r})")
+                print(f"        [{nome}] resposta invalida")
+                continue
+            print(f"        [{nome}] planilha obtida: {len(conteudo)} bytes")
+            return conteudo
+        except Exception as e:
+            erros.append(f"{nome}: {type(e).__name__}: {e}")
+            print(f"        [{nome}] {type(e).__name__}: {e}")
+    raise ValueError("nenhum endereco respondeu -> " + " | ".join(erros))
 
 # rotulo exibido -> termos que identificam a coluna na planilha
 COMMODITIES = {
@@ -193,21 +226,20 @@ def ler_planilha(conteudo):
 
 def commodities_banco_mundial():
     """Ultimo valor mensal de cada commodity, com variacao frente ao mes anterior."""
-    with abrir(URL_BM, timeout=90) as r:
-        conteudo = r.read()
-    print(f"        planilha do Banco Mundial: {len(conteudo)} bytes")
-
+    conteudo = baixar_planilha()
     linhas = ler_planilha(conteudo)
+    print(f"        linhas lidas: {len(linhas)}")
 
     alvos = [t for lista in COMMODITIES.values() for t in lista]
     melhor, pontos = None, 0
-    for i, linha in enumerate(linhas[:15]):
+    for i, linha in enumerate(linhas[:25]):
         texto = " | ".join(linha).lower()
         p = sum(1 for t in alvos if t in texto)
         if p > pontos:
             melhor, pontos = i, p
     if melhor is None or pontos == 0:
-        raise ValueError("cabecalho de commodities nao encontrado")
+        amostra = [" | ".join(l)[:120] for l in linhas[:6]]
+        raise ValueError("cabecalho nao encontrado; primeiras linhas: " + str(amostra))
     print(f"        cabecalho na linha {melhor + 1} ({pontos} termos reconhecidos)")
 
     cabecalho = [c.lower() for c in linhas[melhor]]
