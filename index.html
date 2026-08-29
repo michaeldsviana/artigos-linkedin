@@ -111,19 +111,9 @@
       radial-gradient(100% 80% at 12% 92%, rgba(30,111,168,0.30) 0%, rgba(30,111,168,0) 60%),
       linear-gradient(160deg, #0B1B2C 0%, #0E2338 55%, #10293D 100%);
   }
-  .hero-stage::before{
-    content:""; position:absolute; inset:0;
-    background-image:
-      linear-gradient(rgba(255,255,255,0.045) 1px, transparent 1px),
-      linear-gradient(90deg, rgba(255,255,255,0.045) 1px, transparent 1px);
-    background-size:64px 64px;
-    -webkit-mask-image:radial-gradient(105% 85% at 50% 20%, #000 35%, transparent 78%);
-    mask-image:radial-gradient(105% 85% at 50% 20%, #000 35%, transparent 78%);
-    pointer-events:none;
-  }
   .hero{
     position:relative; z-index:2; max-width:var(--maxw); margin:0 auto;
-    padding:72px 24px 40px; background:transparent;
+    padding:60px 24px 34px; background:transparent;
   }
   .hero h1{
     font-family:'Archivo',sans-serif; font-weight:700;
@@ -166,7 +156,7 @@
   /* foto em cartão sobre o fundo escuro */
   .hero-photo{
     position:relative; z-index:2;
-    max-width:var(--maxw); margin:0 auto; padding:0 24px 60px;
+    max-width:var(--maxw); margin:0 auto; padding:0 24px 46px;
   }
   .hero-photo img{
     width:100%; height:auto; border-radius:16px;
@@ -179,7 +169,7 @@
     max-width:var(--maxw); margin:0 auto; padding:0 24px;
     display:grid; grid-template-columns:repeat(3,1fr);
   }
-  .kpi{padding:22px 18px; border-right:1px solid rgba(255,255,255,0.08);}
+  .kpi{padding:18px 18px; border-right:1px solid rgba(255,255,255,0.08);}
   .kpi:first-child{padding-left:0;}
   .kpi:last-child{border-right:none;}
   .kpi .v{
@@ -187,6 +177,37 @@
     color:var(--green-brand); line-height:1.1; letter-spacing:-0.01em;
   }
   .kpi .l{font-size:12.5px; color:#8FA6BC; margin-top:5px; line-height:1.45;}
+
+
+  /* ---------- ANIMAÇÕES DE ENTRADA ---------- */
+  @keyframes flutuar{
+    0%,100%{transform:translateY(0);}
+    50%{transform:translateY(-7px);}
+  }
+  @keyframes pulsoBotao{
+    0%,100%{box-shadow:0 0 0 0 rgba(99,170,70,0.42);}
+    55%{box-shadow:0 0 0 14px rgba(99,170,70,0);}
+  }
+  @keyframes brilho{
+    0%{background-position:-160% 0;}
+    100%{background-position:260% 0;}
+  }
+  /* título flutua suavemente enquanto a pessoa não rola a página */
+  .hero h1.flutua{animation:flutuar 5.2s ease-in-out infinite;}
+  body.rolou .hero h1.flutua{animation:none;}
+
+  /* botão principal chama o clique */
+  .btn-primary{position:relative; overflow:hidden;}
+  .btn-primary.chama{animation:pulsoBotao 2.6s ease-out infinite;}
+  body.rolou .btn-primary.chama{animation:none;}
+  .btn-primary::after{
+    content:""; position:absolute; top:0; left:0; width:55%; height:100%;
+    background:linear-gradient(100deg, transparent 0%, rgba(255,255,255,0.42) 50%, transparent 100%);
+    transform:skewX(-18deg);
+    animation:brilho 3.4s ease-in-out infinite;
+    pointer-events:none;
+  }
+  .btn-primary:hover::after{animation-play-state:paused;}
 
   /* ---------- REVEAL AO ROLAR ---------- */
   .reveal{
@@ -204,15 +225,15 @@
   .contact-card:hover{transform:translateY(-2px);}
 
   /* ---------- SEÇÕES ---------- */
-  section{max-width:var(--maxw); margin:0 auto; padding:56px 24px;}
+  section{max-width:var(--maxw); margin:0 auto; padding:40px 24px;}
   section + section{border-top:1px solid var(--line);}
   .sec-label{
     font-size:11.5px; font-weight:600; letter-spacing:0.1em; text-transform:uppercase;
-    color:var(--blue); margin-bottom:14px;
+    color:var(--blue); margin-bottom:10px;
   }
   section h2{
-    font-family:'Archivo',sans-serif; font-weight:600; font-size:27px;
-    line-height:1.25; letter-spacing:-0.012em; color:var(--navy); margin:0 0 18px;
+    font-family:'Archivo',sans-serif; font-weight:600; font-size:26px;
+    line-height:1.25; letter-spacing:-0.012em; color:var(--navy); margin:0 0 14px;
   }
   section p{
     font-family:'Source Serif 4',serif; font-size:18px; line-height:1.72;
@@ -279,7 +300,7 @@
   /* ---------- FOOTER ---------- */
   footer{background:var(--navy); color:#E8EEF4;}
   .foot{
-    max-width:var(--maxw); margin:0 auto; padding:36px 24px 26px;
+    max-width:var(--maxw); margin:0 auto; padding:30px 24px 22px;
     display:flex; align-items:center; gap:18px;
   }
   .foot img{width:56px; height:56px; border-radius:100%; object-fit:cover; object-position:center;}
@@ -289,7 +310,7 @@
     margin-left:auto; font-family:'Archivo',sans-serif; font-size:11px; font-weight:600;
     letter-spacing:0.14em; text-transform:uppercase; color:#8FB6D4; white-space:nowrap;
   }
-  .social{max-width:var(--maxw); margin:0 auto; padding:0 24px 36px;}
+  .social{max-width:var(--maxw); margin:0 auto; padding:0 24px 30px;}
   .social .divider{height:1px; background:#2A4560; margin-bottom:22px;}
   .social .icons{display:flex; gap:12px; flex-wrap:wrap;}
   .social a{
@@ -323,6 +344,7 @@
     .nav-drawer, .nav-overlay, .nav-toggle span{transition:none;}
     .reveal{opacity:1 !important; transform:none !important; transition:none;}
     .btn:hover, .ed-card:hover, .contact-card:hover{transform:none;}
+    .hero h1.flutua, .btn-primary.chama, .btn-primary::after{animation:none;}
   }
   .legal-bar{
     border-top:1px solid rgba(255,255,255,0.10);
@@ -372,10 +394,10 @@
 
 <div class="hero-stage" id="topo">
   <div class="hero">
-    <h1 class="reveal d1">Dados e leitura técnica do mercado de <em>biológicos</em>, toda semana</h1>
+    <h1 class="reveal d1 flutua">Dados e leitura técnica do mercado de <em>biológicos</em>, toda semana</h1>
     <p class="lead reveal d2">Informação semanal sobre o mercado de bioinsumos: números, movimentos, e o que isso significa na prática para quem decide no campo.</p>
     <div class="hero-actions reveal d2">
-      <a class="btn btn-primary" href="edicoes/02-fosforo-custo-solubilizadores/">Ler a última edição<span class="arrow">&rarr;</span></a>
+      <a class="btn btn-primary chama" href="edicoes/02-fosforo-custo-solubilizadores/">Ler a última edição<span class="arrow">&rarr;</span></a>
       <a class="btn btn-ghost" href="#publicacoes">Ver todas as análises</a>
     </div>
     <div class="hero-meta reveal d3">
@@ -598,6 +620,16 @@
 
     // rede de segurança: se algo travar, o conteúdo aparece de qualquer forma
     setTimeout(mostrarTodos, 2500);
+
+    // as animações de chamada param assim que a pessoa começa a navegar
+    var parou = false;
+    function pararChamada(){
+      if(parou) return;
+      parou = true;
+      document.body.className += ' rolou';
+    }
+    window.addEventListener('scroll', pararChamada, {passive:true});
+    document.addEventListener('click', pararChamada);
   } catch(e){
     mostrarTodos();
   }
