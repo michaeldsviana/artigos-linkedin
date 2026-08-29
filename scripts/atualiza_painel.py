@@ -472,6 +472,53 @@ COLETA = {
 }
 
 
+# ----------------------------------------------------------------------
+# SONDAGEM: arquivos de preco da CONAB
+# A CONAB autoriza reproducao sem fins lucrativos com citacao da fonte.
+# O portal e feito em JavaScript, entao testamos nomes provaveis dos
+# arquivos que alimentam os paineis. Apenas diagnostico; nada e publicado.
+# ----------------------------------------------------------------------
+BASE_CONAB = "https://portaldeinformacoes.conab.gov.br/downloads/arquivos/"
+
+ARQUIVOS_CONAB = [
+    "PrecosAgropecuariosSemanalUF.csv",
+    "PrecosAgropecuariosSemanalUf.csv",
+    "precos_agropecuarios_semanal_uf.csv",
+    "PrecosAgropecuariosMensalUF.csv",
+    "PrecosSemanalUF.csv",
+    "PrecoSemanalUf.csv",
+    "SerieHistoricaPrecos.csv",
+    "PrecosAgropecuarios.csv",
+    "ProhortDiario.csv",
+]
+
+
+def sondar():
+    print("\n--- sondagem de arquivos da CONAB (diagnostico) ---")
+    achou = []
+    for nome in ARQUIVOS_CONAB:
+        url = BASE_CONAB + nome
+        try:
+            req = urllib.request.Request(url, headers=CABECALHO)
+            with urllib.request.urlopen(req, timeout=25, context=CTX) as r:
+                tipo = r.headers.get("Content-Type", "?")
+                inicio = r.read(300)
+                eh_html = b"<!doctype" in inicio.lower() or b"<html" in inicio.lower()
+                marcador = "HTML (pagina do app)" if eh_html else "DADOS"
+                print(f"[{r.status}] {nome}")
+                print(f"      tipo: {tipo} -> {marcador}")
+                if not eh_html:
+                    achou.append(nome)
+                    print(f"      inicio: {inicio[:220].decode('utf-8', 'ignore')!r}")
+        except Exception as e:
+            print(f"[erro] {nome} -> {type(e).__name__}: {e}")
+    if achou:
+        print("\nARQUIVOS VALIDOS ENCONTRADOS: " + ", ".join(achou))
+    else:
+        print("\nnenhum nome testado retornou dados")
+    print("--- fim da sondagem ---\n")
+
+
 def carregar_anterior():
     try:
         with open(SAIDA, encoding="utf-8") as f:
@@ -522,6 +569,11 @@ def main():
     print(f"\ngravado: {SAIDA} ({total} indicadores)")
     if falhas:
         print("falharam nesta execucao:", ", ".join(falhas))
+
+    try:
+        sondar()
+    except Exception as e:
+        print("sondagem nao concluida:", e)
 
 
 if __name__ == "__main__":
