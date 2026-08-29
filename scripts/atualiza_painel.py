@@ -172,9 +172,6 @@ COMMODITIES = {
     "Fosfato (rocha)": ["phosphate rock"],
 }
 
-NS = "{http://schemas.openxmlformats.org/spreadsheetml/2006/main}"
-
-
 def _letras(ref):
     return re.match(r"[A-Z]+", ref).group(0)
 
@@ -186,38 +183,108 @@ def _indice(letras):
     return n - 1
 
 
+def _ns(raiz):
+    """Extrai o namespace do proprio arquivo.
+
+    Arquivos .xlsx podem usar o namespace padrao (schemas.openxmlformats.org)
+    ou o do formato estrito (purl.oclc.org). Fixar um deles quebra o outro.
+    """
+    if raiz.tag.startswith("{"):
+        return raiz.tag.split("}")[0] + "}"
+    return ""
+
+
+def _escolher_aba(z):
+    """Devolve o caminho da aba de precos mensais.
+
+    A pasta de trabalho lista as abas por nome; preferimos a que fala de
+    precos mensais e evitamos as de indices. Sem essa informacao, cai na
+    primeira aba do arquivo.
+    """
+    caminhos = sorted(n for n in z.namelist()
+                      if re.match(r"xl/worksheets/sheet\d+\.xml$", n))
+    try:
+        wb = ET.fromstring(z.read("xl/workbook.xml"))
+        nsw = _ns(wb)
+        rels = ET.fromstring(z.read("xl/_rels/workbook.xml.rels"))
+        nsr = _ns(rels)
+        destino = {r.get("Id"): r.get("Target") for r in rels.iter(f"{nsr}Relationship")}
+
+        abas = []
+        for s in wb.iter(f"{nsw}sheet"):
+            rid = next((v for k, v in s.attrib.items() if k.endswith("}id")), None)
+            alvo = destino.get(rid, "")
+            if alvo:
+                alvo = "xl/" + alvo.lstrip("/").replace("worksheets/", "worksheets/")
+                if not alvo.startswith("xl/worksheets"):
+                    alvo = "xl/" + alvo.split("xl/")[-1]
+            abas.append((s.get("name", ""), alvo))
+        print("        abas: " + ", ".join(n for n, _ in abas))
+
+        # 1a escolha: aba de precos mensais
+        for nome, alvo in abas:
+            baixo = nome.lower()
+            if "price" in baixo and "month" in baixo and alvo in z.namelist():
+                print(f"        usando aba '{nome}'")
+                return alvo
+        # 2a escolha: qualquer aba de precos que nao seja de indices
+        for nome, alvo in abas:
+            baixo = nome.lower()
+            if "price" in baixo and "ind" not in baixo and alvo in z.namelist():
+                print(f"        usando aba '{nome}'")
+                return alvo
+        # 3a escolha: mensal que nao seja indice
+        for nome, alvo in abas:
+            baixo = nome.lower()
+            if "month" in baixo and "ind" not in baixo and alvo in z.namelist():
+                print(f"        usando aba '{nome}'")
+                return alvo
+        for nome, alvo in abas:
+            if alvo in z.namelist():
+                print(f"        usando aba '{nome}' (primeira disponivel)")
+                return alvo
+    except Exception as e:
+        print(f"        nao foi possivel ler a lista de abas ({type(e).__name__}); usando a primeira")
+    return caminhos[0]
+
+
 def ler_planilha(conteudo):
-    """Devolve a primeira aba do .xlsx como matriz de strings."""
+    """Devolve a aba de precos mensais do .xlsx como matriz de strings."""
     z = zipfile.ZipFile(io.BytesIO(conteudo))
 
     compartilhadas = []
     if "xl/sharedStrings.xml" in z.namelist():
         raiz = ET.fromstring(z.read("xl/sharedStrings.xml"))
-        for si in raiz.findall(f"{NS}si"):
-            compartilhadas.append("".join(t.text or "" for t in si.iter(f"{NS}t")))
+        ns = _ns(raiz)
+        for si in raiz.findall(f"{ns}si"):
+            compartilhadas.append("".join(t.text or "" for t in si.iter(f"{ns}t")))
 
-    nomes = [n for n in z.namelist() if re.match(r"xl/worksheets/sheet\d+\.xml$", n)]
-    raiz = ET.fromstring(z.read(sorted(nomes)[0]))
+    caminho = _escolher_aba(z)
+    raiz = ET.fromstring(z.read(caminho))
+    ns = _ns(raiz)
 
     linhas = []
-    for row in raiz.iter(f"{NS}row"):
+    for row in raiz.iter(f"{ns}row"):
         celulas = {}
-        for c in row.findall(f"{NS}c"):
+        for c in row.findall(f"{ns}c"):
             texto = None
-            if c.get("t") == "inlineStr":          # texto embutido na celula
-                bloco = c.find(f"{NS}is")
+            if c.get("t") == "inlineStr":
+                bloco = c.find(f"{ns}is")
                 if bloco is not None:
-                    texto = "".join(t.text or "" for t in bloco.iter(f"{NS}t"))
+                    texto = "".join(t.text or "" for t in bloco.iter(f"{ns}t"))
             else:
-                v = c.find(f"{NS}v")
+                v = c.find(f"{ns}v")
                 if v is not None and v.text is not None:
                     texto = v.text
-                    if c.get("t") == "s":          # texto na tabela compartilhada
+                    if c.get("t") == "s":
                         i = int(texto)
                         texto = compartilhadas[i] if i < len(compartilhadas) else ""
             if texto is None:
                 continue
-            celulas[_indice(_letras(c.get("r")))] = texto
+            ref = c.get("r")
+            if not ref:
+                continue
+            celulas[_indice(_letras(ref))] = texto
         if celulas:
             largura = max(celulas) + 1
             linhas.append([celulas.get(i, "") for i in range(largura)])
@@ -232,13 +299,13 @@ def commodities_banco_mundial():
 
     alvos = [t for lista in COMMODITIES.values() for t in lista]
     melhor, pontos = None, 0
-    for i, linha in enumerate(linhas[:25]):
+    for i, linha in enumerate(linhas[:40]):
         texto = " | ".join(linha).lower()
         p = sum(1 for t in alvos if t in texto)
         if p > pontos:
             melhor, pontos = i, p
     if melhor is None or pontos == 0:
-        amostra = [" | ".join(l)[:120] for l in linhas[:6]]
+        amostra = [" | ".join(l)[:140] for l in linhas[:8]]
         raise ValueError("cabecalho nao encontrado; primeiras linhas: " + str(amostra))
     print(f"        cabecalho na linha {melhor + 1} ({pontos} termos reconhecidos)")
 
@@ -301,7 +368,10 @@ def safra_ibge():
     if len(dados) < 2:
         raise ValueError("SIDRA retornou vazio")
 
-    saida = {}
+    # o IBGE separa 1a e 2a safra e traz codigos no nome ("1.15 Milho").
+    # Agregamos por cultura para exibir o total nacional.
+    totais = {}
+    periodo_ref = ""
     for linha in dados[1:]:
         nome = (linha.get("D4N") or linha.get("D3N") or "").strip()
         chave = nome.lower()
@@ -311,15 +381,25 @@ def safra_ibge():
             valor = float(linha.get("V"))
         except (TypeError, ValueError):
             continue
-        periodo = linha.get("D3N") or linha.get("D2N") or ""
-        limpo = re.sub(r"\s*\(.*?\)", "", nome).strip()
-        saida[limpo] = {
-            "rotulo": limpo,
-            "valor": br(valor / 1_000_000, 1) + " mi t",
-            "detalhe": f"Estimativa LSPA · {periodo}",
-        }
-    if not saida:
+
+        periodo_ref = linha.get("D3N") or linha.get("D2N") or periodo_ref
+        limpo = re.sub(r"\s*\(.*?\)", "", nome)              # remove parenteses
+        limpo = re.sub(r"^[\d.]+\s*", "", limpo)             # remove "1.15 "
+        limpo = re.sub(r"\s*\d+ª\s*safra", "", limpo)        # junta 1a, 2a e 3a safra
+        limpo = limpo.strip()
+        limpo = limpo[:1].upper() + limpo[1:]
+        totais[limpo] = totais.get(limpo, 0.0) + valor
+
+    if not totais:
         raise ValueError("nenhuma cultura reconhecida na resposta")
+
+    saida = {}
+    for nome in sorted(totais, key=lambda k: -totais[k]):
+        saida[nome] = {
+            "rotulo": nome,
+            "valor": br(totais[nome] / 1_000_000, 1) + " mi t",
+            "detalhe": f"Estimativa LSPA · {periodo_ref}",
+        }
     return saida
 
 
