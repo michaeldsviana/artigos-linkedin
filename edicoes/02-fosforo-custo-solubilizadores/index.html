@@ -106,6 +106,37 @@
   @media (max-width:420px){
     .brand .edicao .t{display:none;}
   }
+  /* ---------- FAIXA DE MERCADO ---------- */
+  .ticker{position:relative; overflow:hidden; background:#0A1727;
+    border-bottom:1px solid rgba(255,255,255,0.08); height:42px;}
+  .ticker-track{display:flex; align-items:center; height:42px; width:max-content;
+    animation:corre 52s linear infinite;}
+  .ticker:hover .ticker-track{animation-play-state:paused;}
+  @keyframes corre{from{transform:translateX(0);} to{transform:translateX(-50%);}}
+  .tk{display:flex; align-items:baseline; white-space:nowrap; padding:0 26px;
+    border-right:1px solid rgba(255,255,255,0.10); font-family:'Inter',sans-serif; font-size:13px;}
+  .tk .r{color:#8FA6BC; text-transform:uppercase; letter-spacing:0.07em; font-size:11px;
+    font-weight:600; margin-right:9px;}
+  .tk .v{font-family:'Archivo',sans-serif; font-weight:600; font-size:14px; color:#FFF;}
+  .tk .var{font-family:'Archivo',sans-serif; font-weight:600; font-size:12.5px; margin-left:8px;}
+  .tk .var.alta{color:#F0907E;} .tk .var.baixa{color:#8ED26B;} .tk .var.estavel{color:#8FA6BC;}
+  .tk.velho .v{color:#B7C6D4;}
+  .tk .selo{font-size:10px; color:#A07A3B; margin-left:8px;
+    border:1px solid rgba(160,122,59,0.5); border-radius:3px; padding:1px 5px;}
+  .ticker .marca{position:absolute; left:0; top:0; height:42px; z-index:2; display:flex;
+    align-items:center; padding:0 16px; background:#0A1727;
+    border-right:1px solid rgba(255,255,255,0.14); font-family:'Archivo',sans-serif;
+    font-weight:700; font-size:10.5px; letter-spacing:0.12em; text-transform:uppercase;
+    color:var(--green-brand); box-shadow:14px 0 18px -8px rgba(10,23,39,0.95);}
+  .ticker .fade{position:absolute; right:0; top:0; width:56px; height:42px; z-index:2;
+    background:linear-gradient(90deg, rgba(10,23,39,0) 0%, #0A1727 78%); pointer-events:none;}
+  .ticker.vazio{display:none;}
+  @media (max-width:560px){ .ticker .marca{display:none;} .tk{padding:0 18px; font-size:12.5px;} }
+  @media (prefers-reduced-motion: reduce){
+    .ticker-track{animation:none;}
+    .ticker{overflow-x:auto; -webkit-overflow-scrolling:touch;}
+  }
+
   .rule-accent{height:3px; background:var(--green-brand);}
 
   /* ---------- BANNER DE CAPA ---------- */
@@ -481,6 +512,12 @@
 </header>
 <div class="rule-accent"></div>
 
+<div class="ticker vazio" id="ticker" aria-label="Indicadores de mercado">
+  <span class="marca">Mercado</span>
+  <div class="ticker-track" id="tickerTrack"></div>
+  <span class="fade"></span>
+</div>
+
 <div class="nav-overlay" id="navOverlay"></div>
 <aside class="nav-drawer" id="navDrawer" aria-hidden="true">
   <div class="head">
@@ -622,6 +659,37 @@
   o.addEventListener('click',close); c.addEventListener('click',close);
   d.querySelectorAll('nav a').forEach(function(a){a.addEventListener('click',close);});
   document.addEventListener('keydown',function(e){if(e.key==='Escape')close();});
+})();
+</script>
+<script>
+(function(){
+  var faixa=document.getElementById('ticker'), trilho=document.getElementById('tickerTrack');
+  if(!faixa||!trilho) return;
+  function esc(t){return String(t).replace(/[&<>"]/g,function(c){
+    return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c];});}
+  function bloco(it){
+    var h='<div class="tk'+(it.atualizado===false?' velho':'')+'">';
+    h+='<span class="r">'+esc(it.rotulo)+'</span><span class="v">'+esc(it.valor)+'</span>';
+    if(it.variacao){h+='<span class="var '+esc(it.sentido||'estavel')+'">'+esc(it.variacao)+'</span>';}
+    if(it.atualizado===false){h+='<span class="selo">defasado</span>';}
+    return h+'</div>';
+  }
+  var req=new XMLHttpRequest();
+  req.open('GET','../../data/mercado.json?v='+Date.now(),true);
+  req.onreadystatechange=function(){
+    if(req.readyState!==4||req.status<200||req.status>=300) return;
+    try{
+      var d=JSON.parse(req.responseText), itens=d.indicadores||{}, ks=Object.keys(itens);
+      if(!ks.length) return;
+      var html=''; for(var i=0;i<ks.length;i++){html+=bloco(itens[ks[i]]);}
+      if(d.atualizado_em){html+='<div class="tk"><span class="r">Atualizado</span><span class="v" style="font-size:12.5px;font-weight:500">'+esc(d.atualizado_em)+'</span></div>';}
+      trilho.innerHTML=html+html;
+      faixa.className='ticker';
+      var larg=trilho.scrollWidth/2;
+      trilho.style.animationDuration=Math.max(22,Math.round(larg/55))+'s';
+    }catch(e){}
+  };
+  req.send();
 })();
 </script>
 </body>
