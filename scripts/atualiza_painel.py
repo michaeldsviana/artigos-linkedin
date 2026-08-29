@@ -98,6 +98,7 @@ def dolar():
         "rotulo": "Dólar",
         "valor": "R$ " + br(atual, 4),
         "detalhe": f"PTAX venda · {data_ref}",
+        "fonte": "bcb",
     }
     if anterior:
         var = (atual - anterior) / anterior * 100
@@ -393,7 +394,7 @@ def commodities_banco_mundial():
                 detalhe = f"Por {por_extenso} · média de {periodo} · Banco Mundial"
 
         item = {"rotulo": rotulo, "valor": "US$ " + br(exibido) + sufixo,
-                "detalhe": detalhe}
+                "detalhe": detalhe, "fonte": "banco-mundial"}
         if unidade:
             item["unidade"] = unidade
         try:
@@ -592,65 +593,75 @@ def precos_conab():
             "rotulo": rotulo,
             "valor": "R$ " + br(r["valor"]),
             "detalhe": f"Por {unidade} · {r['data']} · CONAB",
+            "fonte": "conab",
         }
     print(f"        {len(saida)} precos do Cerrado ({nome_arq})")
     return saida
 
 
 # ======================================================================
+# cada coletor declara a etiqueta de fonte que produz, para que uma falha
+# restaure somente os proprios valores antigos, sem misturar bases
 COLETA = {
-    "precos": [("dolar", dolar),
-               ("culturas_conab", precos_conab),
-               ("fertilizantes", commodities_banco_mundial)],
-    "macro":  [("selic", selic), ("ipca", ipca_12m)],
-    "safra":  [("culturas", safra_ibge)],
+    "precos": [("dolar", dolar, "bcb"),
+               ("culturas_conab", precos_conab, "conab"),
+               ("fertilizantes", commodities_banco_mundial, "banco-mundial")],
+    "macro":  [("selic", selic, None), ("ipca", ipca_12m, None)],
+    "safra":  [("culturas", safra_ibge, "ibge")],
 }
 
 
 # ----------------------------------------------------------------------
-# SONDAGEM: arquivos de preco da CONAB
-# A CONAB autoriza reproducao sem fins lucrativos com citacao da fonte.
-# O portal e feito em JavaScript, entao testamos nomes provaveis dos
-# arquivos que alimentam os paineis. Apenas diagnostico; nada e publicado.
+# SONDAGEM: descobrir os enderecos reais dos arquivos da CONAB
+# O portal e um aplicativo Angular; os caminhos dos arquivos ficam dentro
+# dos pacotes JavaScript. Em vez de adivinhar nomes, lemos o codigo do
+# proprio site e extraimos as referencias. Apenas diagnostico.
 # ----------------------------------------------------------------------
-BASE_CONAB = "https://portaldeinformacoes.conab.gov.br/downloads/arquivos/"
-
-ARQUIVOS_CONAB = [
-    "PrecosAgropecuariosSemanalUF.csv",
-    "PrecosAgropecuariosSemanalUf.csv",
-    "precos_agropecuarios_semanal_uf.csv",
-    "PrecosAgropecuariosMensalUF.csv",
-    "PrecosSemanalUF.csv",
-    "PrecoSemanalUf.csv",
-    "SerieHistoricaPrecos.csv",
-    "PrecosAgropecuarios.csv",
-    "ProhortDiario.csv",
-]
+PORTAL_CONAB = "https://portaldeinformacoes.conab.gov.br/"
 
 
 def sondar():
-    print("\n--- sondagem de arquivos da CONAB (diagnostico) ---")
-    achou = []
-    for nome in ARQUIVOS_CONAB:
-        url = BASE_CONAB + nome
+    print("\n--- sondagem: lendo o codigo do portal da CONAB ---")
+    try:
+        with abrir(PORTAL_CONAB, timeout=40) as r:
+            html = r.read().decode("utf-8", "ignore")
+    except Exception as e:
+        print(f"[erro] nao abriu o portal: {type(e).__name__}: {e}")
+        return
+
+    scripts = re.findall(r'src="([^"]+\.js)"', html)
+    print(f"pacotes JavaScript encontrados: {len(scripts)}")
+    if not scripts:
+        print("trecho do HTML:", html[:300])
+        return
+
+    achados = set()
+    for src in scripts[:8]:
+        url = src if src.startswith("http") else PORTAL_CONAB + src.lstrip("/")
         try:
-            req = urllib.request.Request(url, headers=CABECALHO)
-            with urllib.request.urlopen(req, timeout=25, context=CTX) as r:
-                tipo = r.headers.get("Content-Type", "?")
-                inicio = r.read(300)
-                eh_html = b"<!doctype" in inicio.lower() or b"<html" in inicio.lower()
-                marcador = "HTML (pagina do app)" if eh_html else "DADOS"
-                print(f"[{r.status}] {nome}")
-                print(f"      tipo: {tipo} -> {marcador}")
-                if not eh_html:
-                    achou.append(nome)
-                    print(f"      inicio: {inicio[:220].decode('utf-8', 'ignore')!r}")
+            with abrir(url, timeout=60) as r:
+                codigo = r.read().decode("utf-8", "ignore")
         except Exception as e:
-            print(f"[erro] {nome} -> {type(e).__name__}: {e}")
-    if achou:
-        print("\nARQUIVOS VALIDOS ENCONTRADOS: " + ", ".join(achou))
+            print(f"[erro] {src}: {type(e).__name__}")
+            continue
+
+        print(f"[ok] {src} ({len(codigo)} chars)")
+        for padrao in [
+            r'["\'\`]([^"\'\`\s]*downloads?/[^"\'\`\s]*)["\'\`]',
+            r'["\'\`]([^"\'\`\s]*\.(?:csv|txt|xlsx|json)(?:\?[^"\'\`\s]*)?)["\'\`]',
+            r'["\'\`]([^"\'\`\s]*/api/[^"\'\`\s]*)["\'\`]',
+            r'["\'\`](https?://[^"\'\`\s]*conab[^"\'\`\s]*)["\'\`]',
+        ]:
+            for m in re.findall(padrao, codigo, flags=re.I):
+                if 3 < len(m) < 220:
+                    achados.add(m)
+
+    if achados:
+        print(f"\nreferencias encontradas ({len(achados)}):")
+        for a in sorted(achados)[:60]:
+            print("   ", a)
     else:
-        print("\nnenhum nome testado retornou dados")
+        print("\nnenhuma referencia de arquivo localizada no codigo")
     print("--- fim da sondagem ---\n")
 
 
@@ -668,7 +679,7 @@ def main():
     falhas = []
 
     for grupo, coletores in COLETA.items():
-        for chave, funcao in coletores:
+        for chave, funcao, etiqueta in coletores:
             try:
                 r = funcao()
                 itens = r if "rotulo" not in r else {chave: r}
@@ -679,11 +690,18 @@ def main():
             except Exception as e:
                 falhas.append(f"{grupo}/{chave}")
                 print(f"[falha] {grupo}/{chave}: {type(e).__name__}: {e}")
+                # so recupera o que veio da mesma fonte; assim um preco antigo
+                # em dolar nao reaparece no lugar de um preco em reais
                 for k, item in anterior.get(grupo, {}).items():
-                    if k not in grupos[grupo]:
-                        item["atualizado"] = False
-                        grupos[grupo][k] = item
-                        print(f"        mantido anterior: {k} = {item['valor']}")
+                    if k in grupos[grupo]:
+                        continue
+                    if etiqueta and item.get("fonte") != etiqueta:
+                        continue
+                    if not etiqueta and chave != k:
+                        continue
+                    item["atualizado"] = False
+                    grupos[grupo][k] = item
+                    print(f"        mantido anterior: {k} = {item['valor']}")
 
     if not any(grupos.values()):
         raise SystemExit("nenhum dado obtido; arquivo preservado")
