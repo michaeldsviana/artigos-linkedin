@@ -311,6 +311,29 @@ def commodities_banco_mundial():
 
     cabecalho = [c.lower() for c in linhas[melhor]]
 
+    # Logo abaixo do cabecalho a planilha traz a unidade de cada coluna,
+    # do tipo ($/mt) ou ($/kg). Sem isso, soja em tonelada e algodao em
+    # quilo apareceriam lado a lado como se fossem comparaveis.
+    unidades = {}
+    for linha in linhas[melhor + 1: melhor + 4]:
+        for j, celula in enumerate(linha):
+            if j in unidades or not celula:
+                continue
+            m = re.search(r"\$\s*/\s*([A-Za-z]+)", str(celula))
+            if m:
+                unidades[j] = m.group(1).lower()
+    if unidades:
+        print(f"        unidades reconhecidas em {len(unidades)} colunas")
+    else:
+        print("        [aviso] unidades nao encontradas na planilha")
+
+    NOMES_UNIDADE = {
+        "mt": "tonelada", "kg": "quilo", "bbl": "barril",
+        "mmbtu": "milhão de BTU", "dmtu": "tonelada seca", "oz": "onça troy",
+    }
+    SIMBOLO = {"mt": "/t", "kg": "/kg", "bbl": "/bbl",
+               "mmbtu": "/mmBTU", "dmtu": "/dmtu", "oz": "/oz"}
+
     def coluna_de(termos):
         for j, nome in enumerate(cabecalho):
             if all(t in nome for t in termos):
@@ -338,8 +361,18 @@ def commodities_banco_mundial():
             print(f"        [pulado] {rotulo}: valor invalido")
             continue
 
-        item = {"rotulo": rotulo, "valor": "US$ " + br(atual),
-                "detalhe": f"Média de {periodo} · Banco Mundial"}
+        unidade = unidades.get(j, "")
+        sufixo = SIMBOLO.get(unidade, "")
+        por_extenso = NOMES_UNIDADE.get(unidade)
+
+        detalhe = f"Média de {periodo} · Banco Mundial"
+        if por_extenso:
+            detalhe = f"Por {por_extenso} · média de {periodo} · Banco Mundial"
+
+        item = {"rotulo": rotulo, "valor": "US$ " + br(atual) + sufixo,
+                "detalhe": detalhe}
+        if unidade:
+            item["unidade"] = unidade
         try:
             ant = float(penultima[j])
             if ant:
