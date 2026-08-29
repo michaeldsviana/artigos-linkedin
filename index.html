@@ -241,39 +241,65 @@
   }
 
 
-  /* ---------- PAINEL DE MERCADO ---------- */
-  .painel-wrap{background:var(--panel); border-top:1px solid var(--line); border-bottom:1px solid var(--line);}
-  .painel-wrap section{border-top:none;}
-  .painel-topo{display:flex; align-items:baseline; flex-wrap:wrap; margin-bottom:16px;}
-  .painel-topo .quando{
-    margin-left:auto; font-size:12.5px; color:var(--grey);
+  /* ---------- FAIXA DE MERCADO ---------- */
+  .ticker{
+    position:relative; overflow:hidden;
+    background:#0A1727;
+    border-bottom:1px solid rgba(255,255,255,0.08);
+    height:42px;
   }
-  .painel-grid{
-    display:grid; grid-template-columns:repeat(auto-fit, minmax(160px,1fr));
-    gap:1px; background:var(--line); border:1px solid var(--line); border-radius:4px; overflow:hidden;
+  .ticker-track{
+    display:flex; align-items:center; height:42px;
+    width:max-content;
+    animation:corre 52s linear infinite;
   }
-  .ind{background:#FFF; padding:18px 18px 16px;}
-  .ind .r{
-    font-size:11.5px; font-weight:600; letter-spacing:0.05em; text-transform:uppercase;
-    color:var(--ink-dim); margin-bottom:8px;
+  .ticker:hover .ticker-track{animation-play-state:paused;}
+  @keyframes corre{
+    from{transform:translateX(0);}
+    to{transform:translateX(-50%);}
   }
-  .ind .v{
-    font-family:'Archivo',sans-serif; font-weight:700; font-size:23px;
-    color:var(--navy); line-height:1.1; letter-spacing:-0.01em;
+  .tk{
+    display:flex; align-items:baseline; white-space:nowrap;
+    padding:0 26px; border-right:1px solid rgba(255,255,255,0.10);
+    font-family:'Inter',sans-serif; font-size:13px;
   }
-  .ind .d{font-size:12px; color:var(--grey); margin-top:6px; line-height:1.45;}
-  .ind .var{
-    display:inline-block; font-family:'Archivo',sans-serif; font-weight:600;
-    font-size:12.5px; margin-top:7px; padding:2px 8px; border-radius:100px;
+  .tk .r{
+    color:#8FA6BC; text-transform:uppercase; letter-spacing:0.07em;
+    font-size:11px; font-weight:600; margin-right:9px;
   }
-  .ind .var.alta{color:#8A3B2E; background:#FBEDEA;}
-  .ind .var.baixa{color:var(--green); background:#ECF5E9;}
-  .ind .var.estavel{color:var(--ink-dim); background:var(--panel);}
-  .ind.velho .v{color:var(--ink-dim);}
-  .ind .aviso{font-size:11px; color:#A07A3B; margin-top:6px;}
-  .painel-fonte{font-size:12px; color:var(--grey); margin-top:14px; line-height:1.6;}
-  .painel-carregando{
-    font-size:14px; color:var(--grey); padding:22px 0;
+  .tk .v{
+    font-family:'Archivo',sans-serif; font-weight:600; font-size:14px;
+    color:#FFFFFF; letter-spacing:-0.01em;
+  }
+  .tk .var{font-family:'Archivo',sans-serif; font-weight:600; font-size:12.5px; margin-left:8px;}
+  .tk .var.alta{color:#F0907E;}
+  .tk .var.baixa{color:#8ED26B;}
+  .tk .var.estavel{color:#8FA6BC;}
+  .tk.velho .v{color:#B7C6D4;}
+  .tk .selo{
+    font-size:10px; color:#A07A3B; margin-left:8px;
+    border:1px solid rgba(160,122,59,0.5); border-radius:3px; padding:1px 5px;
+  }
+  /* etiqueta fixa à esquerda */
+  .ticker .marca{
+    position:absolute; left:0; top:0; height:42px; z-index:2;
+    display:flex; align-items:center; padding:0 16px;
+    background:#0A1727;
+    border-right:1px solid rgba(255,255,255,0.14);
+    font-family:'Archivo',sans-serif; font-weight:700; font-size:10.5px;
+    letter-spacing:0.12em; text-transform:uppercase; color:var(--green-brand);
+    box-shadow:14px 0 18px -8px rgba(10,23,39,0.95);
+  }
+  .ticker .fade{
+    position:absolute; right:0; top:0; width:56px; height:42px; z-index:2;
+    background:linear-gradient(90deg, rgba(10,23,39,0) 0%, #0A1727 78%);
+    pointer-events:none;
+  }
+  .ticker-track.pronto{padding-left:0;}
+  .ticker.vazio{display:none;}
+  @media (max-width:560px){
+    .ticker .marca{display:none;}
+    .tk{padding:0 18px; font-size:12.5px;}
   }
 
   /* ---------- PUBLICAÇÕES ---------- */
@@ -381,6 +407,8 @@
     .reveal{opacity:1 !important; transform:none !important; transition:none;}
     .btn:hover, .ed-card:hover, .contact-card:hover{transform:none;}
     .hero h1.flutua, .btn-primary.chama, .btn-primary::after{animation:none;}
+    .ticker-track{animation:none;}
+    .ticker{overflow-x:auto; -webkit-overflow-scrolling:touch;}
   }
   .legal-bar{
     border-top:1px solid rgba(255,255,255,0.10);
@@ -413,6 +441,12 @@
 </header>
 <div class="rule-accent"></div>
 
+<div class="ticker vazio" id="ticker" aria-label="Indicadores de mercado">
+  <span class="marca">Mercado</span>
+  <div class="ticker-track" id="tickerTrack"></div>
+  <span class="fade"></span>
+</div>
+
 <div class="nav-overlay" id="navOverlay"></div>
 <aside class="nav-drawer" id="navDrawer" aria-hidden="true">
   <div class="head">
@@ -421,7 +455,6 @@
   </div>
   <nav>
     <a href="#topo">Home<span>Início</span></a>
-    <a href="#mercado">Mercado<span>Indicadores do dia</span></a>
     <a href="#publicacoes">Publicações<span>Análises semanais</span></a>
     <a href="#relatorios">Relatórios<span>Materiais aprofundados</span></a>
     <a href="#contato">Contato<span>Redes e acesso direto</span></a>
@@ -482,22 +515,6 @@
   <p>O AGROMV Semanal nasceu da vontade de organizar publicamente essa leitura, em vez de deixá-la restrita a apresentações internas e conversas de corredor.</p>
 </section>
 
-
-<div class="painel-wrap">
-  <section id="mercado">
-    <div class="painel-topo">
-      <div>
-        <div class="sec-label reveal">Painel de mercado</div>
-        <h2 class="reveal d1">Indicadores de hoje</h2>
-      </div>
-      <span class="quando reveal d1" id="painelQuando"></span>
-    </div>
-
-    <div id="painelGrid" class="painel-carregando">Carregando indicadores...</div>
-
-    <p class="painel-fonte reveal d2" id="painelFonte"></p>
-  </section>
-</div>
 
 <div class="editions-wrap">
   <section id="publicacoes">
@@ -690,12 +707,12 @@
 })();
 </script>
 
+
 <script>
 (function(){
-  var grid  = document.getElementById('painelGrid');
-  var quando= document.getElementById('painelQuando');
-  var fonte = document.getElementById('painelFonte');
-  if(!grid) return;
+  var faixa = document.getElementById('ticker');
+  var trilho = document.getElementById('tickerTrack');
+  if(!faixa || !trilho) return;
 
   function esc(t){
     return String(t).replace(/[&<>"]/g, function(c){
@@ -703,48 +720,46 @@
     });
   }
 
-  function desenhar(d){
+  function bloco(it){
+    var h = '<div class="tk' + (it.atualizado === false ? ' velho' : '') + '">';
+    h += '<span class="r">' + esc(it.rotulo) + '</span>';
+    h += '<span class="v">' + esc(it.valor) + '</span>';
+    if (it.variacao){
+      h += '<span class="var ' + esc(it.sentido || 'estavel') + '">' + esc(it.variacao) + '</span>';
+    }
+    if (it.atualizado === false){ h += '<span class="selo">defasado</span>'; }
+    h += '</div>';
+    return h;
+  }
+
+  function montar(d){
     var itens = d.indicadores || {};
     var chaves = Object.keys(itens);
-    if(!chaves.length){
-      grid.className = 'painel-carregando';
-      grid.textContent = 'Indicadores serão exibidos após a primeira atualização automática.';
-      return;
-    }
-    var html = '';
-    for (var i=0; i<chaves.length; i++){
-      var it = itens[chaves[i]];
-      html += '<div class="ind' + (it.atualizado === false ? ' velho' : '') + '">';
-      html += '<div class="r">' + esc(it.rotulo) + '</div>';
-      html += '<div class="v">' + esc(it.valor) + '</div>';
-      if (it.variacao){
-        html += '<span class="var ' + esc(it.sentido || 'estavel') + '">' + esc(it.variacao) + '</span>';
-      }
-      if (it.detalhe){ html += '<div class="d">' + esc(it.detalhe) + '</div>'; }
-      if (it.atualizado === false){
-        html += '<div class="aviso">Fonte indisponível na última consulta</div>';
-      }
-      html += '</div>';
-    }
-    grid.className = 'painel-grid';
-    grid.innerHTML = html;
+    if(!chaves.length) return;            // sem dados, a faixa continua oculta
 
-    if (quando && d.atualizado_em){ quando.textContent = 'Atualizado em ' + d.atualizado_em; }
-    if (fonte && d.fontes){
-      fonte.textContent = 'Fontes: ' + d.fontes + '. Atualização automática diária, às 10h.';
+    var html = '';
+    for (var i=0; i<chaves.length; i++){ html += bloco(itens[chaves[i]]); }
+    if (d.atualizado_em){
+      html += '<div class="tk"><span class="r">Atualizado</span>' +
+              '<span class="v" style="font-size:12.5px;font-weight:500">' +
+              esc(d.atualizado_em) + '</span></div>';
     }
+
+    // duplica a sequência para o laço ficar contínuo, sem salto
+    trilho.innerHTML = html + html;
+    faixa.className = 'ticker';
+
+    // velocidade proporcional ao conteúdo: ritmo de leitura constante
+    var largura = trilho.scrollWidth / 2;
+    var segundos = Math.max(22, Math.round(largura / 55));
+    trilho.style.animationDuration = segundos + 's';
   }
 
   var req = new XMLHttpRequest();
   req.open('GET', 'data/mercado.json?v=' + Date.now(), true);
   req.onreadystatechange = function(){
-    if (req.readyState !== 4) return;
-    if (req.status >= 200 && req.status < 300){
-      try { desenhar(JSON.parse(req.responseText)); }
-      catch(e){ grid.textContent = 'Não foi possível carregar os indicadores agora.'; }
-    } else {
-      grid.textContent = 'Não foi possível carregar os indicadores agora.';
-    }
+    if (req.readyState !== 4 || req.status < 200 || req.status >= 300) return;
+    try { montar(JSON.parse(req.responseText)); } catch(e){ /* faixa segue oculta */ }
   };
   req.send();
 })();
