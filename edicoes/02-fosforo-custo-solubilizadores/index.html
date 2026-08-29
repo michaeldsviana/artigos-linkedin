@@ -513,7 +513,7 @@
 <div class="rule-accent"></div>
 
 <div class="ticker vazio" id="ticker" aria-label="Indicadores de mercado">
-  <span class="marca">Mercado</span>
+  <a class="marca" href="../../mercado/" style="text-decoration:none">Mercado</a>
   <div class="ticker-track" id="tickerTrack"></div>
   <span class="fade"></span>
 </div>
@@ -526,6 +526,7 @@
   </div>
   <nav>
     <a href="../../index.html">Home<span>Início</span></a>
+    <a href="../../mercado/">Mercado<span>Cotações e safra</span></a>
     <a href="../../index.html#publicacoes">Publicações<span>Análises semanais</span></a>
     <a href="../../index.html#relatorios">Relatórios<span>Materiais aprofundados</span></a>
     <a href="../../index.html#contato">Contato<span>Redes e acesso direto</span></a>
@@ -679,7 +680,8 @@
   req.onreadystatechange=function(){
     if(req.readyState!==4||req.status<200||req.status>=300) return;
     try{
-      var d=JSON.parse(req.responseText), itens=d.indicadores||{}, ks=Object.keys(itens);
+      var d=JSON.parse(req.responseText);
+      var itens=(d.grupos&&d.grupos.precos)||{}, ks=Object.keys(itens);
       if(!ks.length) return;
       var html=''; for(var i=0;i<ks.length;i++){html+=bloco(itens[ks[i]]);}
       if(d.atualizado_em){html+='<div class="tk"><span class="r">Atualizado</span><span class="v" style="font-size:12.5px;font-weight:500">'+esc(d.atualizado_em)+'</span></div>';}
