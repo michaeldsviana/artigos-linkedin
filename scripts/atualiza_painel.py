@@ -3,7 +3,7 @@ AGROMV Semanal - atualizacao do painel de mercado
 --------------------------------------------------
 Gera data/mercado.json com tres grupos:
 
-  precos  -> dolar (BCB) + commodities e fertilizantes (Banco Mundial)
+  precos  -> dolar (BCB) + culturas do Cerrado (CONAB) + fertilizantes (Banco Mundial)
   macro   -> Selic e IPCA (BCB)
   safra   -> projecao nacional de producao por cultura (IBGE / LSPA)
 
@@ -162,14 +162,13 @@ def baixar_planilha():
             print(f"        [{nome}] {type(e).__name__}: {e}")
     raise ValueError("nenhum endereco respondeu -> " + " | ".join(erros))
 
-# rotulo exibido -> termos que identificam a coluna na planilha
+# A tabela do Banco Mundial passa a cobrir apenas fertilizantes: as culturas
+# vem da CONAB, com preco nacional em reais e recorte do Cerrado.
 COMMODITIES = {
-    "Soja":            ["soybean"],
-    "Milho":           ["maize"],
-    "Algodão":         ["cotton"],
     "Ureia":           ["urea"],
     "DAP":             ["dap"],
     "Fosfato (rocha)": ["phosphate rock"],
+    "Potássio (KCl)":  ["potassium chloride"],
 }
 
 def _letras(ref):
@@ -337,11 +336,7 @@ def commodities_banco_mundial():
     # A planilha vem em tonelada (ou quilo). Convertemos as culturas para a
     # unidade usada na comercializacao no Brasil e deixamos os fertilizantes
     # em tonelada, que e como sao negociados.
-    CONVERSAO = {
-        "Soja":    ("saca de 60 kg", 60, "/sc"),
-        "Milho":   ("saca de 60 kg", 60, "/sc"),
-        "Algodão": ("arroba de 15 kg", 15, "/@"),
-    }
+    CONVERSAO = {}   # fertilizantes permanecem em tonelada
 
     def para_kg(valor, unidade):
         if unidade == "mt":
@@ -464,9 +459,149 @@ def safra_ibge():
     return saida
 
 
+
+# ======================================================================
+# 4. CONAB - precos das culturas no Cerrado
+#    A CONAB autoriza reproducao sem fins lucrativos, citada a fonte e
+#    mantida a integridade das informacoes.
+# ======================================================================
+BASE_CONAB = "https://portaldeinformacoes.conab.gov.br/downloads/arquivos/"
+
+# o portal e feito em JavaScript, entao testamos os nomes provaveis do
+# arquivo que alimenta o painel de precos semanais por UF
+ARQUIVOS_CONAB = [
+    "PrecosAgropecuariosSemanalUF.csv",
+    "PrecosAgropecuariosSemanalUf.csv",
+    "precos_agropecuarios_semanal_uf.csv",
+    "PrecosSemanalUF.csv",
+    "PrecosAgropecuariosMensalUF.csv",
+    "SerieHistoricaPrecos.csv",
+    "PrecosAgropecuarios.csv",
+]
+
+# estados do bioma Cerrado
+UF_CERRADO = ["MT", "GO", "MS", "MG", "BA", "TO", "MA", "PI", "DF"]
+
+CULTURAS_CONAB = ["soja", "milho", "algod", "sorgo", "feij"]
+
+
+def baixar_conab():
+    """Percorre os nomes candidatos ate encontrar um CSV de verdade."""
+    erros = []
+    for nome in ARQUIVOS_CONAB:
+        url = BASE_CONAB + nome
+        try:
+            with abrir(url, timeout=90) as r:
+                bruto = r.read()
+            if b"<!doctype" in bruto[:200].lower() or b"<html" in bruto[:200].lower():
+                erros.append(f"{nome}: veio HTML")
+                print(f"        [{nome}] pagina do app, nao e dado")
+                continue
+            print(f"        [{nome}] arquivo obtido: {len(bruto)} bytes")
+            return nome, bruto
+        except Exception as e:
+            erros.append(f"{nome}: {type(e).__name__}")
+            print(f"        [{nome}] {type(e).__name__}")
+    raise ValueError("nenhum arquivo da CONAB respondeu -> " + " | ".join(erros))
+
+
+def _decodificar(bruto):
+    for cod in ("utf-8-sig", "utf-8", "latin-1"):
+        try:
+            return bruto.decode(cod)
+        except UnicodeDecodeError:
+            continue
+    return bruto.decode("utf-8", "ignore")
+
+
+def _achar(colunas, termos):
+    for i, nome in enumerate(colunas):
+        baixo = nome.lower().strip()
+        if any(t in baixo for t in termos):
+            return i
+    return None
+
+
+def precos_conab():
+    """Ultimo preco por cultura e UF do Cerrado."""
+    import csv as _csv
+
+    nome_arq, bruto = baixar_conab()
+    texto = _decodificar(bruto)
+
+    # o separador varia entre ; e , nos arquivos do governo
+    amostra = texto[:2000]
+    separador = ";" if amostra.count(";") > amostra.count(",") else ","
+    leitor = _csv.reader(io.StringIO(texto), delimiter=separador)
+
+    linhas = [l for l in leitor if l]
+    if len(linhas) < 2:
+        raise ValueError("arquivo sem linhas de dados")
+
+    colunas = linhas[0]
+    print(f"        colunas: {colunas[:10]}")
+
+    i_prod = _achar(colunas, ["produto", "cultura"])
+    i_uf   = _achar(colunas, ["uf", "estado", "sigla"])
+    i_data = _achar(colunas, ["data", "periodo", "semana", "mes", "ano"])
+    i_val  = _achar(colunas, ["preco", "preço", "valor"])
+    i_uni  = _achar(colunas, ["unidade", "embalagem"])
+
+    if i_prod is None or i_val is None:
+        raise ValueError(f"colunas essenciais nao identificadas em {colunas[:12]}")
+
+    registros = {}
+    for linha in linhas[1:]:
+        if len(linha) <= max(x for x in [i_prod, i_val, i_uf, i_data] if x is not None):
+            continue
+        produto = linha[i_prod].strip()
+        baixo = produto.lower()
+        if not any(c in baixo for c in CULTURAS_CONAB):
+            continue
+
+        uf = linha[i_uf].strip().upper() if i_uf is not None else ""
+        if uf and uf not in UF_CERRADO:
+            continue
+
+        bruto_valor = linha[i_val].strip().replace(".", "").replace(",", ".")
+        try:
+            valor = float(bruto_valor)
+        except ValueError:
+            continue
+        if valor <= 0:
+            continue
+
+        data = linha[i_data].strip() if i_data is not None else ""
+        unidade = linha[i_uni].strip() if i_uni is not None else ""
+
+        chave = f"{produto} {uf}".strip()
+        anterior = registros.get(chave)
+        if anterior is None or data > anterior["data"]:
+            registros[chave] = {"produto": produto, "uf": uf, "valor": valor,
+                                "data": data, "unidade": unidade}
+
+    if not registros:
+        raise ValueError("nenhum registro de cultura no Cerrado encontrado")
+
+    saida = {}
+    for chave in sorted(registros, key=lambda k: (registros[k]["produto"], registros[k]["uf"])):
+        r = registros[chave]
+        rotulo = f"{r['produto']} {r['uf']}".strip()
+        unidade = r["unidade"] or "unidade da fonte"
+        saida[rotulo] = {
+            "rotulo": rotulo,
+            "valor": "R$ " + br(r["valor"]),
+            "detalhe": f"Por {unidade} · {r['data']} · CONAB",
+        }
+    print(f"        {len(saida)} precos do Cerrado ({nome_arq})")
+    return saida
+
+
 # ======================================================================
 COLETA = {
-    "precos": [("dolar", dolar), ("commodities", commodities_banco_mundial)],
+    "precos": [("dolar", dolar),
+               ("culturas_conab", precos_conab),
+               ("fertilizantes", commodities_banco_mundial)],
     "macro":  [("selic", selic), ("ipca", ipca_12m)],
     "safra":  [("culturas", safra_ibge)],
 }
@@ -555,8 +690,9 @@ def main():
 
     saida = {
         "atualizado_em": datetime.now(FUSO).strftime("%d/%m/%Y às %H:%M"),
-        "fontes": ("Banco Central do Brasil · IBGE (LSPA) · "
-                   "Banco Mundial, Commodity Markets (CC BY 4.0)"),
+        "fontes": ("CONAB (preços das culturas) · Banco Central do Brasil (câmbio) · "
+                   "IBGE/LSPA (safra) · Banco Mundial, Commodity Markets, CC BY 4.0 "
+                   "(fertilizantes)"),
         "falhas": falhas,
         "grupos": grupos,
     }
