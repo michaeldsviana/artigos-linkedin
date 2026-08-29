@@ -1,0 +1,584 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="color-scheme" content="light only">
+<meta name="supported-color-schemes" content="light">
+<title>Bioinsumos no Brasil: crescimento recorde, mercado ainda pequeno | AGROMV Semanal</title>
+<link rel="icon" type="image/png" href="../../assets/favicon.png">
+<link rel="apple-touch-icon" href="../../assets/favicon.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Archivo:wght@500;600;700&family=Source+Serif+4:opsz,wght@8..60,400;8..60,600&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root{
+    color-scheme: only light;
+    --bg:      #FFFFFF;
+    --panel:   #F4F6F8;
+    --navy:    #0E2338;
+    --navy-mid:#1B3B5A;
+    --blue:    #1E6FA8;
+    --green:   #3F7A2E;
+    --green-brand: #63AA46;
+    --ink:     #16212C;
+    --ink-dim: #5B6773;
+    --grey:    #8A94A0;
+    --line:    #DDE3E9;
+    --maxw:    720px;
+  }
+  *{box-sizing:border-box;}
+  html{
+    scroll-behavior:smooth;
+    background:#FFFFFF;
+    -webkit-text-size-adjust:100%;
+  }
+  body{
+    margin:0;
+    background:#FFFFFF;
+    color:var(--ink);
+    font-family:'Inter', -apple-system, sans-serif;
+    line-height:1.68;
+    -webkit-font-smoothing:antialiased;
+    forced-color-adjust:none;
+  }
+  img{max-width:100%; display:block;}
+  a{color:var(--blue);}
+
+  /* ---------- HEADER ---------- */
+  header.site{
+    position:sticky; top:0; z-index:20;
+    background:var(--navy);
+  }
+  header.site .bar{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    max-width:var(--maxw);
+    margin:0 auto;
+    padding:14px 24px;
+  }
+  .brand{
+    display:flex;
+    align-items:center;
+    font-family:'Archivo', sans-serif;
+    letter-spacing:0.02em;
+    text-decoration:none;
+  }
+  .brand .logo{height:26px; width:auto; display:block; padding-right:11px;}
+  .brand .sub{
+    font-weight:500;
+    font-size:11px;
+    letter-spacing:0.16em;
+    text-transform:uppercase;
+    color:#DCE8F2;
+    padding-left:10px;
+    border-left:1px solid #4A6A86;
+  }
+  header.site .issue{
+    font-family:'Inter', sans-serif;
+    font-size:11.5px;
+    font-weight:500;
+    letter-spacing:0.06em;
+    color:#EAF1F7;
+    text-transform:uppercase;
+  }
+  .rule-accent{height:3px; background:var(--green-brand);}
+
+  /* ---------- BANNER DE CAPA ---------- */
+  .cover{
+    width:100%;
+    border-bottom:1px solid var(--line);
+    background:var(--navy);
+  }
+  .cover img{width:100%; height:auto; display:block;}
+
+  /* ---------- HERO ---------- */
+  .hero-stage{
+    position:relative;
+    overflow:hidden;
+    background:#FFFFFF;
+  }
+  .hero-portrait{
+    position:absolute;
+    right:calc(50% - 580px);
+    top:0;
+    width:470px;
+    pointer-events:none;
+    user-select:none;
+    z-index:0;
+    opacity:1;
+  }
+  .hero{
+    position:relative;
+    z-index:1;
+    max-width:var(--maxw);
+    margin:0 auto;
+    padding:46px 24px 0;
+    background:transparent;
+  }
+  .hero h1{max-width:26ch;}
+  .hero .dek{max-width:56ch;}
+
+  @media (max-width:1180px){
+    .hero-portrait{
+      right:-60px;
+      width:390px;
+      opacity:0.85;
+    }
+    .hero h1{max-width:none;}
+    .hero .dek{max-width:none;}
+  }
+  @media (max-width:820px){
+    .hero-stage{
+      display:flex;
+      flex-direction:column;
+    }
+    .hero-portrait{
+      position:relative;
+      right:auto;
+      width:78%;
+      max-width:330px;
+      margin:14px auto -10px;
+      opacity:1;
+      align-self:center;
+    }
+    .hero{padding-top:20px;}
+    .hero h1, .hero .dek{max-width:none;}
+  }
+  .kicker{
+    display:inline-block;
+    font-family:'Inter', sans-serif;
+    font-size:11.5px;
+    font-weight:600;
+    letter-spacing:0.1em;
+    text-transform:uppercase;
+    color:var(--blue);
+    border-left:3px solid var(--blue);
+    padding-left:10px;
+    margin-bottom:20px;
+  }
+  h1{
+    font-family:'Archivo', sans-serif;
+    font-weight:700;
+    font-size:clamp(29px, 4.8vw, 44px);
+    line-height:1.14;
+    letter-spacing:-0.018em;
+    color:var(--navy);
+    margin:0 0 20px;
+  }
+  .dek{
+    font-family:'Source Serif 4', serif;
+    color:var(--ink-dim);
+    font-size:19px;
+    line-height:1.6;
+    max-width:56ch;
+    margin:0 0 30px;
+  }
+
+  .byline{
+    display:flex;
+    align-items:center;
+    gap:14px;
+    padding:16px 0;
+    border-top:1px solid var(--line);
+    border-bottom:1px solid var(--line);
+    margin-bottom:36px;
+  }
+  .byline .name{
+    font-family:'Archivo', sans-serif;
+    font-weight:600;
+    font-size:15px;
+    color:var(--navy);
+    line-height:1.35;
+  }
+  .byline .role{
+    font-size:12.5px;
+    color:var(--ink-dim);
+  }
+  .byline .meta{
+    margin-left:auto;
+    text-align:right;
+    font-size:12px;
+    color:var(--grey);
+    line-height:1.6;
+    white-space:nowrap;
+  }
+
+  /* ---------- STAT STRIP ---------- */
+  .stat-wrap{
+    background:var(--panel);
+    border-top:1px solid var(--line);
+    border-bottom:1px solid var(--line);
+  }
+  .stat-strip{
+    display:grid;
+    grid-template-columns:repeat(3, 1fr);
+    max-width:var(--maxw);
+    margin:0 auto;
+    padding:0 8px;
+  }
+  .stat{
+    padding:24px 16px;
+    border-right:1px solid var(--line);
+  }
+  .stat:last-child{border-right:none;}
+  .stat .num{
+    font-family:'Archivo', sans-serif;
+    font-weight:700;
+    font-size:clamp(23px, 3.6vw, 31px);
+    color:var(--navy);
+    display:block;
+    line-height:1.1;
+    letter-spacing:-0.01em;
+  }
+  .stat .label{
+    font-size:11.5px;
+    color:var(--ink-dim);
+    letter-spacing:0.02em;
+    display:block;
+    margin-top:7px;
+    line-height:1.45;
+  }
+
+  /* ---------- ARTICLE ---------- */
+  article{
+    max-width:var(--maxw);
+    margin:0 auto;
+    padding:44px 24px 8px;
+    background:#FFFFFF;
+  }
+  article h2{
+    font-family:'Archivo', sans-serif;
+    font-weight:600;
+    font-size:23px;
+    line-height:1.3;
+    letter-spacing:-0.01em;
+    color:var(--navy);
+    margin:44px 0 14px;
+  }
+  article p{
+    font-family:'Source Serif 4', serif;
+    font-size:18px;
+    line-height:1.72;
+    color:var(--ink);
+    margin:0 0 20px;
+  }
+
+  figure.chart{margin:34px 0; padding:0;}
+  figure.chart img{
+    border:1px solid var(--line);
+    border-radius:4px;
+  }
+  figure.chart figcaption{
+    font-family:'Inter', sans-serif;
+    font-size:12.5px;
+    color:var(--ink-dim);
+    margin-top:10px;
+    line-height:1.6;
+    padding-left:12px;
+    border-left:2px solid var(--line);
+  }
+  figure.chart figcaption .src{color:var(--grey);}
+
+  .callout{
+    background:var(--panel);
+    border-left:3px solid var(--green);
+    padding:20px 22px;
+    margin:32px 0;
+  }
+  .callout .mark{
+    display:block;
+    font-family:'Inter', sans-serif;
+    font-size:11px;
+    font-weight:600;
+    color:var(--green);
+    text-transform:uppercase;
+    letter-spacing:0.09em;
+    margin-bottom:8px;
+  }
+  .callout p{
+    margin:0;
+    font-family:'Source Serif 4', serif;
+    font-size:17px;
+    line-height:1.65;
+    color:var(--ink);
+  }
+
+  .takeaway-wrap{
+    background:var(--navy);
+    margin-top:50px;
+  }
+  .takeaway{
+    max-width:var(--maxw);
+    margin:0 auto;
+    padding:38px 24px;
+  }
+  .takeaway .kicker{
+    color:#FFFFFF;
+    border-left-color:#5AA7DE;
+  }
+  .takeaway p{
+    font-family:'Source Serif 4', serif;
+    font-size:18.5px;
+    line-height:1.68;
+    color:#FBFDFE;
+    margin:0;
+  }
+
+  /* ---------- FOOTER ---------- */
+  footer{
+    max-width:var(--maxw);
+    margin:0 auto;
+    padding:40px 24px 60px;
+    background:#FFFFFF;
+  }
+  .sig{
+    display:flex;
+    align-items:center;
+    gap:16px;
+    padding-bottom:24px;
+    border-bottom:1px solid var(--line);
+  }
+  .sig img{
+    width:58px; height:58px;
+    border-radius:100%;
+    object-fit:cover;
+    object-position:center center;
+  }
+  .sig .name{
+    font-family:'Archivo', sans-serif;
+    font-weight:600;
+    font-size:17px;
+    color:var(--navy);
+  }
+  .sig .role{
+    font-size:13px;
+    color:var(--ink-dim);
+    margin-top:2px;
+  }
+  .sig .pub{
+    margin-left:auto;
+    font-family:'Archivo', sans-serif;
+    font-size:11px;
+    font-weight:600;
+    letter-spacing:0.14em;
+    text-transform:uppercase;
+    color:var(--grey);
+    white-space:nowrap;
+  }
+  .sources{
+    font-size:12px;
+    color:var(--grey);
+    margin-top:22px;
+    line-height:1.8;
+  }
+  .sources strong{
+    color:var(--ink-dim);
+    font-weight:600;
+    letter-spacing:0.04em;
+  }
+
+  @media (max-width:540px){
+    .stat-strip{grid-template-columns:1fr;}
+    .stat{border-right:none; border-bottom:1px solid var(--line);}
+    .stat:last-child{border-bottom:none;}
+    .byline .meta{display:none;}
+    .sig .pub{display:none;}
+    .brand .sub{display:none;}
+  }
+  @media (prefers-reduced-motion: reduce){ html{scroll-behavior:auto;} }
+
+  body.nav-open{overflow:hidden;}
+  .nav-toggle{
+    display:block; width:42px; height:42px; padding:9px;
+    background:none; border:none; cursor:pointer; margin-right:-9px;
+  }
+  .nav-toggle span{
+    display:block; width:24px; height:2px; margin:5px 0;
+    background:#EAF1F7; border-radius:2px;
+    transition:transform .22s ease, opacity .18s ease;
+  }
+  body.nav-open .nav-toggle span:nth-child(1){transform:translateY(7px) rotate(45deg);}
+  body.nav-open .nav-toggle span:nth-child(2){opacity:0;}
+  body.nav-open .nav-toggle span:nth-child(3){transform:translateY(-7px) rotate(-45deg);}
+  .nav-overlay{
+    position:fixed; inset:0; background:rgba(14,35,56,0.55);
+    opacity:0; visibility:hidden; transition:opacity .22s ease, visibility .22s; z-index:70;
+  }
+  body.nav-open .nav-overlay{opacity:1; visibility:visible;}
+  .nav-drawer{
+    position:fixed; top:0; right:0; height:100%; width:300px; max-width:84vw;
+    background:#0E2338; z-index:80; padding:26px 28px;
+    transform:translateX(100%); transition:transform .26s cubic-bezier(.4,0,.2,1);
+    display:flex; flex-direction:column;
+  }
+  body.nav-open .nav-drawer{transform:translateX(0);}
+  .nav-drawer .head{
+    display:flex; justify-content:space-between; align-items:center;
+    padding-bottom:22px; border-bottom:1px solid #2A4560; margin-bottom:10px;
+  }
+  .nav-drawer .head .t{
+    font-family:'Archivo',sans-serif; font-size:11px; font-weight:600;
+    letter-spacing:0.14em; text-transform:uppercase; color:var(--green-brand);
+  }
+  .nav-close{background:none; border:none; color:#EAF1F7; font-size:26px; line-height:1; cursor:pointer; padding:0 4px;}
+  .nav-drawer nav a{
+    display:block; padding:15px 0; border-bottom:1px solid #1E3A55;
+    font-family:'Archivo',sans-serif; font-weight:600; font-size:17px;
+    color:#EAF1F7; text-decoration:none;
+  }
+  .nav-drawer nav a span{
+    display:block; font-family:'Inter',sans-serif; font-weight:400;
+    font-size:12.5px; color:#8FB6D4; margin-top:3px;
+  }
+  .nav-drawer .foot-note{margin-top:auto; font-size:12px; color:#6E8CA8; line-height:1.6;}
+</style>
+</head>
+<body>
+
+<header class="site">
+  <div class="bar">
+    <a class="brand" href="/">
+      <img class="logo" src="../../assets/logo-agromv.png" alt="AGROMV">
+      <span class="sub">Semanal</span>
+    </a>
+    <button class="nav-toggle" id="navToggle" aria-label="Abrir menu" aria-expanded="false" aria-controls="navDrawer"><span></span><span></span><span></span></button>
+  </div>
+</header>
+<div class="rule-accent"></div>
+
+<div class="nav-overlay" id="navOverlay"></div>
+<aside class="nav-drawer" id="navDrawer" aria-hidden="true">
+  <div class="head">
+    <span class="t">Navegação</span>
+    <button class="nav-close" id="navClose" aria-label="Fechar menu">&times;</button>
+  </div>
+  <nav>
+    <a href="/">Home<span>Início</span></a>
+    <a href="/#publicacoes">Publicações<span>Análises semanais</span></a>
+    <a href="/#relatorios">Relatórios<span>Materiais aprofundados</span></a>
+    <a href="/#contato">Contato<span>Redes e acesso direto</span></a>
+  </nav>
+  <div class="foot-note">AGROMV Semanal<br>Michael Viana · COGNY</div>
+</aside>
+
+<div class="cover">
+  <img src="hero-fosforo.jpg" alt="Capa da Edição 02 do AGROMV Semanal: curva do preço do fosfato subindo de US$ 635 em janeiro de 2026 para US$ 890 em julho, sobre uma lavoura que transita de soja para milho, com cifrões ao fundo e a chamada Fósforo caro, soja e milho sob pressão de custo">
+</div>
+
+<div class="hero-stage">
+  <div class="hero">
+  <span class="kicker">Custos &amp; Nutrição · Fósforo</span>
+  <h1>Fósforo caro, safra apertada: o que a rota biológica realmente entrega</h1>
+  <p class="dek">O MAP saiu de US$ 635 para perto de US$ 890 a tonelada em 2026 e só agora começa a ceder. Enquanto o custo sobe, boa parte do fósforo aplicado sequer chega à planta. É aí que os solubilizadores entram na conta.</p>
+
+  <div class="byline">
+    <div>
+      <div class="name">Michael Viana</div>
+      <div class="role">Marketing Estratégico Cerrado · COGNY</div>
+    </div>
+    <div class="meta">29 ago 2026<br>7 min de leitura</div>
+  </div>
+</div>
+</div>
+
+<div class="stat-wrap">
+  <div class="stat-strip">
+    <div class="stat">
+      <span class="num">+40%</span>
+      <span class="label">Alta do MAP entre janeiro e julho de 2026</span>
+    </div>
+    <div class="stat">
+      <span class="num">15–30%</span>
+      <span class="label">Do fósforo aplicado é aproveitado por ciclo</span>
+    </div>
+    <div class="stat">
+      <span class="num">até +24%</span>
+      <span class="label">Produtividade com coinoculação em milho</span>
+    </div>
+  </div>
+</div>
+
+<article>
+  <p>A conta do fósforo apertou em 2026. O fosfato monoamônico, principal fonte usada nas lavouras brasileiras, começou o ano em torno de US$ 635 por tonelada e chegou a bater perto de US$ 890 em julho. No fim de agosto veio uma acomodação, com o produto negociado na faixa de US$ 850 a US$ 870 CFR Brasil, ajudada pela maior oferta física no país e pela proximidade do plantio da soja. Mesmo assim, o patamar continua muito acima do início do ano.</p>
+
+  <figure class="chart">
+    <img src="chart-map.png" alt="Gráfico de linha mostrando a evolução do preço do MAP no porto brasileiro ao longo de 2026, de US$ 635 em janeiro até cerca de US$ 890 em julho e recuo para US$ 850 a 870 em agosto">
+    <figcaption>Evolução do MAP no porto brasileiro (CFR) ao longo de 2026. <span class="src">Fontes: Economic News Brasil (jul/2026) e Biond Agro via Band Agro (ago/2026). Valores de janeiro e julho conforme reportado; meses intermediários interpolados para ilustrar a trajetória.</span></figcaption>
+  </figure>
+
+  <h2>Por que o fosfato subiu tanto</h2>
+  <p>A pressão veio de várias frentes ao mesmo tempo. A China, maior exportadora mundial de MAP e DAP, manteve política de restrição às exportações para priorizar o abastecimento interno, medida em vigor até agosto de 2026. A Rússia segue limitando exportações de nitrogenados em meio ao conflito com a Ucrânia, e a tensão no Oriente Médio elevou frete, seguro marítimo e prêmio de risco nas rotas do comércio global de fertilizantes.</p>
+  <p>Somou-se a isso um fator menos visível: o enxofre, matéria-prima essencial na fabricação de fosfatados, saltou de US$ 435 para US$ 1.152 por tonelada desde o início do ano, puxado também pela demanda da indústria de baterias, que consegue pagar mais pelos carregamentos. A pressão foi tanta que a Mosaic anunciou em julho uma redução temporária de parte das operações no Brasil.</p>
+  <p>Como o país importa a maior parte do fosfato que consome, cada um desses choques chega rápido ao custo por hectare. Na prática, o produtor precisa entregar hoje o equivalente a duas a quatro sacas adicionais de soja para comprar a mesma quantidade de fertilizante que compraria um ano atrás.</p>
+
+  <div class="callout">
+    <span class="mark">Onde o mercado está agora</span>
+    <p>Mais de 80% das compras de fertilizantes para a soja 2026/27 já estavam fechadas até o fim de julho, com Mato Grosso em 95%, Paraná em 92% e Goiás em 90%. A decisão que continua aberta é a do milho safrinha 2027, com apenas 35% do volume contratado.</p>
+  </div>
+
+  <h2>O problema que o preço só torna mais caro</h2>
+  <p>Existe um dado que muda a leitura de tudo isso: estudos indicam que apenas 15% a 30% do fósforo aplicado via fertilizante é absorvido pelas plantas a cada ciclo agrícola. O restante fica retido no solo, ligado a argilominerais e a óxidos de alumínio, ferro e cálcio, em formas que a raiz não acessa.</p>
+  <p>Ou seja, o produtor está pagando o preço mais alto dos últimos anos por um nutriente que, em boa parte, não chega ao seu destino. Quando o insumo estava barato, essa ineficiência era absorvida pela margem. Com MAP acima de US$ 850, ela vira uma linha relevante no custo.</p>
+
+  <h2>A rota biológica: solubilizar o que já está lá</h2>
+  <p>É exatamente nesse ponto que entram as bactérias solubilizadoras de fosfato. Duas estirpes desenvolvidas pela Embrapa Milho e Sorgo têm o histórico de validação mais consistente no Brasil: <em>Bacillus megaterium</em> CNPMS B119, isolada da rizosfera do milho, e <em>Bacillus subtilis</em> CNPMS B2084, de comportamento endofítico.</p>
+  <p>O mecanismo não é adicionar fósforo, e sim destravar o que já está imobilizado no solo. As duas estirpes solubilizam e mineralizam fosfatos, produzem fosfatases, sideróforos, exopolissacarídeos, biofilmes e moléculas análogas ao ácido indol-3-acético, que estimulam o desenvolvimento radicular. A B2084 apresenta maior aderência às raízes do milho; a B119 tem capacidade de solubilizar fosfatos de cálcio e de rocha.</p>
+  <p>Um ponto prático relevante para quem monta o pacote de tratamento de sementes: nos ensaios não foi observado antagonismo com <em>Azospirillum</em> nem com <em>Bradyrhizobium</em>, o que permite combinar as tecnologias sem perda de compatibilidade.</p>
+
+  <h2>O que os números de campo mostram</h2>
+  <p>Ao longo de cinco safras, em duas áreas experimentais, a inoculação via tratamento de sementes elevou a produtividade de grãos de milho de forma consistente. Aplicadas isoladamente, a B119 e a B2084 entregaram ganhos médios de 22% e 16% em Sete Lagoas (MG) e de 6% e 3% em Santo Antônio de Goiás (GO). A coinoculação das duas estirpes foi mais eficiente que qualquer uma sozinha: 24% em Sete Lagoas e 11% em Santo Antônio de Goiás, sempre em comparação ao controle não inoculado.</p>
+
+  <figure class="chart">
+    <img src="chart-yield.png" alt="Gráfico de barras comparando ganhos de produtividade de milho com inoculação isolada de B. megaterium B119, B. subtilis B2084 e coinoculação, em Sete Lagoas e Santo Antônio de Goiás">
+    <figcaption>Ganho relativo de produtividade em milho, média de cinco safras, frente ao controle não inoculado. <span class="src">Fonte: Oliveira-Paiva et al., Frontiers in Microbiology (2024), Embrapa Milho e Sorgo.</span></figcaption>
+  </figure>
+
+  <p>A amplitude entre as duas localidades é a informação mais honesta desse conjunto: a resposta depende do tipo de solo e da disponibilidade prévia de fósforo. Não é uma tecnologia que entrega o mesmo número em qualquer talhão, e tratá-la assim é o caminho mais rápido para frustrar expectativa.</p>
+  <p>No recorte econômico, avaliações da Embrapa com a dose de 100 mL/ha aplicada na semente apontaram retorno médio de 7 vezes o custo de aplicação no milho e 6,1 vezes na soja. A tecnologia tem registro no Mapa para milho e, desde 2021, também para soja.</p>
+
+  <h2>O que fazer com isso na safra 2026/27</h2>
+  <p>Com a maior parte da compra de fosfatados para a soja já fechada, a janela de decisão desta safra migrou para outro lugar: extrair mais de cada quilo de P que já foi contratado. É aí que a inoculação com solubilizadores tem o melhor encaixe, atuando sobre o fósforo residual do solo e sobre a fração do fertilizante que seria imobilizada.</p>
+  <p>Para o milho safrinha 2027, com apenas 35% do volume contratado, a conversa é diferente e mais estratégica: dá para desenhar o pacote considerando a contribuição biológica desde o início, em vez de encaixá-la depois. E a recomendação de mercado para o fósforo neste momento é avançar de forma fracionada, aproveitando o recuo atual sem apostar que ele continue.</p>
+  <p>O ponto que fica: em um ano de fosfato caro, eficiência de uso deixa de ser argumento de sustentabilidade e vira argumento de caixa. Quem tratar solubilizadores como linha de custo a mais perde a conta; quem tratar como ferramenta de aproveitamento do que já está pago tende a fechar a safra com uma margem diferente.</p>
+</article>
+
+<div class="takeaway-wrap">
+  <div class="takeaway">
+    <span class="kicker">O que fica</span>
+    <p>O fósforo ficou caro e continuará sendo o nutriente mais sensível do custo brasileiro enquanto a dependência de importação persistir. Com 70% a 85% do que se aplica não chegando à planta, a discussão mais rentável de 2026 não é quanto comprar, e sim quanto do que já foi comprado a lavoura consegue de fato aproveitar.</p>
+  </div>
+</div>
+
+<footer>
+  <div class="sig">
+    <img src="../../assets/author.jpg" alt="Michael Viana">
+    <div>
+      <div class="name">Michael Viana</div>
+      <div class="role">Marketing Estratégico Cerrado · COGNY</div>
+    </div>
+    <span class="pub">AGROMV Semanal</span>
+  </div>
+  <div class="sources">
+    <strong>FONTES:</strong> Band Agro / Biond Agro (25 ago 2026) · Economic News Brasil (jul/2026) · Markestrat via Folha Agrícola (jul/2026) · Oliveira-Paiva et al., Frontiers in Microbiology (2024) · Embrapa Milho e Sorgo, Circular Técnica 260 e estudos de viabilidade técnica e econômica
+  </div>
+  <p style="margin-top:26px;font-size:14px;">
+    <a href="/" style="color:#1E6FA8;text-decoration:none;font-weight:600;">&larr; Ver todas as edições do AGROMV Semanal</a>
+  </p>
+</footer>
+
+<script>
+(function(){
+  var body=document.body,t=document.getElementById('navToggle'),o=document.getElementById('navOverlay'),
+      c=document.getElementById('navClose'),d=document.getElementById('navDrawer');
+  function open(){body.classList.add('nav-open');t.setAttribute('aria-expanded','true');d.setAttribute('aria-hidden','false');}
+  function close(){body.classList.remove('nav-open');t.setAttribute('aria-expanded','false');d.setAttribute('aria-hidden','true');}
+  t.addEventListener('click',function(){body.classList.contains('nav-open')?close():open();});
+  o.addEventListener('click',close); c.addEventListener('click',close);
+  d.querySelectorAll('nav a').forEach(function(a){a.addEventListener('click',close);});
+  document.addEventListener('keydown',function(e){if(e.key==='Escape')close();});
+})();
+</script>
+</body>
+</html>
