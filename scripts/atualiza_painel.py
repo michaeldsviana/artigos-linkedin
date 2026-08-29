@@ -368,10 +368,10 @@ def safra_ibge():
     if len(dados) < 2:
         raise ValueError("SIDRA retornou vazio")
 
-    # o IBGE separa 1a e 2a safra e traz codigos no nome ("1.15 Milho").
-    # Agregamos por cultura para exibir o total nacional.
-    totais = {}
-    periodo_ref = ""
+    # Cada linha do IBGE e mantida como veio: 1a e 2a safra de milho, as tres
+    # safras de feijao e os tipos de cafe tem comportamento de mercado
+    # diferente, entao somar mascararia a leitura.
+    itens = []
     for linha in dados[1:]:
         nome = (linha.get("D4N") or linha.get("D3N") or "").strip()
         chave = nome.lower()
@@ -382,23 +382,23 @@ def safra_ibge():
         except (TypeError, ValueError):
             continue
 
-        periodo_ref = linha.get("D3N") or linha.get("D2N") or periodo_ref
-        limpo = re.sub(r"\s*\(.*?\)", "", nome)              # remove parenteses
-        limpo = re.sub(r"^[\d.]+\s*", "", limpo)             # remove "1.15 "
-        limpo = re.sub(r"\s*\d+ª\s*safra", "", limpo)        # junta 1a, 2a e 3a safra
-        limpo = limpo.strip()
+        periodo = linha.get("D3N") or linha.get("D2N") or ""
+        limpo = re.sub(r"^[\d.]+\s*", "", nome)               # tira "1.15 "
+        limpo = re.sub(r"\s*\((em grão|em casca|em caroço)\)", "", limpo, flags=re.I)
+        limpo = re.sub(r"\s{2,}", " ", limpo).strip()
         limpo = limpo[:1].upper() + limpo[1:]
-        totais[limpo] = totais.get(limpo, 0.0) + valor
+        itens.append((limpo, valor, periodo))
 
-    if not totais:
+    if not itens:
         raise ValueError("nenhuma cultura reconhecida na resposta")
 
+    itens.sort(key=lambda x: -x[1])
     saida = {}
-    for nome in sorted(totais, key=lambda k: -totais[k]):
+    for nome, valor, periodo in itens:
         saida[nome] = {
             "rotulo": nome,
-            "valor": br(totais[nome] / 1_000_000, 1) + " mi t",
-            "detalhe": f"Estimativa LSPA · {periodo_ref}",
+            "valor": br(valor / 1_000_000, 1) + " mi t",
+            "detalhe": f"Estimativa LSPA · {periodo}",
         }
     return saida
 
