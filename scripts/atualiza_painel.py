@@ -774,8 +774,9 @@ def sondar(orcamento=90):
     try:
         html, _ = _texto(PORTAL_CONAB, 20)
         scripts = re.findall(r'src="([^"]+\.js)"', html)
-        marcadores = ["getDownloads", "buildDownloadUrl", "downloadRequest",
-                      "downloadGroups", "resolvedDownloadUrl"]
+        # o cliente usa this.rootUrl; e esse valor que precisamos descobrir
+        marcadores = ["rootUrl", "ApiConfiguration", "apiUrl", "baseUrl",
+                      "BASE_URL", "environment ="]
         vistos = set()
         for src in scripts:
             if "polyfill" in src.lower() or esgotou():
@@ -796,6 +797,32 @@ def sondar(orcamento=90):
                     print(f"\n    >>> {marcador}")
                     print("    " + trecho.replace("\n", " ")[:560])
                     break        # uma ocorrencia por marcador ja basta
+        # varredura direta por atribuicoes de endereco
+        print("\n    >>> atribuicoes de endereco encontradas")
+        enderecos = set()
+        for src in scripts:
+            if "polyfill" in src.lower():
+                continue
+            url = src if src.startswith("http") else PORTAL_CONAB + src.lstrip("/")
+            try:
+                codigo, _ = _texto(url, 25)
+            except Exception:
+                continue
+            for padrao in [
+                r'rootUrl\s*=\s*["\'`]([^"\'`]{4,160})["\'`]',
+                r'apiUrl\s*:\s*["\'`]([^"\'`]{4,160})["\'`]',
+                r'baseUrl\s*[:=]\s*["\'`]([^"\'`]{4,160})["\'`]',
+                r'["\'`](https?://[^"\'`\s]{6,160})["\'`]',
+                r'["\'`](/[a-z0-9_\-/]{3,60}/api[^"\'`\s]{0,60})["\'`]',
+            ]:
+                for m in re.findall(padrao, codigo, flags=re.I):
+                    if "conab" in m.lower() or m.startswith("/") or "api" in m.lower():
+                        enderecos.add(m)
+        for e in sorted(enderecos)[:50]:
+            print("        ", e)
+        if not enderecos:
+            print("         nada encontrado")
+
         if not vistos:
             print("     nenhum trecho localizado")
     except Exception as e:
