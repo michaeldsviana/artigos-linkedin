@@ -23,6 +23,8 @@ import json
 import os
 import re
 import ssl
+import time
+import time
 import urllib.request
 import zipfile
 import xml.etree.ElementTree as ET
@@ -41,9 +43,30 @@ def abrir(url, timeout=60):
     return urllib.request.urlopen(req, timeout=timeout, context=CTX)
 
 
-def buscar_json(url, timeout=30):
-    with abrir(url, timeout) as r:
-        return json.loads(r.read().decode("utf-8"))
+def buscar_json(url, timeout=30, tentativas=3):
+    """Le JSON com nova tentativa apenas em falha passageira.
+
+    502, 503 e timeout costumam ser instabilidade momentanea e vale repetir.
+    Ja 404 ou 403 nao mudam com insistencia, entao abortamos na hora para
+    nao gastar minutos de execucao a toa.
+    """
+    PASSAGEIROS = (429, 500, 502, 503, 504)
+    ultimo = None
+    for n in range(tentativas):
+        try:
+            with abrir(url, timeout) as r:
+                return json.loads(r.read().decode("utf-8"))
+        except Exception as e:
+            ultimo = e
+            codigo = getattr(e, "code", None)
+            if codigo is not None and codigo not in PASSAGEIROS:
+                raise                      # erro permanente: nao adianta repetir
+            if n < tentativas - 1:
+                espera = 3 * (n + 1)
+                print(f"        tentativa {n+1} falhou ({type(e).__name__}"
+                      f"{f' {codigo}' if codigo else ''}); repetindo em {espera}s")
+                time.sleep(espera)
+    raise ultimo
 
 
 def br(valor, casas=2):
@@ -166,6 +189,9 @@ def baixar_planilha():
 # A tabela do Banco Mundial passa a cobrir apenas fertilizantes: as culturas
 # vem da CONAB, com preco nacional em reais e recorte do Cerrado.
 COMMODITIES = {
+    "Soja (int.)":     ["soybean"],
+    "Milho (int.)":    ["maize"],
+    "Algodão (int.)":  ["cotton"],
     "Ureia":           ["urea"],
     "DAP":             ["dap"],
     "Fosfato (rocha)": ["phosphate rock"],
@@ -337,7 +363,13 @@ def commodities_banco_mundial():
     # A planilha vem em tonelada (ou quilo). Convertemos as culturas para a
     # unidade usada na comercializacao no Brasil e deixamos os fertilizantes
     # em tonelada, que e como sao negociados.
-    CONVERSAO = {}   # fertilizantes permanecem em tonelada
+    # culturas convertidas para a unidade de comercializacao;
+    # fertilizantes permanecem em tonelada
+    CONVERSAO = {
+        "Soja (int.)":    ("saca de 60 kg", 60, "/sc"),
+        "Milho (int.)":   ("saca de 60 kg", 60, "/sc"),
+        "Algodão (int.)": ("arroba de 15 kg", 15, "/@"),
+    }
 
     def para_kg(valor, unidade):
         if unidade == "mt":
@@ -612,57 +644,88 @@ COLETA = {
 
 
 # ----------------------------------------------------------------------
-# SONDAGEM: descobrir os enderecos reais dos arquivos da CONAB
-# O portal e um aplicativo Angular; os caminhos dos arquivos ficam dentro
-# dos pacotes JavaScript. Em vez de adivinhar nomes, lemos o codigo do
-# proprio site e extraimos as referencias. Apenas diagnostico.
+# SONDAGEM: localizar a API da CONAB
+# O JavaScript do portal aponta para "localhost:8001/api/v1", ou seja, o
+# endereco real e injetado em tempo de execucao. Procuramos o arquivo de
+# configuracao e os caminhos de rota dentro do codigo. Apenas diagnostico.
 # ----------------------------------------------------------------------
 PORTAL_CONAB = "https://portaldeinformacoes.conab.gov.br/"
 
+CONFIGS = [
+    "assets/config.json", "assets/config/config.json",
+    "assets/environment.json", "assets/env.json",
+    "assets/data/config.json", "config.json", "assets/appsettings.json",
+]
+
+BASES_API = [
+    "https://portaldeinformacoes.conab.gov.br/api/v1/",
+    "https://apiportaldeinformacoes.conab.gov.br/api/v1/",
+    "https://portaldeinformacoes.conab.gov.br/backend/api/v1/",
+    "https://sisdep.conab.gov.br/api/v1/",
+]
+
+
+def _texto(url, timeout=45):
+    with abrir(url, timeout) as r:
+        return r.read().decode("utf-8", "ignore"), r.headers.get("Content-Type", "?")
+
 
 def sondar():
-    print("\n--- sondagem: lendo o codigo do portal da CONAB ---")
-    try:
-        with abrir(PORTAL_CONAB, timeout=40) as r:
-            html = r.read().decode("utf-8", "ignore")
-    except Exception as e:
-        print(f"[erro] nao abriu o portal: {type(e).__name__}: {e}")
-        return
+    print("\n--- sondagem: procurando a API da CONAB ---")
 
-    scripts = re.findall(r'src="([^"]+\.js)"', html)
-    print(f"pacotes JavaScript encontrados: {len(scripts)}")
-    if not scripts:
-        print("trecho do HTML:", html[:300])
-        return
-
-    achados = set()
-    for src in scripts[:8]:
-        url = src if src.startswith("http") else PORTAL_CONAB + src.lstrip("/")
+    # 1. arquivos de configuracao do aplicativo
+    print("\n[1] arquivos de configuracao")
+    for caminho in CONFIGS:
+        url = PORTAL_CONAB + caminho
         try:
-            with abrir(url, timeout=60) as r:
-                codigo = r.read().decode("utf-8", "ignore")
+            corpo, tipo = _texto(url, 25)
+            eh_html = "<!doctype" in corpo[:200].lower() or "<html" in corpo[:200].lower()
+            if eh_html:
+                print(f"    [-] {caminho}: pagina do app")
+            else:
+                print(f"    [OK] {caminho} ({tipo})")
+                print(f"         {corpo[:400]}")
         except Exception as e:
-            print(f"[erro] {src}: {type(e).__name__}")
-            continue
+            print(f"    [x] {caminho}: {type(e).__name__}")
 
-        print(f"[ok] {src} ({len(codigo)} chars)")
-        for padrao in [
-            r'["\'\`]([^"\'\`\s]*downloads?/[^"\'\`\s]*)["\'\`]',
-            r'["\'\`]([^"\'\`\s]*\.(?:csv|txt|xlsx|json)(?:\?[^"\'\`\s]*)?)["\'\`]',
-            r'["\'\`]([^"\'\`\s]*/api/[^"\'\`\s]*)["\'\`]',
-            r'["\'\`](https?://[^"\'\`\s]*conab[^"\'\`\s]*)["\'\`]',
-        ]:
-            for m in re.findall(padrao, codigo, flags=re.I):
-                if 3 < len(m) < 220:
-                    achados.add(m)
+    # 2. rotas citadas no codigo do aplicativo
+    print("\n[2] rotas encontradas no JavaScript")
+    try:
+        html, _ = _texto(PORTAL_CONAB, 40)
+        scripts = re.findall(r'src="([^"]+\.js)"', html)
+        chaves = ("preco", "safra", "prohort", "arquivo", "download",
+                  "serie", "produto", "cultura", "api/")
+        achados = set()
+        for src in scripts:
+            url = src if src.startswith("http") else PORTAL_CONAB + src.lstrip("/")
+            try:
+                codigo, _ = _texto(url, 60)
+            except Exception:
+                continue
+            for texto in re.findall(r'"([^"\\]{4,120})"', codigo):
+                baixo = texto.lower()
+                if any(k in baixo for k in chaves) and " " not in texto:
+                    achados.add(texto)
+        for a in sorted(achados)[:70]:
+            print("    ", a)
+        if not achados:
+            print("     nenhuma rota reconhecida")
+    except Exception as e:
+        print(f"    [x] {type(e).__name__}: {e}")
 
-    if achados:
-        print(f"\nreferencias encontradas ({len(achados)}):")
-        for a in sorted(achados)[:60]:
-            print("   ", a)
-    else:
-        print("\nnenhuma referencia de arquivo localizada no codigo")
-    print("--- fim da sondagem ---\n")
+    # 3. bases de API candidatas
+    print("\n[3] bases de API")
+    for base in BASES_API:
+        try:
+            corpo, tipo = _texto(base, 20)
+            eh_html = "<!doctype" in corpo[:200].lower()
+            print(f"    [{'-' if eh_html else 'OK'}] {base} ({tipo})")
+            if not eh_html:
+                print(f"         {corpo[:200]}")
+        except Exception as e:
+            print(f"    [x] {base}: {type(e).__name__}")
+
+    print("\n--- fim da sondagem ---\n")
 
 
 def carregar_anterior():
