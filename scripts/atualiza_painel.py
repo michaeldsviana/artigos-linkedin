@@ -488,6 +488,7 @@ def safra_ibge():
             "rotulo": nome,
             "valor": br(valor / 1_000_000, 1) + " mi t",
             "detalhe": f"Estimativa LSPA · {periodo}",
+            "fonte": "ibge",
         }
     return saida
 
@@ -699,151 +700,16 @@ def precos_conab():
 # ======================================================================
 # cada coletor declara a etiqueta de fonte que produz, para que uma falha
 # restaure somente os proprios valores antigos, sem misturar bases
+# A coleta da CONAB esta pronta, porem desativada: o portal injeta o endereco
+# da API em tempo de execucao e nao ha caminho publico documentado. Assim que
+# a CONAB informar a URL do arquivo de precos, reative a linha comentada.
 COLETA = {
     "precos": [("dolar", dolar, "bcb"),
-               ("culturas_conab", precos_conab, "conab"),
+               # ("culturas_conab", precos_conab, "conab"),
                ("fertilizantes", commodities_banco_mundial, "banco-mundial")],
     "macro":  [("selic", selic, None), ("ipca", ipca_12m, None)],
     "safra":  [("culturas", safra_ibge, "ibge")],
 }
-
-
-# ----------------------------------------------------------------------
-# SONDAGEM: localizar a API da CONAB
-# O JavaScript do portal aponta para "localhost:8001/api/v1", ou seja, o
-# endereco real e injetado em tempo de execucao. Procuramos o arquivo de
-# configuracao e os caminhos de rota dentro do codigo. Apenas diagnostico.
-# ----------------------------------------------------------------------
-PORTAL_CONAB = "https://portaldeinformacoes.conab.gov.br/"
-
-CONFIGS = [
-    "assets/config.json", "assets/config/config.json",
-    "assets/environment.json", "assets/env.json",
-    "assets/data/config.json", "config.json", "assets/appsettings.json",
-]
-
-BASES_API = [
-    "https://portaldeinformacoes.conab.gov.br/api/v1/",
-    "https://apiportaldeinformacoes.conab.gov.br/api/v1/",
-    "https://portaldeinformacoes.conab.gov.br/backend/api/v1/",
-    "https://sisdep.conab.gov.br/api/v1/",
-]
-
-
-LIMITE_LEITURA = 1_500_000   # 1,5 MB por arquivo ja cobre os pacotes do portal
-
-
-def _texto(url, timeout=20, limite=LIMITE_LEITURA):
-    """Le no maximo `limite` bytes: os pacotes do portal sao grandes e a
-    sondagem nao pode arrastar a execucao do painel."""
-    with abrir(url, timeout) as r:
-        return r.read(limite).decode("utf-8", "ignore"), r.headers.get("Content-Type", "?")
-
-
-def sondar(orcamento=90):
-    """Diagnostico com tempo limitado: o painel ja foi gravado antes daqui."""
-    inicio = time.time()
-
-    def esgotou():
-        return time.time() - inicio > orcamento
-
-    print("\n--- sondagem: procurando a API da CONAB ---")
-
-    # 1. arquivos de configuracao do aplicativo
-    print("\n[1] arquivos de configuracao")
-    for caminho in CONFIGS:
-        if esgotou():
-            print("    (tempo esgotado)")
-            break
-        url = PORTAL_CONAB + caminho
-        try:
-            corpo, tipo = _texto(url, 12)
-            eh_html = "<!doctype" in corpo[:200].lower() or "<html" in corpo[:200].lower()
-            if eh_html:
-                print(f"    [-] {caminho}: pagina do app")
-            else:
-                print(f"    [OK] {caminho} ({tipo})")
-                print(f"         {corpo[:400]}")
-        except Exception as e:
-            print(f"    [x] {caminho}: {type(e).__name__}")
-
-    # 2. o codigo revelou "getDownloads" e "buildDownloadUrl": existe um
-    #    endpoint que lista os arquivos. Extraimos o trecho em volta dessas
-    #    funcoes para descobrir a rota e como a URL final e montada.
-    print("\n[2] trechos de codigo em volta das funcoes de download")
-    try:
-        html, _ = _texto(PORTAL_CONAB, 20)
-        scripts = re.findall(r'src="([^"]+\.js)"', html)
-        # o cliente usa this.rootUrl; e esse valor que precisamos descobrir
-        marcadores = ["rootUrl", "ApiConfiguration", "apiUrl", "baseUrl",
-                      "BASE_URL", "environment ="]
-        vistos = set()
-        for src in scripts:
-            if "polyfill" in src.lower() or esgotou():
-                continue
-            url = src if src.startswith("http") else PORTAL_CONAB + src.lstrip("/")
-            try:
-                codigo, _ = _texto(url, 25)
-            except Exception:
-                continue
-            for marcador in marcadores:
-                for m in re.finditer(re.escape(marcador), codigo):
-                    ini_t = max(0, m.start() - 260)
-                    trecho = codigo[ini_t:m.start() + 320]
-                    assinatura = trecho[:60]
-                    if assinatura in vistos:
-                        continue
-                    vistos.add(assinatura)
-                    print(f"\n    >>> {marcador}")
-                    print("    " + trecho.replace("\n", " ")[:560])
-                    break        # uma ocorrencia por marcador ja basta
-        # varredura direta por atribuicoes de endereco
-        print("\n    >>> atribuicoes de endereco encontradas")
-        enderecos = set()
-        for src in scripts:
-            if "polyfill" in src.lower():
-                continue
-            url = src if src.startswith("http") else PORTAL_CONAB + src.lstrip("/")
-            try:
-                codigo, _ = _texto(url, 25)
-            except Exception:
-                continue
-            for padrao in [
-                r'rootUrl\s*=\s*["\'`]([^"\'`]{4,160})["\'`]',
-                r'apiUrl\s*:\s*["\'`]([^"\'`]{4,160})["\'`]',
-                r'baseUrl\s*[:=]\s*["\'`]([^"\'`]{4,160})["\'`]',
-                r'["\'`](https?://[^"\'`\s]{6,160})["\'`]',
-                r'["\'`](/[a-z0-9_\-/]{3,60}/api[^"\'`\s]{0,60})["\'`]',
-            ]:
-                for m in re.findall(padrao, codigo, flags=re.I):
-                    if "conab" in m.lower() or m.startswith("/") or "api" in m.lower():
-                        enderecos.add(m)
-        for e in sorted(enderecos)[:50]:
-            print("        ", e)
-        if not enderecos:
-            print("         nada encontrado")
-
-        if not vistos:
-            print("     nenhum trecho localizado")
-    except Exception as e:
-        print(f"    [x] {type(e).__name__}: {e}")
-
-    # 3. bases de API candidatas
-    print("\n[3] bases de API")
-    for base in BASES_API:
-        if esgotou():
-            print("    (tempo esgotado)")
-            break
-        try:
-            corpo, tipo = _texto(base, 12)
-            eh_html = "<!doctype" in corpo[:200].lower()
-            print(f"    [{'-' if eh_html else 'OK'}] {base} ({tipo})")
-            if not eh_html:
-                print(f"         {corpo[:200]}")
-        except Exception as e:
-            print(f"    [x] {base}: {type(e).__name__}")
-
-    print("\n--- fim da sondagem ---\n")
 
 
 def carregar_anterior():
@@ -876,7 +742,10 @@ def main():
                 for k, item in anterior.get(grupo, {}).items():
                     if k in grupos[grupo]:
                         continue
-                    if etiqueta and item.get("fonte") != etiqueta:
+                    # itens gravados antes da etiquetagem nao tem "fonte";
+                    # nesse caso preservamos, para nao perder historico
+                    fonte_item = item.get("fonte")
+                    if etiqueta and fonte_item and fonte_item != etiqueta:
                         continue
                     if not etiqueta and chave != k:
                         continue
@@ -905,11 +774,7 @@ def main():
     if falhas:
         print("falharam nesta execucao:", ", ".join(falhas))
 
-    # diagnostico opcional, com tempo limitado; o painel ja esta salvo
-    try:
-        sondar()
-    except Exception as e:
-        print("sondagem nao concluida:", e)
+
 
 
 if __name__ == "__main__":
