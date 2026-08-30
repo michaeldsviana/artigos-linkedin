@@ -665,20 +665,34 @@ BASES_API = [
 ]
 
 
-def _texto(url, timeout=45):
+LIMITE_LEITURA = 1_500_000   # 1,5 MB por arquivo ja cobre os pacotes do portal
+
+
+def _texto(url, timeout=20, limite=LIMITE_LEITURA):
+    """Le no maximo `limite` bytes: os pacotes do portal sao grandes e a
+    sondagem nao pode arrastar a execucao do painel."""
     with abrir(url, timeout) as r:
-        return r.read().decode("utf-8", "ignore"), r.headers.get("Content-Type", "?")
+        return r.read(limite).decode("utf-8", "ignore"), r.headers.get("Content-Type", "?")
 
 
-def sondar():
+def sondar(orcamento=90):
+    """Diagnostico com tempo limitado: o painel ja foi gravado antes daqui."""
+    inicio = time.time()
+
+    def esgotou():
+        return time.time() - inicio > orcamento
+
     print("\n--- sondagem: procurando a API da CONAB ---")
 
     # 1. arquivos de configuracao do aplicativo
     print("\n[1] arquivos de configuracao")
     for caminho in CONFIGS:
+        if esgotou():
+            print("    (tempo esgotado)")
+            break
         url = PORTAL_CONAB + caminho
         try:
-            corpo, tipo = _texto(url, 25)
+            corpo, tipo = _texto(url, 12)
             eh_html = "<!doctype" in corpo[:200].lower() or "<html" in corpo[:200].lower()
             if eh_html:
                 print(f"    [-] {caminho}: pagina do app")
@@ -691,15 +705,17 @@ def sondar():
     # 2. rotas citadas no codigo do aplicativo
     print("\n[2] rotas encontradas no JavaScript")
     try:
-        html, _ = _texto(PORTAL_CONAB, 40)
+        html, _ = _texto(PORTAL_CONAB, 20)
         scripts = re.findall(r'src="([^"]+\.js)"', html)
         chaves = ("preco", "safra", "prohort", "arquivo", "download",
                   "serie", "produto", "cultura", "api/")
         achados = set()
         for src in scripts:
+            if "polyfill" in src.lower():
+                continue
             url = src if src.startswith("http") else PORTAL_CONAB + src.lstrip("/")
             try:
-                codigo, _ = _texto(url, 60)
+                codigo, _ = _texto(url, 25)
             except Exception:
                 continue
             for texto in re.findall(r'"([^"\\]{4,120})"', codigo):
@@ -716,8 +732,11 @@ def sondar():
     # 3. bases de API candidatas
     print("\n[3] bases de API")
     for base in BASES_API:
+        if esgotou():
+            print("    (tempo esgotado)")
+            break
         try:
-            corpo, tipo = _texto(base, 20)
+            corpo, tipo = _texto(base, 12)
             eh_html = "<!doctype" in corpo[:200].lower()
             print(f"    [{'-' if eh_html else 'OK'}] {base} ({tipo})")
             if not eh_html:
@@ -787,6 +806,7 @@ def main():
     if falhas:
         print("falharam nesta execucao:", ", ".join(falhas))
 
+    # diagnostico opcional, com tempo limitado; o painel ja esta salvo
     try:
         sondar()
     except Exception as e:
