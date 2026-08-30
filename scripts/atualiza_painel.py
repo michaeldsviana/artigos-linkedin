@@ -69,6 +69,19 @@ def buscar_json(url, timeout=30, tentativas=3):
     raise ultimo
 
 
+MESES = ["janeiro", "fevereiro", "março", "abril", "maio", "junho", "julho",
+         "agosto", "setembro", "outubro", "novembro", "dezembro"]
+
+
+def mes_extenso(data_br):
+    """Converte 01/07/2026 em 'julho de 2026'. Data solta confunde o leitor."""
+    try:
+        d, m, a = data_br.split("/")
+        return f"{MESES[int(m) - 1]} de {a}"
+    except Exception:
+        return data_br
+
+
 def br(valor, casas=2):
     """Formata numero no padrao brasileiro."""
     txt = f"{valor:,.{casas}f}"
@@ -122,6 +135,7 @@ def dolar():
         "valor": "R$ " + br(atual, 4),
         "detalhe": f"PTAX venda · {data_ref}",
         "fonte": "bcb",
+        "classe": "cambio",
     }
     if anterior:
         var = (atual - anterior) / anterior * 100
@@ -131,9 +145,17 @@ def dolar():
 
 
 def selic():
+    """Meta Selic do Copom.
+
+    A serie do BCB projeta a meta ate a proxima reuniao, entao a ultima data
+    costuma estar no futuro. Dizer "vigente em" uma data futura confunde;
+    informamos que e a meta em vigor e citamos a validade.
+    """
     d = serie_bcb(432, n=1)[-1]
-    return {"rotulo": "Selic (meta)", "valor": br(float(d["valor"])) + "% a.a.",
-            "detalhe": f"Vigente em {d['data']}"}
+    return {"rotulo": "Selic (meta)",
+            "valor": br(float(d["valor"])) + "% a.a.",
+            "detalhe": f"Meta definida pelo Copom · série até {d['data']}",
+            "classe": "macro"}
 
 
 def ipca_12m():
@@ -141,8 +163,10 @@ def ipca_12m():
     acum = 1.0
     for m in d:
         acum *= 1 + float(m["valor"]) / 100
-    return {"rotulo": "IPCA 12 meses", "valor": br((acum - 1) * 100) + "%",
-            "detalhe": f"Até {d[-1]['data']}"}
+    return {"rotulo": "IPCA 12 meses",
+            "valor": br((acum - 1) * 100) + "%",
+            "detalhe": f"Acumulado até {mes_extenso(d[-1]['data'])}",
+            "classe": "macro"}
 
 
 # ======================================================================
@@ -425,8 +449,11 @@ def commodities_banco_mundial():
             if por_extenso:
                 detalhe = f"Por {por_extenso} · média de {periodo} · Banco Mundial"
 
+        # cultura e insumo tem leitura oposta: alta de cultura e receita,
+        # alta de fertilizante e custo. O site usa isso para colorir.
+        classe = "cultura" if rotulo in CONVERSAO else "insumo"
         item = {"rotulo": rotulo, "valor": "US$ " + br(exibido) + sufixo,
-                "detalhe": detalhe, "fonte": "banco-mundial"}
+                "detalhe": detalhe, "fonte": "banco-mundial", "classe": classe}
         if unidade:
             item["unidade"] = unidade
         try:
@@ -489,6 +516,7 @@ def safra_ibge():
             "valor": br(valor / 1_000_000, 1) + " mi t",
             "detalhe": f"Estimativa LSPA · {periodo}",
             "fonte": "ibge",
+            "classe": "safra",
         }
     return saida
 
