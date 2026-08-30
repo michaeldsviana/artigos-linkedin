@@ -453,7 +453,7 @@ CULTURAS = ["soja", "milho", "algod", "arroz", "feij", "trigo", "café", "cafe"]
 
 
 def safra_ibge():
-    dados = buscar_json(URL_SIDRA, timeout=60)
+    dados = buscar_json(URL_SIDRA, timeout=120)
     if len(dados) < 2:
         raise ValueError("SIDRA retornou vazio")
 
@@ -702,30 +702,37 @@ def sondar(orcamento=90):
         except Exception as e:
             print(f"    [x] {caminho}: {type(e).__name__}")
 
-    # 2. rotas citadas no codigo do aplicativo
-    print("\n[2] rotas encontradas no JavaScript")
+    # 2. o codigo revelou "getDownloads" e "buildDownloadUrl": existe um
+    #    endpoint que lista os arquivos. Extraimos o trecho em volta dessas
+    #    funcoes para descobrir a rota e como a URL final e montada.
+    print("\n[2] trechos de codigo em volta das funcoes de download")
     try:
         html, _ = _texto(PORTAL_CONAB, 20)
         scripts = re.findall(r'src="([^"]+\.js)"', html)
-        chaves = ("preco", "safra", "prohort", "arquivo", "download",
-                  "serie", "produto", "cultura", "api/")
-        achados = set()
+        marcadores = ["getDownloads", "buildDownloadUrl", "downloadRequest",
+                      "downloadGroups", "resolvedDownloadUrl"]
+        vistos = set()
         for src in scripts:
-            if "polyfill" in src.lower():
+            if "polyfill" in src.lower() or esgotou():
                 continue
             url = src if src.startswith("http") else PORTAL_CONAB + src.lstrip("/")
             try:
                 codigo, _ = _texto(url, 25)
             except Exception:
                 continue
-            for texto in re.findall(r'"([^"\\]{4,120})"', codigo):
-                baixo = texto.lower()
-                if any(k in baixo for k in chaves) and " " not in texto:
-                    achados.add(texto)
-        for a in sorted(achados)[:70]:
-            print("    ", a)
-        if not achados:
-            print("     nenhuma rota reconhecida")
+            for marcador in marcadores:
+                for m in re.finditer(re.escape(marcador), codigo):
+                    ini_t = max(0, m.start() - 260)
+                    trecho = codigo[ini_t:m.start() + 320]
+                    assinatura = trecho[:60]
+                    if assinatura in vistos:
+                        continue
+                    vistos.add(assinatura)
+                    print(f"\n    >>> {marcador}")
+                    print("    " + trecho.replace("\n", " ")[:560])
+                    break        # uma ocorrencia por marcador ja basta
+        if not vistos:
+            print("     nenhum trecho localizado")
     except Exception as e:
         print(f"    [x] {type(e).__name__}: {e}")
 
