@@ -498,44 +498,103 @@ def safra_ibge():
 #    A CONAB autoriza reproducao sem fins lucrativos, citada a fonte e
 #    mantida a integridade das informacoes.
 # ======================================================================
-BASE_CONAB = "https://portaldeinformacoes.conab.gov.br/downloads/arquivos/"
+SITE_CONAB = "https://portaldeinformacoes.conab.gov.br"
 
-# o portal e feito em JavaScript, entao testamos os nomes provaveis do
-# arquivo que alimenta o painel de precos semanais por UF
-ARQUIVOS_CONAB = [
-    "PrecosAgropecuariosSemanalUF.csv",
-    "PrecosAgropecuariosSemanalUf.csv",
-    "precos_agropecuarios_semanal_uf.csv",
-    "PrecosSemanalUF.csv",
-    "PrecosAgropecuariosMensalUF.csv",
-    "SerieHistoricaPrecos.csv",
-    "PrecosAgropecuarios.csv",
+# O portal expoe um endpoint que LISTA os arquivos publicados. Descobrimos
+# isso lendo o codigo do aplicativo: a rota e "/download", com paginacao.
+# Assim nao precisamos adivinhar nomes de arquivo.
+BASES_DOWNLOAD = [
+    SITE_CONAB + "/api/v1",
+    SITE_CONAB + "/api",
+    SITE_CONAB + "/backend/api/v1",
+    SITE_CONAB,
+    "https://apiportaldeinformacoes.conab.gov.br/api/v1",
 ]
 
-# estados do bioma Cerrado
 UF_CERRADO = ["MT", "GO", "MS", "MG", "BA", "TO", "MA", "PI", "DF"]
-
 CULTURAS_CONAB = ["soja", "milho", "algod", "sorgo", "feij"]
 
 
-def baixar_conab():
-    """Percorre os nomes candidatos ate encontrar um CSV de verdade."""
+def listar_downloads():
+    """Consulta o catalogo de arquivos do portal da CONAB."""
     erros = []
-    for nome in ARQUIVOS_CONAB:
-        url = BASE_CONAB + nome
+    for base in BASES_DOWNLOAD:
+        url = f"{base}/download?page=0&size=500"
         try:
-            with abrir(url, timeout=90) as r:
-                bruto = r.read()
-            if b"<!doctype" in bruto[:200].lower() or b"<html" in bruto[:200].lower():
-                erros.append(f"{nome}: veio HTML")
-                print(f"        [{nome}] pagina do app, nao e dado")
-                continue
-            print(f"        [{nome}] arquivo obtido: {len(bruto)} bytes")
-            return nome, bruto
+            dados = buscar_json(url, timeout=40, tentativas=1)
         except Exception as e:
-            erros.append(f"{nome}: {type(e).__name__}")
-            print(f"        [{nome}] {type(e).__name__}")
-    raise ValueError("nenhum arquivo da CONAB respondeu -> " + " | ".join(erros))
+            erros.append(f"{base}: {type(e).__name__}")
+            continue
+
+        itens = dados
+        if isinstance(dados, dict):
+            for campo in ("content", "items", "data", "results", "downloads"):
+                if isinstance(dados.get(campo), list):
+                    itens = dados[campo]
+                    break
+        if isinstance(itens, list) and itens:
+            print(f"        catalogo obtido em {base} ({len(itens)} arquivos)")
+            return base, itens
+        erros.append(f"{base}: resposta sem lista")
+
+    raise ValueError("catalogo de downloads inacessivel -> " + " | ".join(erros))
+
+
+def escolher_arquivo(itens):
+    """Seleciona o arquivo de precos, preferindo a serie semanal por UF."""
+    def texto(it):
+        return " ".join(str(it.get(c, "")) for c in
+                        ("titulo", "descricao", "nome", "url")).lower()
+
+    candidatos = [it for it in itens
+                  if any(p in texto(it) for p in ("preço", "preco", "precos", "preços"))]
+
+    if not candidatos:
+        amostra = [str(it.get("titulo", ""))[:60] for it in itens[:25]]
+        raise ValueError("nenhum arquivo de preco no catalogo; titulos: " + str(amostra))
+
+    print(f"        {len(candidatos)} arquivos de preco no catalogo:")
+    for it in candidatos[:12]:
+        print(f"           - {it.get('titulo', '')} [{it.get('tipo_arquivo', '?')}]")
+
+    def nota(it):
+        t = texto(it)
+        p = 0
+        if "semanal" in t: p += 4
+        if "uf" in t or "estado" in t: p += 2
+        if "mensal" in t: p += 1
+        if str(it.get("tipo_arquivo", "")).lower() in ("csv", "txt"): p += 2
+        return -p
+
+    return sorted(candidatos, key=nota)[0]
+
+
+def resolver_url(caminho):
+    """Reproduz o buildDownloadUrl do portal: caminho absoluto ou relativo."""
+    if not caminho:
+        return None
+    if caminho.startswith("http"):
+        return caminho
+    return SITE_CONAB + "/" + caminho.lstrip("/")
+
+
+def baixar_conab():
+    """Descobre e baixa o arquivo de precos publicado pela CONAB."""
+    _, itens = listar_downloads()
+    escolhido = escolher_arquivo(itens)
+    titulo = escolhido.get("titulo", "sem titulo")
+    url = resolver_url(escolhido.get("url") or escolhido.get("arquivo"))
+    if not url:
+        raise ValueError(f"arquivo '{titulo}' nao traz URL")
+
+    print(f"        baixando: {titulo}")
+    print(f"        url: {url}")
+    with abrir(url, timeout=120) as r:
+        bruto = r.read()
+    if bruto[:200].lower().count(b"<html") or bruto[:200].lower().count(b"<!doctype"):
+        raise ValueError("o download retornou HTML, nao dados")
+    print(f"        arquivo obtido: {len(bruto)} bytes")
+    return titulo, bruto
 
 
 def _decodificar(bruto):
@@ -560,7 +619,13 @@ def precos_conab():
     import csv as _csv
 
     nome_arq, bruto = baixar_conab()
-    texto = _decodificar(bruto)
+
+    if bruto[:2] == b"PK":          # arquivo .xlsx
+        linhas_tab = ler_planilha(bruto)
+        texto = "\n".join(";".join(str(c) for c in l) for l in linhas_tab)
+        print("        conteudo em planilha, convertido para leitura")
+    else:
+        texto = _decodificar(bruto)
 
     # o separador varia entre ; e , nos arquivos do governo
     amostra = texto[:2000]
