@@ -118,35 +118,70 @@
   }
 
   /* blocos de indicadores */
-  .grupo{max-width:var(--maxw); margin:0 auto; padding:28px 24px 8px;}
+  .grupo{max-width:var(--maxw); margin:0 auto; padding:30px 24px 6px;}
   .grupo h2{
     font-family:'Archivo',sans-serif; font-weight:600; font-size:21px;
     color:var(--navy); margin:0 0 4px;
   }
-  .grupo .sub{font-size:13.5px; color:var(--ink-dim); margin:0 0 16px;}
-  .cards{
-    display:grid; grid-template-columns:repeat(auto-fit, minmax(170px,1fr));
-    gap:1px; background:var(--line); border:1px solid var(--line); border-radius:5px; overflow:hidden;
+  .grupo .sub{font-size:13.5px; color:var(--ink-dim); margin:0 0 8px; max-width:66ch;}
+  .grupo .credito{
+    font-size:12px; color:var(--grey); margin:0 0 16px;
+    padding-left:10px; border-left:2px solid var(--line);
   }
-  .card{background:#FFF; padding:18px 18px 16px;}
+
+  /* subgrupo: culturas, fertilizantes, cambio */
+  .sub-bloco{margin-bottom:18px;}
+  .sub-bloco .titulo{
+    display:flex; align-items:baseline; flex-wrap:wrap;
+    font-family:'Archivo',sans-serif; font-weight:600; font-size:14px;
+    color:var(--navy); margin-bottom:9px;
+  }
+  .sub-bloco .titulo .nota{
+    font-family:'Inter',sans-serif; font-weight:400; font-size:12.5px;
+    color:var(--grey); margin-left:9px;
+  }
+
+  .cards{
+    display:grid; grid-template-columns:repeat(auto-fit, minmax(168px,1fr));
+    gap:1px; background:var(--line); border:1px solid var(--line);
+    border-radius:6px; overflow:hidden;
+  }
+  .card{background:#FFF; padding:16px 16px 15px;}
   .card .r{
-    font-size:11.5px; font-weight:600; letter-spacing:0.05em; text-transform:uppercase;
-    color:var(--ink-dim); margin-bottom:8px;
+    font-size:11.5px; font-weight:600; letter-spacing:0.04em; text-transform:uppercase;
+    color:var(--ink-dim); margin-bottom:7px;
   }
   .card .v{
-    font-family:'Archivo',sans-serif; font-weight:700; font-size:22px;
-    color:var(--navy); line-height:1.1; letter-spacing:-0.01em;
+    font-family:'Archivo',sans-serif; font-weight:700; font-size:21px;
+    color:var(--navy); line-height:1.15; letter-spacing:-0.01em;
   }
-  .card .d{font-size:12px; color:var(--grey); margin-top:6px; line-height:1.45;}
+  .card .d{font-size:11.5px; color:var(--grey); margin-top:6px; line-height:1.5;}
   .card .var{
     display:inline-block; font-family:'Archivo',sans-serif; font-weight:600;
-    font-size:12.5px; margin-top:8px; padding:2px 8px; border-radius:100px;
+    font-size:12.5px; margin-top:8px; padding:2px 9px; border-radius:100px;
   }
-  .card .var.alta{color:#8A3B2E; background:#FBEDEA;}
-  .card .var.baixa{color:var(--green); background:#ECF5E9;}
-  .card .var.estavel{color:var(--ink-dim); background:var(--panel);}
+  /* verde e vermelho pelo efeito no bolso, nao pela direcao do numero */
+  .card .var.bom{color:#2F6B33; background:#ECF5E9;}
+  .card .var.ruim{color:#8A3B2E; background:#FBEDEA;}
+  .card .var.neutro{color:var(--ink-dim); background:var(--panel);}
+  .card.velho{background:#FCFBF7;}
   .card.velho .v{color:var(--ink-dim);}
-  .card .aviso{font-size:11px; color:#A07A3B; margin-top:6px;}
+  .card .selo{
+    display:inline-block; font-size:10.5px; color:#8A6D3B; background:#FBF3E2;
+    border-radius:3px; padding:2px 7px; margin-top:7px;
+  }
+
+  .legenda{
+    max-width:var(--maxw); margin:0 auto; padding:6px 24px 0;
+    display:flex; flex-wrap:wrap; font-size:12px; color:var(--grey);
+  }
+  .legenda span{margin-right:18px; line-height:2;}
+  .legenda i{
+    display:inline-block; width:9px; height:9px; border-radius:2px;
+    margin-right:6px; vertical-align:middle;
+  }
+  .legenda .bom{background:#9CC98F;}
+  .legenda .ruim{background:#DCA79B;}
 
   .carregando{
     max-width:var(--maxw); margin:0 auto; padding:30px 24px;
@@ -213,11 +248,13 @@
 <div class="topo">
   <span class="kicker">Mercado</span>
   <h1>Cotações, câmbio e safra nacional</h1>
-  <p class="intro">Indicadores coletados automaticamente em fontes públicas, atualizados todo dia às 10h. As culturas trazem preço em reais nos estados do Cerrado, pela CONAB. Fertilizantes e câmbio seguem em dólar, do Banco Mundial e do Banco Central. A projeção de safra segue o levantamento mensal do IBGE, preservando a distinção entre safras.</p>
+  <p class="intro">Indicadores coletados automaticamente em fontes públicas, todo dia às 10h. Os preços de culturas e fertilizantes são referências internacionais em dólar, úteis para leitura de tendência; não substituem a cotação praticada na sua praça. A projeção de safra segue o levantamento mensal do IBGE, preservando a distinção entre safras.</p>
   <div class="quando" id="quando"></div>
 </div>
 
 <div id="conteudo" class="carregando">Carregando indicadores...</div>
+
+<div class="legenda" id="legenda"></div>
 
 <p class="rodape-fonte" id="fontes"></p>
 
@@ -265,21 +302,62 @@
     });
   }
 
-  var TITULOS = {
-    precos: ['Preços', 'Culturas do Cerrado em reais, por estado, com dados da CONAB. Fertilizantes em dólar por tonelada, do Banco Mundial. A unidade aparece em cada indicador.'],
-    macro:  ['Indicadores macroeconômicos', 'Referências de custo de capital e inflação.'],
-    safra:  ['Projeção da safra nacional', 'Estimativa de produção do Levantamento Sistemático da Produção Agrícola, do IBGE.']
+  // cada grupo tem titulo, explicacao e credito de fonte
+  var GRUPOS = {
+    precos: {
+      titulo: "Preços",
+      sub: "Referências de mercado para culturas, fertilizantes e câmbio.",
+      credito: "Culturas e fertilizantes: Banco Mundial, Commodity Markets (CC BY 4.0). " +
+               "Câmbio: Banco Central do Brasil."
+    },
+    macro: {
+      titulo: "Indicadores macroeconômicos",
+      sub: "Custo de capital e inflação, que entram na conta do financiamento de safra.",
+      credito: "Banco Central do Brasil, Sistema Gerenciador de Séries Temporais."
+    },
+    safra: {
+      titulo: "Projeção da safra nacional",
+      sub: "Estimativa de produção por cultura, preservando a distinção entre safras.",
+      credito: "IBGE, Levantamento Sistemático da Produção Agrícola."
+    }
   };
+
+  // dentro de Preços, separamos por natureza do indicador
+  var BLOCOS = [
+    {chave:"cultura", titulo:"Culturas",
+     nota:"referência internacional em dólar, convertida para saca e arroba"},
+    {chave:"insumo",  titulo:"Fertilizantes",
+     nota:"referência internacional em dólar por tonelada"},
+    {chave:"cambio",  titulo:"Câmbio",
+     nota:"cotação oficial de fechamento"}
+  ];
+
+  function classeVariacao(item){
+    // O sinal de uma alta depende do que ela representa para quem produz:
+    // cultura em alta é receita, insumo em alta é custo.
+    var s = item.sentido;
+    if(!s || s === "estavel") return "neutro";
+    var c = item.classe;
+    if(c === "cultura") return s === "alta" ? "bom" : "ruim";
+    if(c === "insumo")  return s === "alta" ? "ruim" : "bom";
+    return "neutro";
+  }
 
   function cartao(it){
     var h='<div class="card'+(it.atualizado===false?' velho':'')+'">';
     h+='<div class="r">'+esc(it.rotulo)+'</div>';
     h+='<div class="v">'+esc(it.valor)+'</div>';
     if(it.variacao){
-      h+='<span class="var '+esc(it.sentido||'estavel')+'">'+esc(it.variacao)+'</span>';
+      h+='<span class="var '+classeVariacao(it)+'">'+esc(it.variacao)+'</span>';
     }
     if(it.detalhe){ h+='<div class="d">'+esc(it.detalhe)+'</div>'; }
-    if(it.atualizado===false){ h+='<div class="aviso">Fonte indisponível na última consulta</div>'; }
+    if(it.atualizado===false){ h+='<div class="selo">valor da consulta anterior</div>'; }
+    return h+'</div>';
+  }
+
+  function cartoes(lista){
+    var h='<div class="cards">';
+    for(var i=0;i<lista.length;i++){ h+=cartao(lista[i]); }
     return h+'</div>';
   }
 
@@ -287,14 +365,48 @@
     var grupos=d.grupos||{};
     var ordem=['precos','macro','safra'];
     var html='';
+
     for(var g=0; g<ordem.length; g++){
-      var nome=ordem[g], itens=grupos[nome]||{}, chaves=Object.keys(itens);
+      var nome=ordem[g], itens=grupos[nome]||{};
+      var chaves=Object.keys(itens);
       if(!chaves.length) continue;
-      html+='<div class="grupo"><h2>'+TITULOS[nome][0]+'</h2>';
-      html+='<p class="sub">'+TITULOS[nome][1]+'</p><div class="cards">';
-      for(var i=0;i<chaves.length;i++){ html+=cartao(itens[chaves[i]]); }
-      html+='</div></div>';
+
+      var info=GRUPOS[nome];
+      html+='<div class="grupo"><h2>'+info.titulo+'</h2>';
+      html+='<p class="sub">'+info.sub+'</p>';
+      html+='<p class="credito">'+info.credito+'</p>';
+
+      if(nome==='precos'){
+        // separa em culturas, fertilizantes e câmbio
+        var usados={};
+        for(var b=0;b<BLOCOS.length;b++){
+          var bloco=BLOCOS[b], lista=[];
+          for(var i=0;i<chaves.length;i++){
+            var it=itens[chaves[i]];
+            if(it.classe===bloco.chave){ lista.push(it); usados[chaves[i]]=1; }
+          }
+          if(!lista.length) continue;
+          html+='<div class="sub-bloco"><div class="titulo">'+bloco.titulo+
+                '<span class="nota">'+bloco.nota+'</span></div>';
+          html+=cartoes(lista)+'</div>';
+        }
+        // qualquer indicador sem classe definida entra em um bloco final
+        var resto=[];
+        for(var i=0;i<chaves.length;i++){
+          if(!usados[chaves[i]]) resto.push(itens[chaves[i]]);
+        }
+        if(resto.length){
+          html+='<div class="sub-bloco"><div class="titulo">Outros</div>';
+          html+=cartoes(resto)+'</div>';
+        }
+      } else {
+        var lista=[];
+        for(var i=0;i<chaves.length;i++){ lista.push(itens[chaves[i]]); }
+        html+=cartoes(lista);
+      }
+      html+='</div>';
     }
+
     if(!html){
       alvo.className='carregando';
       alvo.textContent='Os indicadores aparecerão após a primeira atualização automática.';
@@ -302,10 +414,18 @@
     }
     alvo.className='';
     alvo.innerHTML=html;
+
+    var leg=document.getElementById('legenda');
+    if(leg){
+      leg.innerHTML='<span><i class="bom"></i>variação favorável ao produtor</span>'+
+                    '<span><i class="ruim"></i>variação desfavorável</span>'+
+                    '<span>Comparação com o mês anterior nas séries mensais.</span>';
+    }
     if(quando && d.atualizado_em){ quando.textContent='Última atualização: '+d.atualizado_em; }
     if(fontes && d.fontes){
       fontes.textContent='Fontes: '+d.fontes+'. Coleta automática diária às 10h. '+
-        'Os dados são reproduzidos com finalidade informativa, mantendo a integridade das informações e o crédito às fontes originais.';
+        'Dados reproduzidos com finalidade informativa, mantendo a integridade das '+
+        'informações e o crédito às fontes originais.';
     }
   }
 
