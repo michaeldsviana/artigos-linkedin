@@ -141,34 +141,59 @@
     color:var(--grey); margin-left:9px;
   }
 
+  /* linhas empilhadas: sem grade, nao sobra celula vazia e encurta a pagina */
   .cards{
-    display:grid; grid-template-columns:repeat(auto-fit, minmax(168px,1fr));
-    gap:1px; background:var(--line); border:1px solid var(--line);
-    border-radius:6px; overflow:hidden;
+    border:1px solid var(--line); border-radius:6px; overflow:hidden;
+    background:#FFF;
   }
-  .card{background:#FFF; padding:16px 16px 15px;}
+  .card{
+    display:flex; align-items:center; gap:14px;
+    padding:13px 16px; border-bottom:1px solid var(--line);
+    opacity:0; transform:translateY(12px);
+    transition:opacity .45s ease, transform .45s ease;
+  }
+  .card:last-child{border-bottom:none;}
+  .card.vis{opacity:1; transform:none;}
+  .card:hover{background:#FAFBFC;}
+
+  .card .esq{flex:1; min-width:0;}
   .card .r{
-    font-size:11.5px; font-weight:600; letter-spacing:0.04em; text-transform:uppercase;
-    color:var(--ink-dim); margin-bottom:7px;
+    font-size:12px; font-weight:600; letter-spacing:0.03em; text-transform:uppercase;
+    color:var(--navy); margin-bottom:3px;
+  }
+  .card .d{font-size:11.5px; color:var(--grey); line-height:1.45;}
+
+  .card .dir{
+    text-align:right; white-space:nowrap; display:flex;
+    flex-direction:column; align-items:flex-end;
   }
   .card .v{
-    font-family:'Archivo',sans-serif; font-weight:700; font-size:21px;
+    font-family:'Archivo',sans-serif; font-weight:700; font-size:19px;
     color:var(--navy); line-height:1.15; letter-spacing:-0.01em;
+    font-variant-numeric:tabular-nums;
   }
-  .card .d{font-size:11.5px; color:var(--grey); margin-top:6px; line-height:1.5;}
   .card .var{
-    display:inline-block; font-family:'Archivo',sans-serif; font-weight:600;
-    font-size:12.5px; margin-top:8px; padding:2px 9px; border-radius:100px;
+    font-family:'Archivo',sans-serif; font-weight:600; font-size:12px;
+    margin-top:4px; padding:2px 8px; border-radius:100px;
   }
-  /* verde e vermelho pelo efeito no bolso, nao pela direcao do numero */
   .card .var.bom{color:#2F6B33; background:#ECF5E9;}
   .card .var.ruim{color:#8A3B2E; background:#FBEDEA;}
   .card .var.neutro{color:var(--ink-dim); background:var(--panel);}
+
   .card.velho{background:#FCFBF7;}
   .card.velho .v{color:var(--ink-dim);}
   .card .selo{
     display:inline-block; font-size:10.5px; color:#8A6D3B; background:#FBF3E2;
-    border-radius:3px; padding:2px 7px; margin-top:7px;
+    border-radius:3px; padding:1px 6px; margin-top:4px;
+  }
+
+  @media (max-width:430px){
+    .card{padding:12px 13px; gap:10px;}
+    .card .v{font-size:17px;}
+    .card .d{font-size:11px;}
+  }
+  @media (prefers-reduced-motion: reduce){
+    .card{opacity:1; transform:none; transition:none;}
   }
 
   .legenda{
@@ -332,6 +357,91 @@
      nota:"cotação oficial de fechamento"}
   ];
 
+
+  // ---------- animacoes ----------
+  var querMenos = window.matchMedia &&
+                  window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  // separa "US$ 27,54/sc" em prefixo, numero e sufixo
+  function partes(texto){
+    var m = String(texto).match(/^(\D*)([\d.,]+)(.*)$/);
+    if(!m) return null;
+    var bruto = m[2];
+    var casas = (bruto.split(',')[1] || '').length;
+    var num = parseFloat(bruto.replace(/\./g,'').replace(',','.'));
+    if(isNaN(num)) return null;
+    return {prefixo:m[1], numero:num, sufixo:m[3], casas:casas};
+  }
+
+  function formatar(valor, casas){
+    var t = valor.toFixed(casas);
+    var p = t.split('.');
+    p[0] = p[0].replace(/\B(?=(\d{3})+(?!\d))/g, '.');
+    return p.join(',');
+  }
+
+  // roleta: o numero sobe ate o valor final, como painel de cotacao
+  function rodar(el){
+    var alvo = el.getAttribute('data-valor');
+    var p = partes(alvo);
+    if(!p || querMenos){ el.textContent = alvo; return; }
+
+    var inicio = performance.now();
+    var duracao = 900;
+    var partida = p.numero * 0.82;   // comeca perto, nao do zero
+
+    function passo(agora){
+      var t = Math.min(1, (agora - inicio) / duracao);
+      var suave = 1 - Math.pow(1 - t, 3);          // desacelera no fim
+      var atual = partida + (p.numero - partida) * suave;
+      el.textContent = p.prefixo + formatar(atual, p.casas) + p.sufixo;
+      if(t < 1) requestAnimationFrame(passo);
+      else el.textContent = alvo;
+    }
+    requestAnimationFrame(passo);
+  }
+
+  // revela as linhas conforme a pagina desce, em cascata
+  function animarEntrada(){
+    var linhas = Array.prototype.slice.call(document.querySelectorAll('.card'));
+    if(querMenos || !('IntersectionObserver' in window)){
+      linhas.forEach(function(l){
+        l.className += ' vis';
+        var v = l.querySelector('.v');
+        if(v) v.textContent = v.getAttribute('data-valor');
+      });
+      return;
+    }
+    var obs = new IntersectionObserver(function(entradas){
+      entradas.forEach(function(e){
+        if(!e.isIntersecting) return;
+        var el = e.target;
+        var atraso = (parseInt(el.getAttribute('data-i'), 10) || 0) * 70;
+        setTimeout(function(){
+          el.className += ' vis';
+          var v = el.querySelector('.v');
+          if(v) rodar(v);
+        }, atraso);
+        obs.unobserve(el);
+      });
+    }, {threshold:0.15, rootMargin:'0px 0px -30px 0px'});
+
+    linhas.forEach(function(l, i){
+      l.setAttribute('data-i', i % 6);   // cascata reinicia a cada bloco
+      obs.observe(l);
+    });
+    // rede de seguranca
+    setTimeout(function(){
+      linhas.forEach(function(l){
+        if(l.className.indexOf('vis') === -1){
+          l.className += ' vis';
+          var v = l.querySelector('.v');
+          if(v) v.textContent = v.getAttribute('data-valor');
+        }
+      });
+    }, 4000);
+  }
+
   function classeVariacao(item){
     // O sinal de uma alta depende do que ela representa para quem produz:
     // cultura em alta é receita, insumo em alta é custo.
@@ -345,14 +455,18 @@
 
   function cartao(it){
     var h='<div class="card'+(it.atualizado===false?' velho':'')+'">';
+    h+='<div class="esq">';
     h+='<div class="r">'+esc(it.rotulo)+'</div>';
-    h+='<div class="v">'+esc(it.valor)+'</div>';
+    if(it.detalhe){ h+='<div class="d">'+esc(it.detalhe)+'</div>'; }
+    if(it.atualizado===false){ h+='<div class="selo">valor da consulta anterior</div>'; }
+    h+='</div>';
+    h+='<div class="dir">';
+    h+='<div class="v" data-valor="'+esc(it.valor)+'">'+esc(it.valor)+'</div>';
     if(it.variacao){
       h+='<span class="var '+classeVariacao(it)+'">'+esc(it.variacao)+'</span>';
     }
-    if(it.detalhe){ h+='<div class="d">'+esc(it.detalhe)+'</div>'; }
-    if(it.atualizado===false){ h+='<div class="selo">valor da consulta anterior</div>'; }
-    return h+'</div>';
+    h+='</div></div>';
+    return h;
   }
 
   function cartoes(lista){
@@ -414,6 +528,7 @@
     }
     alvo.className='';
     alvo.innerHTML=html;
+    animarEntrada();
 
     var leg=document.getElementById('legenda');
     if(leg){
