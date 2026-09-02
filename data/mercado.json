@@ -1,16 +1,16 @@
 {
-  "atualizado_em": "01/09/2026 às 10:03",
+  "atualizado_em": "02/09/2026 às 10:02",
   "fontes": "CONAB (preços das culturas) · Banco Central do Brasil (câmbio) · IBGE/LSPA (safra) · Banco Mundial, Commodity Markets, CC BY 4.0 (fertilizantes)",
   "falhas": [],
   "grupos": {
     "precos": {
       "dolar": {
         "rotulo": "Dólar",
-        "valor": "R$ 5,1816",
-        "detalhe": "PTAX venda · 31/08/2026",
+        "valor": "R$ 5,1570",
+        "detalhe": "PTAX venda · 01/09/2026",
         "fonte": "bcb",
         "classe": "cambio",
-        "variacao": "-0,36%",
+        "variacao": "-0,47%",
         "sentido": "baixa",
         "atualizado": true
       },
