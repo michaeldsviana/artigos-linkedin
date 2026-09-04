@@ -1,0 +1,705 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="color-scheme" content="light only">
+<meta name="supported-color-schemes" content="light">
+<title>Bioinsumos no Brasil: crescimento recorde, mercado ainda pequeno | AGROMV Semanal</title>
+<meta name="description" content="A NOAA projeta 81% de chance de El Niño muito forte no trimestre outubro-dezembro, com chuva abaixo da média no centro-norte. O que os mitigadores biológicos de estresse hídrico entregam.">
+<meta property="og:type" content="article">
+<meta property="og:title" content="El Niño muito forte no Cerrado: o que a rota biológica faz pelo estresse hídrico">
+<meta property="og:description" content="81% de chance de El Niño muito forte no trimestre outubro-dezembro, com chuva abaixo da média justamente no Cerrado.">
+<meta property="og:image" content="https://mvagro.net/edicoes/03-el-nino-estresse-hidrico/share-card.jpg">
+<meta property="og:url" content="https://mvagro.net/edicoes/03-el-nino-estresse-hidrico/">
+<meta property="og:site_name" content="AGROMV Semanal">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="icon" type="image/png" href="../../assets/favicon.png">
+<link rel="apple-touch-icon" href="../../assets/favicon.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Archivo:wght@500;600;700&family=Source+Serif+4:opsz,wght@8..60,400;8..60,600&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root{
+    color-scheme: only light;
+    --bg:      #FFFFFF;
+    --panel:   #F4F6F8;
+    --navy:    #0E2338;
+    --navy-mid:#1B3B5A;
+    --blue:    #1E6FA8;
+    --green:   #3F7A2E;
+    --green-brand: #63AA46;
+    --ink:     #16212C;
+    --ink-dim: #5B6773;
+    --grey:    #8A94A0;
+    --line:    #DDE3E9;
+    --maxw:    720px;
+  }
+  *{box-sizing:border-box;}
+  html{
+    scroll-behavior:smooth;
+    background:#FFFFFF;
+    -webkit-text-size-adjust:100%;
+  }
+  body{
+    margin:0;
+    background:#FFFFFF;
+    color:var(--ink);
+    font-family:'Inter', -apple-system, sans-serif;
+    line-height:1.68;
+    -webkit-font-smoothing:antialiased;
+    forced-color-adjust:none;
+  }
+  img{max-width:100%; display:block;}
+  a{color:var(--blue);}
+
+  /* ---------- HEADER ---------- */
+  header.site{
+    position:sticky; top:0; z-index:20;
+    background:var(--navy);
+  }
+  header.site .bar{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    max-width:var(--maxw);
+    margin:0 auto;
+    padding:14px 24px;
+  }
+  .brand{
+    display:flex;
+    align-items:center;
+    font-family:'Archivo', sans-serif;
+    letter-spacing:0.02em;
+    text-decoration:none;
+  }
+  .brand .logo{height:27px; width:auto; display:block; padding-right:11px;}
+  .brand .sub{
+    font-weight:500;
+    font-size:11px;
+    letter-spacing:0.16em;
+    text-transform:uppercase;
+    color:#DCE8F2;
+    padding-left:10px;
+    border-left:1px solid #4A6A86;
+  }
+  header.site .issue{
+    font-family:'Inter', sans-serif;
+    font-size:11.5px;
+    font-weight:500;
+    letter-spacing:0.06em;
+    color:#EAF1F7;
+    text-transform:uppercase;
+  }
+  .brand .edicao{
+    display:flex; flex-direction:column; padding-left:11px;
+    border-left:1px solid #4A6A86; line-height:1.25;
+  }
+  .brand .edicao .n{
+    font-family:'Archivo',sans-serif; font-weight:600; font-size:12px;
+    color:var(--green-brand); letter-spacing:0.06em; white-space:nowrap;
+  }
+  .brand .edicao .t{
+    font-family:'Inter',sans-serif; font-weight:500; font-size:10.5px;
+    color:#B7CBDC; letter-spacing:0.04em; text-transform:uppercase; white-space:nowrap;
+  }
+  @media (max-width:420px){
+    .brand .edicao .t{display:none;}
+  }
+  /* ---------- FAIXA DE MERCADO ---------- */
+  .ticker{position:relative; overflow:hidden; background:#0A1727;
+    border-bottom:1px solid rgba(255,255,255,0.08); height:42px;}
+  .ticker-track{display:flex; align-items:center; height:42px; width:max-content;
+    animation:corre 52s linear infinite;}
+  .ticker:hover .ticker-track{animation-play-state:paused;}
+  @keyframes corre{from{transform:translateX(0);} to{transform:translateX(-50%);}}
+  .tk{display:flex; align-items:baseline; white-space:nowrap; padding:0 26px;
+    border-right:1px solid rgba(255,255,255,0.10); font-family:'Inter',sans-serif; font-size:13px;}
+  .tk .r{color:#8FA6BC; text-transform:uppercase; letter-spacing:0.07em; font-size:11px;
+    font-weight:600; margin-right:9px;}
+  .tk .v{font-family:'Archivo',sans-serif; font-weight:600; font-size:14px; color:#FFF;}
+  .tk .var{font-family:'Archivo',sans-serif; font-weight:600; font-size:12.5px; margin-left:8px;}
+  .tk .var.alta{color:#F0907E;} .tk .var.baixa{color:#8ED26B;} .tk .var.estavel{color:#8FA6BC;}
+  .tk.velho .v{color:#B7C6D4;}
+  .tk .selo{font-size:10px; color:#A07A3B; margin-left:8px;
+    border:1px solid rgba(160,122,59,0.5); border-radius:3px; padding:1px 5px;}
+  .ticker .marca{position:absolute; left:0; top:0; height:42px; z-index:2; display:flex;
+    align-items:center; padding:0 16px; background:#0A1727;
+    border-right:1px solid rgba(255,255,255,0.14); font-family:'Archivo',sans-serif;
+    font-weight:700; font-size:10.5px; letter-spacing:0.12em; text-transform:uppercase;
+    color:var(--green-brand); box-shadow:14px 0 18px -8px rgba(10,23,39,0.95);}
+  .ticker .fade{position:absolute; right:0; top:0; width:56px; height:42px; z-index:2;
+    background:linear-gradient(90deg, rgba(10,23,39,0) 0%, #0A1727 78%); pointer-events:none;}
+  .ticker.vazio{display:none;}
+  @media (max-width:560px){ .ticker .marca{display:none;} .tk{padding:0 18px; font-size:12.5px;} }
+  @media (prefers-reduced-motion: reduce){
+    .ticker-track{animation:none;}
+    .ticker{overflow-x:auto; -webkit-overflow-scrolling:touch;}
+  }
+
+  .rule-accent{height:3px; background:var(--green-brand);}
+
+  /* ---------- BANNER DE CAPA ---------- */
+  .cover{
+    width:100%;
+    border-bottom:1px solid var(--line);
+    background:var(--navy);
+  }
+  .cover img{width:100%; height:auto; display:block;}
+
+  /* ---------- HERO ---------- */
+  .hero-stage{
+    position:relative;
+    overflow:hidden;
+    background:#FFFFFF;
+  }
+  .hero-portrait{
+    position:absolute;
+    right:calc(50% - 580px);
+    top:0;
+    width:470px;
+    pointer-events:none;
+    user-select:none;
+    z-index:0;
+    opacity:1;
+  }
+  .hero{
+    position:relative;
+    z-index:1;
+    max-width:var(--maxw);
+    margin:0 auto;
+    padding:34px 24px 0;
+    background:transparent;
+  }
+  .hero h1{max-width:26ch;}
+  .hero .dek{max-width:56ch;}
+
+  @media (max-width:1180px){
+    .hero-portrait{
+      right:-60px;
+      width:390px;
+      opacity:0.85;
+    }
+    .hero h1{max-width:none;}
+    .hero .dek{max-width:none;}
+  }
+  @media (max-width:820px){
+    .hero-stage{
+      display:flex;
+      flex-direction:column;
+    }
+    .hero-portrait{
+      position:relative;
+      right:auto;
+      width:78%;
+      max-width:330px;
+      margin:14px auto -10px;
+      opacity:1;
+      align-self:center;
+    }
+    .hero{padding-top:20px;}
+    .hero h1, .hero .dek{max-width:none;}
+  }
+  .kicker{
+    display:inline-block;
+    font-family:'Inter', sans-serif;
+    font-size:11.5px;
+    font-weight:600;
+    letter-spacing:0.1em;
+    text-transform:uppercase;
+    color:var(--blue);
+    border-left:3px solid var(--blue);
+    padding-left:10px;
+    margin-bottom:20px;
+  }
+  h1{
+    font-family:'Archivo', sans-serif;
+    font-weight:700;
+    font-size:clamp(29px, 4.8vw, 44px);
+    line-height:1.14;
+    letter-spacing:-0.018em;
+    color:var(--navy);
+    margin:0 0 20px;
+  }
+  .dek{
+    font-family:'Source Serif 4', serif;
+    color:var(--ink-dim);
+    font-size:19px;
+    line-height:1.6;
+    max-width:56ch;
+    margin:0 0 30px;
+  }
+
+  .byline{
+    display:flex;
+    align-items:center;
+    gap:14px;
+    padding:16px 0;
+    border-top:1px solid var(--line);
+    border-bottom:1px solid var(--line);
+    margin-bottom:36px;
+  }
+  .byline .name{
+    font-family:'Archivo', sans-serif;
+    font-weight:600;
+    font-size:15px;
+    color:var(--navy);
+    line-height:1.35;
+  }
+  .byline .role{
+    font-size:12.5px;
+    color:var(--ink-dim);
+  }
+  .byline .meta{
+    margin-left:auto;
+    text-align:right;
+    font-size:12px;
+    color:var(--grey);
+    line-height:1.6;
+    white-space:nowrap;
+  }
+
+  /* ---------- STAT STRIP ---------- */
+  .stat-wrap{
+    background:var(--panel);
+    border-top:1px solid var(--line);
+    border-bottom:1px solid var(--line);
+  }
+  .stat-strip{
+    display:grid;
+    grid-template-columns:repeat(3, 1fr);
+    max-width:var(--maxw);
+    margin:0 auto;
+    padding:0 8px;
+  }
+  .stat{
+    padding:24px 16px;
+    border-right:1px solid var(--line);
+  }
+  .stat:last-child{border-right:none;}
+  .stat .num{
+    font-family:'Archivo', sans-serif;
+    font-weight:700;
+    font-size:clamp(23px, 3.6vw, 31px);
+    color:var(--navy);
+    display:block;
+    line-height:1.1;
+    letter-spacing:-0.01em;
+  }
+  .stat .label{
+    font-size:11.5px;
+    color:var(--ink-dim);
+    letter-spacing:0.02em;
+    display:block;
+    margin-top:7px;
+    line-height:1.45;
+  }
+
+  /* ---------- ARTICLE ---------- */
+  article{
+    max-width:var(--maxw);
+    margin:0 auto;
+    padding:34px 24px 8px;
+    background:#FFFFFF;
+  }
+  article h2{
+    font-family:'Archivo', sans-serif;
+    font-weight:600;
+    font-size:23px;
+    line-height:1.3;
+    letter-spacing:-0.01em;
+    color:var(--navy);
+    margin:34px 0 12px;
+  }
+  article p{
+    font-family:'Source Serif 4', serif;
+    font-size:18px;
+    line-height:1.72;
+    color:var(--ink);
+    margin:0 0 20px;
+  }
+
+  figure.chart{margin:26px 0; padding:0;}
+  figure.chart img{
+    border:1px solid var(--line);
+    border-radius:4px;
+  }
+  figure.chart figcaption{
+    font-family:'Inter', sans-serif;
+    font-size:12.5px;
+    color:var(--ink-dim);
+    margin-top:10px;
+    line-height:1.6;
+    padding-left:12px;
+    border-left:2px solid var(--line);
+  }
+  figure.chart figcaption .src{color:var(--grey);}
+
+  .callout{
+    background:var(--panel);
+    border-left:3px solid var(--green);
+    padding:20px 22px;
+    margin:32px 0;
+  }
+  .callout .mark{
+    display:block;
+    font-family:'Inter', sans-serif;
+    font-size:11px;
+    font-weight:600;
+    color:var(--green);
+    text-transform:uppercase;
+    letter-spacing:0.09em;
+    margin-bottom:8px;
+  }
+  .callout p{
+    margin:0;
+    font-family:'Source Serif 4', serif;
+    font-size:17px;
+    line-height:1.65;
+    color:var(--ink);
+  }
+
+  .takeaway-wrap{
+    background:var(--navy);
+    margin-top:50px;
+  }
+  .takeaway{
+    max-width:var(--maxw);
+    margin:0 auto;
+    padding:38px 24px;
+  }
+  .takeaway .kicker{
+    color:#FFFFFF;
+    border-left-color:#5AA7DE;
+  }
+  .takeaway p{
+    font-family:'Source Serif 4', serif;
+    font-size:18.5px;
+    line-height:1.68;
+    color:#FBFDFE;
+    margin:0;
+  }
+
+  /* ---------- FOOTER ---------- */
+  footer{
+    max-width:var(--maxw);
+    margin:0 auto;
+    padding:40px 24px 60px;
+    background:#FFFFFF;
+  }
+  .sig{
+    display:flex;
+    align-items:center;
+    gap:16px;
+    padding-bottom:24px;
+    border-bottom:1px solid var(--line);
+  }
+  .sig img{
+    width:58px; height:58px;
+    border-radius:100%;
+    object-fit:cover;
+    object-position:center center;
+  }
+  .sig .name{
+    font-family:'Archivo', sans-serif;
+    font-weight:600;
+    font-size:17px;
+    color:var(--navy);
+  }
+  .sig .role{
+    font-size:13px;
+    color:var(--ink-dim);
+    margin-top:2px;
+  }
+  .sig .pub{
+    margin-left:auto;
+    font-family:'Archivo', sans-serif;
+    font-size:11px;
+    font-weight:600;
+    letter-spacing:0.14em;
+    text-transform:uppercase;
+    color:var(--grey);
+    white-space:nowrap;
+  }
+  .sources{
+    font-size:12px;
+    color:var(--grey);
+    margin-top:22px;
+    line-height:1.8;
+  }
+  .sources strong{
+    color:var(--ink-dim);
+    font-weight:600;
+    letter-spacing:0.04em;
+  }
+
+  @media (max-width:540px){
+    .stat-strip{grid-template-columns:1fr;}
+    .stat{border-right:none; border-bottom:1px solid var(--line);}
+    .stat:last-child{border-bottom:none;}
+    .byline .meta{display:none;}
+    .sig .pub{display:none;}
+    .brand .sub{display:none;}
+  }
+  @media (prefers-reduced-motion: reduce){ html{scroll-behavior:auto;} }
+
+  body.nav-open{overflow:hidden;}
+  .nav-toggle{
+    display:block; width:42px; height:42px; padding:9px;
+    background:none; border:none; cursor:pointer; margin-right:-9px;
+  }
+  .nav-toggle span{
+    display:block; width:24px; height:2px; margin:5px 0;
+    background:#EAF1F7; border-radius:2px;
+    transition:transform .22s ease, opacity .18s ease;
+  }
+  body.nav-open .nav-toggle span:nth-child(1){transform:translateY(7px) rotate(45deg);}
+  body.nav-open .nav-toggle span:nth-child(2){opacity:0;}
+  body.nav-open .nav-toggle span:nth-child(3){transform:translateY(-7px) rotate(-45deg);}
+  .nav-overlay{
+    position:fixed; inset:0; background:rgba(14,35,56,0.55);
+    opacity:0; visibility:hidden; transition:opacity .22s ease, visibility .22s; z-index:70;
+  }
+  body.nav-open .nav-overlay{opacity:1; visibility:visible;}
+  .nav-drawer{
+    position:fixed; top:0; right:0; height:100%; width:300px; max-width:84vw;
+    background:#0E2338; z-index:80; padding:26px 28px;
+    transform:translateX(100%); transition:transform .26s cubic-bezier(.4,0,.2,1);
+    display:flex; flex-direction:column;
+  }
+  body.nav-open .nav-drawer{transform:translateX(0);}
+  .nav-drawer .head{
+    display:flex; justify-content:space-between; align-items:center;
+    padding-bottom:22px; border-bottom:1px solid #2A4560; margin-bottom:10px;
+  }
+  .nav-drawer .head .t{
+    font-family:'Archivo',sans-serif; font-size:11px; font-weight:600;
+    letter-spacing:0.14em; text-transform:uppercase; color:var(--green-brand);
+  }
+  .nav-close{background:none; border:none; color:#EAF1F7; font-size:26px; line-height:1; cursor:pointer; padding:0 4px;}
+  .nav-drawer nav a{
+    display:block; padding:15px 0; border-bottom:1px solid #1E3A55;
+    font-family:'Archivo',sans-serif; font-weight:600; font-size:17px;
+    color:#EAF1F7; text-decoration:none;
+  }
+  .nav-drawer nav a span{
+    display:block; font-family:'Inter',sans-serif; font-weight:400;
+    font-size:12.5px; color:#8FB6D4; margin-top:3px;
+  }
+  .nav-drawer .foot-note{margin-top:auto; font-size:12px; color:#6E8CA8; line-height:1.6;}
+  .legal-bar{background:#0A1727;}
+  .legal-inner{
+    max-width:var(--maxw); margin:0 auto; padding:22px 24px;
+    display:flex; flex-wrap:wrap; align-items:center;
+    font-family:'Inter',sans-serif; font-size:12.5px; color:#8FA6BC; line-height:1.9;
+  }
+  .legal-inner span, .legal-inner a{margin-right:9px;}
+  .legal-inner a{color:#B7CBDC; text-decoration:none;}
+  .legal-inner a:hover{color:var(--green-brand);}
+  .legal-inner .sep{color:#3C5872;}
+</style>
+</head>
+<body>
+
+<header class="site">
+  <div class="bar">
+    <a class="brand" href="../../index.html">
+      <img class="logo" src="../../assets/logo-agromv.png" alt="AGROMV">
+      <span class="edicao"><span class="n">Ed. 03</span><span class="t">Clima &amp; Manejo</span></span>
+    </a>
+    <button class="nav-toggle" id="navToggle" aria-label="Abrir menu" aria-expanded="false" aria-controls="navDrawer"><span></span><span></span><span></span></button>
+  </div>
+</header>
+<div class="rule-accent"></div>
+
+<div class="ticker vazio" id="ticker" aria-label="Indicadores de mercado">
+  <a class="marca" href="../../mercado/" style="text-decoration:none">Mercado</a>
+  <div class="ticker-track" id="tickerTrack"></div>
+  <span class="fade"></span>
+</div>
+
+<div class="nav-overlay" id="navOverlay"></div>
+<aside class="nav-drawer" id="navDrawer" aria-hidden="true">
+  <div class="head">
+    <span class="t">Navegação</span>
+    <button class="nav-close" id="navClose" aria-label="Fechar menu">&times;</button>
+  </div>
+  <nav>
+    <a href="../../index.html">Home<span>Início</span></a>
+    <a href="../../mercado/">Mercado<span>Cotações e safra</span></a>
+    <a href="../../index.html#publicacoes">Publicações<span>Análises semanais</span></a>
+    <a href="../../index.html#relatorios">Relatórios<span>Materiais aprofundados</span></a>
+    <a href="../../index.html#contato">Contato<span>Redes e acesso direto</span></a>
+  </nav>
+  <div class="foot-note">AGROMV Semanal<br>Michael Viana · COGNY</div>
+</aside>
+
+<div class="cover">
+  <img src="hero-elnino.jpg" alt="Capa da Edição 03 do AGROMV Semanal: lavoura em corte de solo, com plantas murchas e solo rachado sob sol forte à esquerda, e plantas vigorosas com raízes profundas em solo úmido à direita, com a chamada El Niño muito forte, o que fazer antes do veranico">
+</div>
+
+<div class="hero-stage">
+  <div class="hero">
+  <span class="kicker">Clima &amp; Manejo · Estresse hídrico</span>
+  <h1>El Niño muito forte a caminho: o que dá para fazer pela planta antes do veranico</h1>
+  <p class="dek">A NOAA projeta 81% de chance de o El Niño chegar a muito forte no trimestre outubro-dezembro, com chuva abaixo da média justamente no centro-norte do país. Enquanto o cultivar e a data de plantio já estão decididos, ainda há uma janela aberta no tratamento de sementes.</p>
+
+  <div class="byline">
+    <div>
+      <div class="name">Michael Viana</div>
+      <div class="role">Marketing Estratégico Cerrado · COGNY</div>
+    </div>
+    <div class="meta">05 set 2026<br>7 min de leitura</div>
+  </div>
+</div>
+</div>
+
+<div class="stat-wrap">
+  <div class="stat-strip">
+    <div class="stat">
+      <span class="num">81%</span>
+      <span class="label">Chance de El Niño muito forte entre outubro e dezembro</span>
+    </div>
+    <div class="stat">
+      <span class="num">+90%</span>
+      <span class="label">Chance de o fenômeno persistir até o início de 2027</span>
+    </div>
+    <div class="stat">
+      <span class="num">+7,7 sc/ha</span>
+      <span class="label">Ganho em milho com inoculação, em área comercial</span>
+    </div>
+  </div>
+</div>
+
+<article>
+  <p>O segundo boletim do Painel El Niño 2026-2027, publicado por INMET, INPE, ANA, Cemaden, Serviço Geológico e Defesa Civil, colocou número no que o produtor do Cerrado já vinha sentindo. As previsões da NOAA indicam 81% de probabilidade de o fenômeno atingir a categoria muito forte no trimestre outubro-dezembro, e mais de 90% de probabilidade de ele permanecer ativo até pelo menos o início de 2027.</p>
+
+  <figure class="chart">
+    <img src="chart-elnino.png" alt="Gráfico de barras com a probabilidade do El Niño atingir categoria muito forte entre outubro e dezembro de 2026, de 81%, e de persistir até o início de 2027, acima de 90%">
+    <figcaption>Probabilidades projetadas para o evento em curso. <span class="src">Fonte: NOAA, citada no Painel El Niño 2026-2027 (INMET, INPE e parceiros).</span></figcaption>
+  </figure>
+
+  <h2>Por que este ano pesa mais no Cerrado</h2>
+  <p>O El Niño não distribui o efeito de forma uniforme pelo Brasil. Ele tende a aumentar a chuva no Sul e a reduzir no centro-norte, e é exatamente aí que está a área que interessa a quem trabalha no Cerrado. A previsão sazonal aponta chuva abaixo da normal em boa parte do Centro-Oeste e do Nordeste, com temperatura acima da média em praticamente todo o país.</p>
+  <p>A combinação é o que preocupa. Não se trata apenas de chover menos, e sim de chover de forma irregular sob temperatura mais alta, o que eleva a demanda hídrica da planta no mesmo período em que a oferta de água fica instável. Na prática, isso significa maior frequência de veranicos na primavera e no início do verão, justamente na janela de estabelecimento da soja e do milho de primeira safra.</p>
+
+  <div class="callout">
+    <span class="mark">O que já está decidido</span>
+    <p>A esta altura da safra, cultivar, arranjo de plantio e boa parte do pacote de fertilidade já foram definidos. A janela que continua aberta é a do tratamento de sementes, e é sobre ela que vale conversar agora.</p>
+  </div>
+
+  <h2>O que a planta faz quando falta água</h2>
+  <p>Sob déficit hídrico, a planta fecha estômatos para perder menos água. O custo dessa defesa é imediato: com estômatos fechados, entra menos gás carbônico, a fotossíntese cai e o enchimento de grãos perde ritmo. Some-se a isso o estresse oxidativo, que danifica membranas e reduz a eficiência do aparato fotossintético.</p>
+  <p>O que separa uma lavoura que atravessa o veranico de outra que quebra costuma estar embaixo do solo. Raiz mais profunda alcança água que a raiz superficial não acessa, e é essa diferença que define quantos dias a planta aguenta sem chuva.</p>
+
+  <h2>A rota biológica: bactéria do semiárido</h2>
+  <p>É nesse ponto que entra uma linha de pesquisa da Embrapa Milho e Sorgo iniciada há cerca de oito anos, com uma pergunta direta: se existem microrganismos adaptados a solos que convivem com seca há milênios, o que eles fazem pelas plantas que crescem ali?</p>
+  <p>A resposta veio de uma estirpe de <em>Bacillus subtilis</em> isolada de solos áridos do Ceará, em área de Caatinga. O sequenciamento do genoma, conduzido na Embrapa, identificou genes associados à promoção de crescimento vegetal, à resposta a estresse oxidativo e osmótico e à produção de compostos voláteis, que são as moléculas pelas quais a bactéria sinaliza para a planta.</p>
+  <p>Em ensaios de hidroponia com estresse osmótico induzido, a inoculação em sementes de milho aumentou de forma significativa o comprimento das raízes, a atividade fotossintética e o acúmulo de biomassa. Ou seja, o mecanismo não é reter água no solo, e sim mudar a arquitetura da raiz e sustentar a fotossíntese enquanto o estresse dura.</p>
+
+  <h2>O que os números de campo mostram</h2>
+  <p>Estudos conduzidos em áreas comerciais registraram aumento de até 7,7 sacas por hectare em milho e 4,8 sacas por hectare em soja nas lavouras tratadas, frente ao controle. A tecnologia tem registro no Ministério da Agricultura para a cultura da soja e vem sendo avaliada para outras culturas.</p>
+
+  <figure class="chart">
+    <img src="chart-ganhos.png" alt="Gráfico de barras horizontais mostrando ganho de 7,7 sacas por hectare em milho e 4,8 sacas por hectare em soja com inoculação de Bacillus subtilis em áreas comerciais">
+    <figcaption>Diferença de produtividade frente ao controle em áreas comerciais. <span class="src">Fonte: Embrapa Milho e Sorgo, 2025.</span></figcaption>
+  </figure>
+
+  <p>Um trabalho anterior da mesma unidade, com irrigação controlada em três níveis, ajuda a entender de onde vem esse ganho. Sob déficit hídrico, a coinoculação de <em>Azospirillum brasilense</em> com <em>Bacillus</em> influenciou o sistema radicular, aumentando o número de raízes e favorecendo raízes mais longas, mais profundas e mais finas. Raiz fina e profunda é o desenho que interessa quando a água disponível está longe da superfície.</p>
+
+  <figure class="chart">
+    <img src="esquema-raiz.jpg" alt="Esquema comparando duas plantas sob déficit hídrico: à esquerda, sem inoculação, raiz curta que para antes da camada úmida do solo; à direita, com inoculação, raízes mais longas, profundas e finas que alcançam a camada com água disponível">
+    <figcaption>Como a arquitetura da raiz muda o acesso à água em profundidade. <span class="src">Representação esquemática, sem escala. Achados: Embrapa Milho e Sorgo.</span></figcaption>
+  </figure>
+
+  <div class="callout">
+    <span class="mark">Leitura de campo</span>
+    <p>Os ganhos citados vêm de áreas comerciais, não de vitrine. Ainda assim, resposta a bioinsumo varia com solo, histórico da área e severidade do estresse. Em ano de veranico curto, o diferencial tende a ser menor; em veranico prolongado, é quando a diferença aparece.</p>
+  </div>
+
+  <h2>O que fazer com isso na safra 2026/27</h2>
+  <p>Com o plantio da soja se aproximando e um El Niño de intensidade projetada como muito forte, a decisão sobre tratamento de sementes deixa de ser rotina e passa a ser gestão de risco. Inoculante de estresse hídrico não substitui cultivar adaptado, nem corrige compactação que impede a raiz de descer, nem compensa plantio fora de janela.</p>
+  <p>O encaixe dele é outro: melhorar a chance de a planta atravessar o veranico com o sistema radicular que ela conseguiu construir. É um custo baixo por hectare frente ao valor do que está exposto no talhão, e essa assimetria é o que sustenta a decisão.</p>
+  <p>Vale ainda um ponto de compatibilidade que costuma travar a adoção: nos ensaios da Embrapa não foi observado antagonismo entre <em>Bacillus</em> e <em>Azospirillum</em>, o que permite compor o pacote sem abrir mão do que já está estabelecido no tratamento.</p>
+</article>
+
+<div class="takeaway-wrap">
+  <div class="takeaway">
+    <span class="kicker">Racional</span>
+    <p>O El Niño já está confirmado e a projeção é de intensidade muito forte justamente na janela de estabelecimento da safra no Cerrado. Cultivar e data de plantio já foram decididos. O que ainda dá para decidir é o que vai junto com a semente, e biologia que constrói raiz profunda é uma das poucas alavancas que restam antes da primeira chuva.</p>
+  </div>
+</div>
+
+<footer>
+  <div class="sig">
+    <img src="../../assets/author.jpg" alt="Michael Viana">
+    <div>
+      <div class="name">Michael Viana</div>
+      <div class="role">Marketing Estratégico Cerrado · COGNY</div>
+    </div>
+    <span class="pub">AGROMV Semanal</span>
+  </div>
+  <div class="sources">
+    <strong>FONTES:</strong> Painel El Niño 2026-2027, boletim nº 2 (INMET, INPE, ANA, Cemaden, SGB e Sedec) · NOAA/CPC · INMET, nota técnica sobre El Niño e agricultura · Embrapa Milho e Sorgo, pesquisa com Bacillus subtilis isolada da Caatinga (2025) · Embrapa, resposta do milho à inoculação com rizobactérias sob níveis de estresse hídrico </div>
+  <p style="margin-top:26px;font-size:14px;">
+    <a href="../../index.html" style="color:#1E6FA8;text-decoration:none;font-weight:600;">&larr; Ver todas as edições do AGROMV Semanal</a>
+  </p>
+
+</footer>
+<div class="legal-bar">
+  <div class="legal-inner">
+    <span>&copy; 2026 AGROMV Semanal</span>
+    <span class="sep">·</span>
+    <span>Michael Viana</span>
+    <span class="sep">·</span>
+    <a href="../../politica-de-privacidade/">Política de Privacidade</a>
+  </div>
+</div>
+
+
+<script>
+(function(){
+  var body=document.body,t=document.getElementById('navToggle'),o=document.getElementById('navOverlay'),
+      c=document.getElementById('navClose'),d=document.getElementById('navDrawer');
+  function open(){body.classList.add('nav-open');t.setAttribute('aria-expanded','true');d.setAttribute('aria-hidden','false');}
+  function close(){body.classList.remove('nav-open');t.setAttribute('aria-expanded','false');d.setAttribute('aria-hidden','true');}
+  t.addEventListener('click',function(){body.classList.contains('nav-open')?close():open();});
+  o.addEventListener('click',close); c.addEventListener('click',close);
+  d.querySelectorAll('nav a').forEach(function(a){a.addEventListener('click',close);});
+  document.addEventListener('keydown',function(e){if(e.key==='Escape')close();});
+})();
+</script>
+<script>
+(function(){
+  var faixa=document.getElementById('ticker'), trilho=document.getElementById('tickerTrack');
+  if(!faixa||!trilho) return;
+  function esc(t){return String(t).replace(/[&<>"]/g,function(c){
+    return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c];});}
+  function bloco(it){
+    var h='<div class="tk'+(it.atualizado===false?' velho':'')+'">';
+    h+='<span class="r">'+esc(it.rotulo)+'</span><span class="v">'+esc(it.valor)+'</span>';
+    if(it.variacao){h+='<span class="var '+esc(it.sentido||'estavel')+'">'+esc(it.variacao)+'</span>';}
+    if(it.atualizado===false){h+='<span class="selo">defasado</span>';}
+    return h+'</div>';
+  }
+  var req=new XMLHttpRequest();
+  req.open('GET','../../data/mercado.json?v='+Date.now(),true);
+  req.onreadystatechange=function(){
+    if(req.readyState!==4||req.status<200||req.status>=300) return;
+    try{
+      var d=JSON.parse(req.responseText);
+      var itens=(d.grupos&&d.grupos.precos)||{}, ks=Object.keys(itens);
+      if(!ks.length) return;
+      var html=''; for(var i=0;i<ks.length;i++){html+=bloco(itens[ks[i]]);}
+      if(d.atualizado_em){html+='<div class="tk"><span class="r">Atualizado</span><span class="v" style="font-size:12.5px;font-weight:500">'+esc(d.atualizado_em)+'</span></div>';}
+      trilho.innerHTML=html+html;
+      faixa.className='ticker';
+      var larg=trilho.scrollWidth/2;
+      trilho.style.animationDuration=Math.max(22,Math.round(larg/55))+'s';
+    }catch(e){}
+  };
+  req.send();
+})();
+</script>
+</body>
+</html>
