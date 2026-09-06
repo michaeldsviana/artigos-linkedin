@@ -1,7 +1,9 @@
 {
-  "atualizado_em": "05/09/2026 às 10:02",
+  "atualizado_em": "06/09/2026 às 10:08",
   "fontes": "CONAB (preços das culturas) · Banco Central do Brasil (câmbio) · IBGE/LSPA (safra) · Banco Mundial, Commodity Markets, CC BY 4.0 (fertilizantes)",
-  "falhas": [],
+  "falhas": [
+    "safra/culturas"
+  ],
   "grupos": {
     "precos": {
       "dolar": {
@@ -115,7 +117,7 @@
         "detalhe": "Estimativa LSPA · julho 2026",
         "fonte": "ibge",
         "classe": "safra",
-        "atualizado": true
+        "atualizado": false
       },
       "Milho (2ª Safra)": {
         "rotulo": "Milho (2ª Safra)",
@@ -123,7 +125,7 @@
         "detalhe": "Estimativa LSPA · julho 2026",
         "fonte": "ibge",
         "classe": "safra",
-        "atualizado": true
+        "atualizado": false
       },
       "Milho (1ª Safra)": {
         "rotulo": "Milho (1ª Safra)",
@@ -131,7 +133,7 @@
         "detalhe": "Estimativa LSPA · julho 2026",
         "fonte": "ibge",
         "classe": "safra",
-        "atualizado": true
+        "atualizado": false
       },
       "Arroz": {
         "rotulo": "Arroz",
@@ -139,7 +141,7 @@
         "detalhe": "Estimativa LSPA · julho 2026",
         "fonte": "ibge",
         "classe": "safra",
-        "atualizado": true
+        "atualizado": false
       },
       "Algodão herbáceo": {
         "rotulo": "Algodão herbáceo",
@@ -147,7 +149,7 @@
         "detalhe": "Estimativa LSPA · julho 2026",
         "fonte": "ibge",
         "classe": "safra",
-        "atualizado": true
+        "atualizado": false
       },
       "Trigo": {
         "rotulo": "Trigo",
@@ -155,7 +157,7 @@
         "detalhe": "Estimativa LSPA · julho 2026",
         "fonte": "ibge",
         "classe": "safra",
-        "atualizado": true
+        "atualizado": false
       },
       "Café arábica": {
         "rotulo": "Café arábica",
@@ -163,7 +165,7 @@
         "detalhe": "Estimativa LSPA · julho 2026",
         "fonte": "ibge",
         "classe": "safra",
-        "atualizado": true
+        "atualizado": false
       },
       "Café canephora": {
         "rotulo": "Café canephora",
@@ -171,7 +173,7 @@
         "detalhe": "Estimativa LSPA · julho 2026",
         "fonte": "ibge",
         "classe": "safra",
-        "atualizado": true
+        "atualizado": false
       },
       "Feijão (2ª Safra)": {
         "rotulo": "Feijão (2ª Safra)",
@@ -179,7 +181,7 @@
         "detalhe": "Estimativa LSPA · julho 2026",
         "fonte": "ibge",
         "classe": "safra",
-        "atualizado": true
+        "atualizado": false
       },
       "Feijão (1ª Safra)": {
         "rotulo": "Feijão (1ª Safra)",
@@ -187,7 +189,7 @@
         "detalhe": "Estimativa LSPA · julho 2026",
         "fonte": "ibge",
         "classe": "safra",
-        "atualizado": true
+        "atualizado": false
       },
       "Feijão (3ª Safra)": {
         "rotulo": "Feijão (3ª Safra)",
@@ -195,7 +197,7 @@
         "detalhe": "Estimativa LSPA · julho 2026",
         "fonte": "ibge",
         "classe": "safra",
-        "atualizado": true
+        "atualizado": false
       }
     }
   }
