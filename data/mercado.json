@@ -1,16 +1,16 @@
 {
-  "atualizado_em": "10/09/2026 às 10:02",
+  "atualizado_em": "11/09/2026 às 10:02",
   "fontes": "CONAB (preços das culturas) · Banco Central do Brasil (câmbio) · IBGE/LSPA (safra) · Banco Mundial, Commodity Markets, CC BY 4.0 (fertilizantes)",
   "falhas": [],
   "grupos": {
     "precos": {
       "dolar": {
         "rotulo": "Dólar",
-        "valor": "R$ 5,0979",
-        "detalhe": "PTAX venda · 09/09/2026",
+        "valor": "R$ 5,1149",
+        "detalhe": "PTAX venda · 10/09/2026",
         "fonte": "bcb",
         "classe": "cambio",
-        "variacao": "+0,24%",
+        "variacao": "+0,33%",
         "sentido": "alta",
         "atualizado": true
       },
@@ -102,8 +102,8 @@
       },
       "ipca": {
         "rotulo": "IPCA 12 meses",
-        "valor": "4,44%",
-        "detalhe": "Acumulado até julho de 2026",
+        "valor": "4,22%",
+        "detalhe": "Acumulado até agosto de 2026",
         "classe": "macro",
         "atualizado": true
       }
