@@ -1,5 +1,5 @@
 {
-  "atualizado_em": "16/09/2026 às 10:04",
+  "atualizado_em": "17/09/2026 às 10:04",
   "fontes": "CONAB (preços das culturas) · Banco Central do Brasil (câmbio) · IBGE/LSPA (safra) · Banco Mundial, Commodity Markets, CC BY 4.0 (fertilizantes)",
   "falhas": [
     "safra/culturas"
@@ -8,12 +8,12 @@
     "precos": {
       "dolar": {
         "rotulo": "Dólar",
-        "valor": "R$ 5,1490",
-        "detalhe": "PTAX venda · 15/09/2026",
+        "valor": "R$ 5,1527",
+        "detalhe": "PTAX venda · 16/09/2026",
         "fonte": "bcb",
         "classe": "cambio",
-        "variacao": "-0,40%",
-        "sentido": "baixa",
+        "variacao": "+0,07%",
+        "sentido": "alta",
         "atualizado": true
       },
       "Soja (int.)": {
@@ -97,8 +97,8 @@
     "macro": {
       "selic": {
         "rotulo": "Selic (meta)",
-        "valor": "14,00% a.a.",
-        "detalhe": "Meta definida pelo Copom · série até 16/09/2026",
+        "valor": "13,75% a.a.",
+        "detalhe": "Meta definida pelo Copom · série até 04/11/2026",
         "classe": "macro",
         "atualizado": true
       },
