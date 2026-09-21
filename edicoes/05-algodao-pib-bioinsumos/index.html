@@ -1,0 +1,749 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="color-scheme" content="light only">
+<meta name="supported-color-schemes" content="light">
+<title>Bioinsumos no Brasil: crescimento recorde, mercado ainda pequeno | AGROMV Semanal</title>
+<meta name="description" content="Sapezal (MT) e São Desidério (BA) lideram o ranking nacional de produção agrícola, puxados pelo algodão. No algodão brasileiro, mais de 80% da área já recebe tratamento biológico de sementes contra nematoide.">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Algodão faz do Cerrado a capital do agro, e a biologia já sustenta a lavoura">
+<meta property="og:description" content="Sapezal e São Desidério lideram a produção agrícola nacional pelo algodão. No algodão brasileiro, mais de 80% da área já recebe tratamento biológico contra nematoide.">
+<meta property="og:image" content="https://mvagro.net/edicoes/05-algodao-pib-bioinsumos/share-card.jpg">
+<meta property="og:url" content="https://mvagro.net/edicoes/05-algodao-pib-bioinsumos/">
+<meta property="og:site_name" content="AGROMV Semanal">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="icon" type="image/png" href="../../assets/favicon.png">
+<link rel="apple-touch-icon" href="../../assets/favicon.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Archivo:wght@500;600;700&family=Source+Serif+4:opsz,wght@8..60,400;8..60,600&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root{
+    color-scheme: only light;
+    --bg:      #FFFFFF;
+    --panel:   #F4F6F8;
+    --navy:    #0E2338;
+    --navy-mid:#1B3B5A;
+    --blue:    #1E6FA8;
+    --green:   #3F7A2E;
+    --green-brand: #63AA46;
+    --ink:     #16212C;
+    --ink-dim: #5B6773;
+    --grey:    #8A94A0;
+    --line:    #DDE3E9;
+    --maxw:    720px;
+  }
+  *{box-sizing:border-box;}
+  html{
+    scroll-behavior:smooth;
+    background:#FFFFFF;
+    -webkit-text-size-adjust:100%;
+  }
+  body{
+    margin:0;
+    background:#FFFFFF;
+    color:var(--ink);
+    font-family:'Inter', -apple-system, sans-serif;
+    line-height:1.68;
+    -webkit-font-smoothing:antialiased;
+    forced-color-adjust:none;
+  }
+  img{max-width:100%; display:block;}
+  a{color:var(--blue);}
+
+  /* ---------- HEADER ---------- */
+  header.site{
+    position:sticky; top:0; z-index:20;
+    background:var(--navy);
+  }
+  header.site .bar{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    max-width:var(--maxw);
+    margin:0 auto;
+    padding:14px 24px;
+  }
+  .brand{
+    display:flex;
+    align-items:center;
+    font-family:'Archivo', sans-serif;
+    letter-spacing:0.02em;
+    text-decoration:none;
+  }
+  .brand .logo{height:27px; width:auto; display:block; padding-right:11px;}
+  .brand .sub{
+    font-weight:500;
+    font-size:11px;
+    letter-spacing:0.16em;
+    text-transform:uppercase;
+    color:#DCE8F2;
+    padding-left:10px;
+    border-left:1px solid #4A6A86;
+  }
+  header.site .issue{
+    font-family:'Inter', sans-serif;
+    font-size:11.5px;
+    font-weight:500;
+    letter-spacing:0.06em;
+    color:#EAF1F7;
+    text-transform:uppercase;
+  }
+  .brand .edicao{
+    display:flex; flex-direction:column; padding-left:11px;
+    border-left:1px solid #4A6A86; line-height:1.25;
+  }
+  .brand .edicao .n{
+    font-family:'Archivo',sans-serif; font-weight:600; font-size:12px;
+    color:var(--green-brand); letter-spacing:0.06em; white-space:nowrap;
+  }
+  .brand .edicao .t{
+    font-family:'Inter',sans-serif; font-weight:500; font-size:10.5px;
+    color:#B7CBDC; letter-spacing:0.04em; text-transform:uppercase; white-space:nowrap;
+  }
+  @media (max-width:420px){
+    .brand .edicao .t{display:none;}
+  }
+  /* ---------- FAIXA DE MERCADO ---------- */
+  .ticker{position:relative; overflow:hidden; background:#0A1727;
+    border-bottom:1px solid rgba(255,255,255,0.08); height:42px;}
+  .ticker-track{display:flex; align-items:center; height:42px; width:max-content;
+    animation:corre 52s linear infinite;}
+  .ticker:hover .ticker-track{animation-play-state:paused;}
+  @keyframes corre{from{transform:translateX(0);} to{transform:translateX(-50%);}}
+  .tk{display:flex; align-items:baseline; white-space:nowrap; padding:0 26px;
+    border-right:1px solid rgba(255,255,255,0.10); font-family:'Inter',sans-serif; font-size:13px;}
+  .tk .r{color:#8FA6BC; text-transform:uppercase; letter-spacing:0.07em; font-size:11px;
+    font-weight:600; margin-right:9px;}
+  .tk .v{font-family:'Archivo',sans-serif; font-weight:600; font-size:14px; color:#FFF;}
+  .tk .var{font-family:'Archivo',sans-serif; font-weight:600; font-size:12.5px; margin-left:8px;}
+  .tk .var.alta{color:#F0907E;} .tk .var.baixa{color:#8ED26B;} .tk .var.estavel{color:#8FA6BC;}
+  .tk.velho .v{color:#B7C6D4;}
+  .tk .selo{font-size:10px; color:#A07A3B; margin-left:8px;
+    border:1px solid rgba(160,122,59,0.5); border-radius:3px; padding:1px 5px;}
+  .ticker .marca{position:absolute; left:0; top:0; height:42px; z-index:2; display:flex;
+    align-items:center; padding:0 16px; background:#0A1727;
+    border-right:1px solid rgba(255,255,255,0.14); font-family:'Archivo',sans-serif;
+    font-weight:700; font-size:10.5px; letter-spacing:0.12em; text-transform:uppercase;
+    color:var(--green-brand); box-shadow:14px 0 18px -8px rgba(10,23,39,0.95);}
+  .ticker .fade{position:absolute; right:0; top:0; width:56px; height:42px; z-index:2;
+    background:linear-gradient(90deg, rgba(10,23,39,0) 0%, #0A1727 78%); pointer-events:none;}
+  .ticker.vazio{display:none;}
+  @media (max-width:560px){ .ticker .marca{display:none;} .tk{padding:0 18px; font-size:12.5px;} }
+  @media (prefers-reduced-motion: reduce){
+    .ticker-track{animation:none;}
+    .ticker{overflow-x:auto; -webkit-overflow-scrolling:touch;}
+  }
+
+  /* ---------- TABELA E LISTAS ---------- */
+  .tabela-wrap{margin:26px 0;}
+  table.dados{
+    width:100%; border-collapse:collapse; font-family:'Inter',sans-serif;
+    font-size:15px; border:1px solid var(--line); border-radius:5px; overflow:hidden;
+  }
+  table.dados thead th{
+    background:var(--panel); text-align:left; padding:11px 14px;
+    font-size:11.5px; font-weight:600; letter-spacing:0.05em; text-transform:uppercase;
+    color:var(--ink-dim); border-bottom:1px solid var(--line);
+  }
+  table.dados thead th:nth-child(2), table.dados thead th:nth-child(3){text-align:right;}
+  table.dados td{
+    padding:11px 14px; border-bottom:1px solid var(--line); color:var(--ink);
+  }
+  table.dados tbody tr:last-child td{border-bottom:none;}
+  table.dados tbody tr:last-child{background:#FBFCFD;}
+  table.dados td:nth-child(2){
+    text-align:right; font-family:'Archivo',sans-serif; font-weight:600;
+    color:var(--navy); font-variant-numeric:tabular-nums; white-space:nowrap;
+  }
+  table.dados td:nth-child(3){
+    text-align:right; font-family:'Archivo',sans-serif; font-weight:600;
+    font-size:13.5px; white-space:nowrap;
+  }
+  table.dados td.neg{color:#8A3B2E;}
+  table.dados td.pos{color:var(--green);}
+  .tab-fonte{
+    font-family:'Inter',sans-serif; font-size:12px; color:var(--grey);
+    margin:9px 0 0; padding-left:11px; border-left:2px solid var(--line);
+  }
+
+  ul.lista{
+    font-family:'Source Serif 4',serif; font-size:18px; line-height:1.7;
+    color:var(--ink); margin:0 0 20px; padding-left:22px;
+  }
+  ul.lista li{margin-bottom:7px;}
+
+  article h3{
+    font-family:'Archivo',sans-serif; font-weight:600; font-size:18px;
+    color:var(--navy); margin:26px 0 10px;
+  }
+
+  @media (max-width:480px){
+    table.dados{font-size:13.5px;}
+    table.dados thead th, table.dados td{padding:9px 10px;}
+  }
+
+  .rule-accent{height:3px; background:var(--green-brand);}
+
+  /* ---------- BANNER DE CAPA ---------- */
+  .cover{
+    width:100%;
+    border-bottom:1px solid var(--line);
+    background:var(--navy);
+  }
+  .cover img{width:100%; height:auto; display:block;}
+
+  /* ---------- HERO ---------- */
+  .hero-stage{
+    position:relative;
+    overflow:hidden;
+    background:#FFFFFF;
+  }
+  .hero-portrait{
+    position:absolute;
+    right:calc(50% - 580px);
+    top:0;
+    width:470px;
+    pointer-events:none;
+    user-select:none;
+    z-index:0;
+    opacity:1;
+  }
+  .hero{
+    position:relative;
+    z-index:1;
+    max-width:var(--maxw);
+    margin:0 auto;
+    padding:34px 24px 0;
+    background:transparent;
+  }
+  .hero h1{max-width:26ch;}
+  .hero .dek{max-width:56ch;}
+
+  @media (max-width:1180px){
+    .hero-portrait{
+      right:-60px;
+      width:390px;
+      opacity:0.85;
+    }
+    .hero h1{max-width:none;}
+    .hero .dek{max-width:none;}
+  }
+  @media (max-width:820px){
+    .hero-stage{
+      display:flex;
+      flex-direction:column;
+    }
+    .hero-portrait{
+      position:relative;
+      right:auto;
+      width:78%;
+      max-width:330px;
+      margin:14px auto -10px;
+      opacity:1;
+      align-self:center;
+    }
+    .hero{padding-top:20px;}
+    .hero h1, .hero .dek{max-width:none;}
+  }
+  .kicker{
+    display:inline-block;
+    font-family:'Inter', sans-serif;
+    font-size:11.5px;
+    font-weight:600;
+    letter-spacing:0.1em;
+    text-transform:uppercase;
+    color:var(--blue);
+    border-left:3px solid var(--blue);
+    padding-left:10px;
+    margin-bottom:20px;
+  }
+  h1{
+    font-family:'Archivo', sans-serif;
+    font-weight:700;
+    font-size:clamp(29px, 4.8vw, 44px);
+    line-height:1.14;
+    letter-spacing:-0.018em;
+    color:var(--navy);
+    margin:0 0 20px;
+  }
+  .dek{
+    font-family:'Source Serif 4', serif;
+    color:var(--ink-dim);
+    font-size:19px;
+    line-height:1.6;
+    max-width:56ch;
+    margin:0 0 30px;
+  }
+
+  .byline{
+    display:flex;
+    align-items:center;
+    gap:14px;
+    padding:16px 0;
+    border-top:1px solid var(--line);
+    border-bottom:1px solid var(--line);
+    margin-bottom:36px;
+  }
+  .byline .name{
+    font-family:'Archivo', sans-serif;
+    font-weight:600;
+    font-size:15px;
+    color:var(--navy);
+    line-height:1.35;
+  }
+  .byline .role{
+    font-size:12.5px;
+    color:var(--ink-dim);
+  }
+  .byline .meta{
+    margin-left:auto;
+    text-align:right;
+    font-size:12px;
+    color:var(--grey);
+    line-height:1.6;
+    white-space:nowrap;
+  }
+
+  /* ---------- STAT STRIP ---------- */
+  .stat-wrap{
+    background:var(--panel);
+    border-top:1px solid var(--line);
+    border-bottom:1px solid var(--line);
+  }
+  .stat-strip{
+    display:grid;
+    grid-template-columns:repeat(3, 1fr);
+    max-width:var(--maxw);
+    margin:0 auto;
+    padding:0 8px;
+  }
+  .stat{
+    padding:24px 16px;
+    border-right:1px solid var(--line);
+  }
+  .stat:last-child{border-right:none;}
+  .stat .num{
+    font-family:'Archivo', sans-serif;
+    font-weight:700;
+    font-size:clamp(23px, 3.6vw, 31px);
+    color:var(--navy);
+    display:block;
+    line-height:1.1;
+    letter-spacing:-0.01em;
+  }
+  .stat .label{
+    font-size:11.5px;
+    color:var(--ink-dim);
+    letter-spacing:0.02em;
+    display:block;
+    margin-top:7px;
+    line-height:1.45;
+  }
+
+  /* ---------- ARTICLE ---------- */
+  article{
+    max-width:var(--maxw);
+    margin:0 auto;
+    padding:34px 24px 8px;
+    background:#FFFFFF;
+  }
+  article h2{
+    font-family:'Archivo', sans-serif;
+    font-weight:600;
+    font-size:23px;
+    line-height:1.3;
+    letter-spacing:-0.01em;
+    color:var(--navy);
+    margin:34px 0 12px;
+  }
+  article p{
+    font-family:'Source Serif 4', serif;
+    font-size:18px;
+    line-height:1.72;
+    color:var(--ink);
+    margin:0 0 20px;
+  }
+
+  figure.chart{margin:26px 0; padding:0;}
+  figure.chart img{
+    border:1px solid var(--line);
+    border-radius:4px;
+  }
+  figure.chart figcaption{
+    font-family:'Inter', sans-serif;
+    font-size:12.5px;
+    color:var(--ink-dim);
+    margin-top:10px;
+    line-height:1.6;
+    padding-left:12px;
+    border-left:2px solid var(--line);
+  }
+  figure.chart figcaption .src{color:var(--grey);}
+
+  .callout{
+    background:var(--panel);
+    border-left:3px solid var(--green);
+    padding:20px 22px;
+    margin:32px 0;
+  }
+  .callout .mark{
+    display:block;
+    font-family:'Inter', sans-serif;
+    font-size:11px;
+    font-weight:600;
+    color:var(--green);
+    text-transform:uppercase;
+    letter-spacing:0.09em;
+    margin-bottom:8px;
+  }
+  .callout p{
+    margin:0;
+    font-family:'Source Serif 4', serif;
+    font-size:17px;
+    line-height:1.65;
+    color:var(--ink);
+  }
+
+  .takeaway-wrap{
+    background:var(--navy);
+    margin-top:50px;
+  }
+  .takeaway{
+    max-width:var(--maxw);
+    margin:0 auto;
+    padding:38px 24px;
+  }
+  .takeaway .kicker{
+    color:#FFFFFF;
+    border-left-color:#5AA7DE;
+  }
+  .takeaway p{
+    font-family:'Source Serif 4', serif;
+    font-size:18.5px;
+    line-height:1.68;
+    color:#FBFDFE;
+    margin:0;
+  }
+
+  /* ---------- FOOTER ---------- */
+  footer{
+    max-width:var(--maxw);
+    margin:0 auto;
+    padding:40px 24px 60px;
+    background:#FFFFFF;
+  }
+  .sig{
+    display:flex;
+    align-items:center;
+    gap:16px;
+    padding-bottom:24px;
+    border-bottom:1px solid var(--line);
+  }
+  .sig img{
+    width:58px; height:58px;
+    border-radius:100%;
+    object-fit:cover;
+    object-position:center center;
+  }
+  .sig .name{
+    font-family:'Archivo', sans-serif;
+    font-weight:600;
+    font-size:17px;
+    color:var(--navy);
+  }
+  .sig .role{
+    font-size:13px;
+    color:var(--ink-dim);
+    margin-top:2px;
+  }
+  .sig .pub{
+    margin-left:auto;
+    font-family:'Archivo', sans-serif;
+    font-size:11px;
+    font-weight:600;
+    letter-spacing:0.14em;
+    text-transform:uppercase;
+    color:var(--grey);
+    white-space:nowrap;
+  }
+  .sources{
+    font-size:12px;
+    color:var(--grey);
+    margin-top:22px;
+    line-height:1.8;
+  }
+  .sources strong{
+    color:var(--ink-dim);
+    font-weight:600;
+    letter-spacing:0.04em;
+  }
+
+  @media (max-width:540px){
+    .stat-strip{grid-template-columns:1fr;}
+    .stat{border-right:none; border-bottom:1px solid var(--line);}
+    .stat:last-child{border-bottom:none;}
+    .byline .meta{display:none;}
+    .sig .pub{display:none;}
+    .brand .sub{display:none;}
+  }
+  @media (prefers-reduced-motion: reduce){ html{scroll-behavior:auto;} }
+
+  body.nav-open{overflow:hidden;}
+  .nav-toggle{
+    display:block; width:42px; height:42px; padding:9px;
+    background:none; border:none; cursor:pointer; margin-right:-9px;
+  }
+  .nav-toggle span{
+    display:block; width:24px; height:2px; margin:5px 0;
+    background:#EAF1F7; border-radius:2px;
+    transition:transform .22s ease, opacity .18s ease;
+  }
+  body.nav-open .nav-toggle span:nth-child(1){transform:translateY(7px) rotate(45deg);}
+  body.nav-open .nav-toggle span:nth-child(2){opacity:0;}
+  body.nav-open .nav-toggle span:nth-child(3){transform:translateY(-7px) rotate(-45deg);}
+  .nav-overlay{
+    position:fixed; inset:0; background:rgba(14,35,56,0.55);
+    opacity:0; visibility:hidden; transition:opacity .22s ease, visibility .22s; z-index:70;
+  }
+  body.nav-open .nav-overlay{opacity:1; visibility:visible;}
+  .nav-drawer{
+    position:fixed; top:0; right:0; height:100%; width:300px; max-width:84vw;
+    background:#0E2338; z-index:80; padding:26px 28px;
+    transform:translateX(100%); transition:transform .26s cubic-bezier(.4,0,.2,1);
+    display:flex; flex-direction:column;
+  }
+  body.nav-open .nav-drawer{transform:translateX(0);}
+  .nav-drawer .head{
+    display:flex; justify-content:space-between; align-items:center;
+    padding-bottom:22px; border-bottom:1px solid #2A4560; margin-bottom:10px;
+  }
+  .nav-drawer .head .t{
+    font-family:'Archivo',sans-serif; font-size:11px; font-weight:600;
+    letter-spacing:0.14em; text-transform:uppercase; color:var(--green-brand);
+  }
+  .nav-close{background:none; border:none; color:#EAF1F7; font-size:26px; line-height:1; cursor:pointer; padding:0 4px;}
+  .nav-drawer nav a{
+    display:block; padding:15px 0; border-bottom:1px solid #1E3A55;
+    font-family:'Archivo',sans-serif; font-weight:600; font-size:17px;
+    color:#EAF1F7; text-decoration:none;
+  }
+  .nav-drawer nav a span{
+    display:block; font-family:'Inter',sans-serif; font-weight:400;
+    font-size:12.5px; color:#8FB6D4; margin-top:3px;
+  }
+  .nav-drawer .foot-note{margin-top:auto; font-size:12px; color:#6E8CA8; line-height:1.6;}
+  .legal-bar{background:#0A1727;}
+  .legal-inner{
+    max-width:var(--maxw); margin:0 auto; padding:22px 24px;
+    display:flex; flex-wrap:wrap; align-items:center;
+    font-family:'Inter',sans-serif; font-size:12.5px; color:#8FA6BC; line-height:1.9;
+  }
+  .legal-inner span, .legal-inner a{margin-right:9px;}
+  .legal-inner a{color:#B7CBDC; text-decoration:none;}
+  .legal-inner a:hover{color:var(--green-brand);}
+  .legal-inner .sep{color:#3C5872;}
+</style>
+</head>
+<body>
+
+<header class="site">
+  <div class="bar">
+    <a class="brand" href="../../index.html">
+      <img class="logo" src="../../assets/logo-agromv.png" alt="AGROMV">
+      <span class="edicao"><span class="n">Ed. 05</span><span class="t">Algodão &amp; Bioinsumos</span></span>
+    </a>
+    <button class="nav-toggle" id="navToggle" aria-label="Abrir menu" aria-expanded="false" aria-controls="navDrawer"><span></span><span></span><span></span></button>
+  </div>
+</header>
+<div class="rule-accent"></div>
+
+<div class="ticker vazio" id="ticker" aria-label="Indicadores de mercado">
+  <a class="marca" href="../../mercado/" style="text-decoration:none">Mercado</a>
+  <div class="ticker-track" id="tickerTrack"></div>
+  <span class="fade"></span>
+</div>
+
+<div class="nav-overlay" id="navOverlay"></div>
+<aside class="nav-drawer" id="navDrawer" aria-hidden="true">
+  <div class="head">
+    <span class="t">Navegação</span>
+    <button class="nav-close" id="navClose" aria-label="Fechar menu">&times;</button>
+  </div>
+  <nav>
+    <a href="../../index.html">Home<span>Início</span></a>
+    <a href="../../mercado/">Mercado<span>Cotações e safra</span></a>
+    <a href="../../index.html#publicacoes">Publicações<span>Análises semanais</span></a>
+    <a href="../../index.html#relatorios">Relatórios<span>Materiais aprofundados</span></a>
+    <a href="../../index.html#contato">Contato<span>Redes e acesso direto</span></a>
+  </nav>
+  <div class="foot-note">AGROMV Semanal<br>Michael Viana · COGNY</div>
+</aside>
+
+<div class="cover">
+  <img src="hero-algodao.jpg" alt="Capa da Edição 05 do AGROMV Semanal: lavoura de algodão em pleno capulho no Cerrado, ao entardecer">
+</div>
+
+<div class="hero-stage">
+  <div class="hero">
+  <span class="kicker">Algodão &amp; Bioinsumos no Cerrado</span>
+  <h1>O algodão fez do Cerrado a capital do agro, e a biologia já está dentro da conta</h1>
+  <p class="dek">O IBGE confirmou: Sapezal e São Desidério lideram o ranking nacional de produção agrícola, puxados pelo algodão. No algodão brasileiro, o tratamento biológico de sementes contra nematoide já passa de 80% da área. O Congresso Brasileiro do Algodão começa nesta semana.</p>
+
+  <div class="byline">
+    <div>
+      <div class="name">Michael Viana</div>
+      <div class="role">Marketing Estratégico Cerrado · COGNY</div>
+    </div>
+    <div class="meta">19 set 2026<br>8 min de leitura</div>
+  </div>
+</div>
+</div>
+
+<div class="stat-wrap">
+  <div class="stat-strip">
+    <div class="stat">
+      <span class="num">R$ 8,59 bi</span>
+      <span class="label">Produção agrícola de Sapezal (MT) em 2025, novo líder nacional</span>
+    </div>
+    <div class="stat">
+      <span class="num">60%</span>
+      <span class="label">Da produção de Sapezal vem só do algodão</span>
+    </div>
+    <div class="stat">
+      <span class="num">+80%</span>
+      <span class="label">Da área de algodão já recebe tratamento biológico de sementes</span>
+    </div>
+  </div>
+</div>
+
+<article>
+  <h2>O mapa do agro tem um novo primeiro lugar</h2>
+  <p>Na quinta-feira, 17 de setembro, o IBGE divulgou a Produção Agrícola Municipal (PAM) de 2025, o levantamento que soma o valor de tudo o que cada município brasileiro colheu no ano. Depois de seis anos com Sorriso (MT) no topo, o novo primeiro lugar é <strong>Sapezal</strong>, também no Mato Grosso.</p>
+  <p>A troca não veio de uma queda de Sorriso. Veio de um recorte de mapa: parte do território do município foi transferida para a criação de Boa Esperança do Norte, cidade instalada em janeiro de 2025, e isso reduziu em 9,3% a área plantada atribuída a Sorriso nas estatísticas. Mas o que colocou Sapezal na frente foi crescimento de verdade. A produção agrícola do município saltou 46,6% em 2025, puxada por um único produto: o algodão.</p>
+  <p>Dos R$ 8,59 bilhões produzidos em Sapezal, <strong>60% (R$ 5,13 bilhões) vieram só do algodão herbáceo</strong>, com 1,2 milhão de toneladas colhidas. Em segundo lugar no ranking nacional ficou São Desidério, na Bahia, também impulsionado por algodão, com alta de 23,7% no valor de produção. É a mesma cultura decidindo as duas primeiras posições do ranking, uma no Cerrado mato-grossense, outra no Cerrado baiano.</p>
+
+  <figure class="chart">
+    <img src="grafico-ranking.svg" alt="Gráfico de barras mostrando Sapezal com R$ 8,59 bilhões, São Desidério com R$ 8,22 bilhões e Sorriso com R$ 8,16 bilhões em valor de produção agrícola em 2025">
+    <figcaption>Os três primeiros colocados do ranking nacional de valor de produção agrícola. <span class="src">Fonte: IBGE, PAM 2025, divulgada em 17/09/2026.</span></figcaption>
+  </figure>
+
+  <p>No total nacional, a produção agrícola brasileira somou R$ 927,2 bilhões em 2025, alta de 18,4% sobre 2024. O dado municipal importa porque mostra onde esse crescimento se concentra: não é um recorde difuso, é puxado por regiões específicas, com uma cultura específica.</p>
+
+  <h2>A semana em que a cadeia se reúne</h2>
+  <p>A divulgação da PAM antecede em cinco dias o <strong>15º Congresso Brasileiro do Algodão</strong>, que a Abrapa realiza de 22 a 24 de setembro no Expominas, em Belo Horizonte. É o maior encontro da cotonicultura nacional, e chega num momento em que o setor tem números para comemorar e uma pauta de custo para discutir.</p>
+  <p>O Brasil fechou o ano comercial encerrado em julho de 2026 com recorde de exportação, 3,37 milhões de toneladas de algodão, com a China na liderança das compras. Mas o próprio congresso reconhece que vender mais não é o mesmo que ganhar mais: a oferta elevada, no Brasil e em outros países, limita a recuperação das cotações, enquanto fertilizantes, defensivos, máquinas, combustível, financiamento e armazenagem seguem pressionando o custo de produção, o mesmo tipo de pressão que já tratamos na <a href="../04-custo-margem-nematoide/">Ed. 04</a>.</p>
+
+  <h2>O que já sustenta essa liderança embaixo da terra</h2>
+  <p>Sapezal não virou capital do agro por acaso, e parte do argumento está embaixo da terra. Levantamento da consultoria Kynetec, apresentado no Fórum Bioinsumos no Agro em agosto, mostra que a adoção de bioinsumos no algodão brasileiro já chega a 80% da área, puxada, entre outras aplicações, pelo tratamento industrial de sementes com bionematicidas. É a cultura com maior penetração biológica entre as principais do país, à frente até da soja, que soma mais de 58 milhões de hectares tratados.</p>
+
+  <h2>Por que o nematoide pesa tanto no algodão</h2>
+  <p>A explicação para essa adoção alta está na pressão sanitária. Levantamento conduzido pela Embrapa e pelo Instituto Mato-grossense do Algodão (IMAmt) nas safras 2011/2012 e 2012/2013 encontrou <em>Pratylenchus brachyurus</em> em 96% das amostras de solo do estado, o nematoide mais distribuído. Mas o próprio estudo aponta que essa espécie, isolada, não está relacionada à queda de produtividade do algodoeiro.</p>
+  <p>O problema é outra espécie, presente em proporção menor, mas com efeito maior: o <em>Meloidogyne incognita</em>, causador de galhas nas raízes, encontrado em 23% das áreas amostradas em Mato Grosso. Segundo o pesquisador João Flávio Veloso Silva, da Embrapa Agrossilvipastoril, essa espécie está fortemente relacionada à baixa produtividade, sobretudo quando a infestação ocorre junto com solo compactado. Os dois fatores se somam: a planta tem pouco volume de solo para explorar, e o nematoide ataca justamente as raízes que restaram nessa área menor.</p>
+  <p>No Cerrado baiano, onde fica São Desidério, o quadro é parecido em gravidade e mais amplo em espécies. Pesquisa da Embrapa Algodão, com amostragem em 96 fazendas de 11 municípios nas safras 2016/2017 e 2017/2018, encontrou pelo menos uma das três principais espécies de nematoide em 92% dos 835 talhões avaliados. O nematoide das lesões radiculares apareceu em 85% das amostras, o das galhas em 37%, e o reniforme em 14%, com o das galhas apontado como o de maior relação com perda de produtividade.</p>
+
+  <div class="callout">
+    <span class="mark">Leitura de campo</span>
+    <p>Nas duas regiões que hoje lideram o ranking nacional de produção agrícola, o nematoide não é um problema pontual. É presença quase universal no solo, e a diferença entre uma safra cheia e uma safra comprometida está em qual espécie predomina e em como o produtor trata a semente antes de plantar.</p>
+  </div>
+
+  <h2>Um mercado que já tem tamanho, e ainda tem espaço</h2>
+  <p>O segmento de bionematicidas, os biológicos usados especificamente contra nematoide, movimentou R$ 1,8 bilhão em 2025, com 44 milhões de hectares tratados no Brasil, segundo a CropData, levantamento trimestral da CropLife Brasil. É um mercado que a própria entidade já classifica como maduro, integrado aos protocolos de manejo sustentável, não mais uma novidade em fase de adoção.</p>
+  <p>No algodão especificamente, essa maturidade aparece em números de auditoria, não só de venda. Dentro do programa Algodão Brasileiro Responsável, da Abrapa, <strong>78% das fazendas de algodão do país participam da certificação</strong>, e entre essas, <strong>83,6% usaram algum produto biológico no último ano</strong> para controle de pragas e doenças.</p>
+
+  <figure class="chart">
+    <img src="grafico-adocao.svg" alt="Gráfico de barras mostrando que 78% das fazendas de algodão participam do programa Algodão Brasileiro Responsável, e que 83,6% dessas fazendas usaram produto biológico no último ano">
+    <figcaption>Adoção de biológicos entre as fazendas certificadas pelo programa da Abrapa. <span class="src">Fonte: Abrapa, Algodão Brasileiro Responsável, 27/04/2026.</span></figcaption>
+  </figure>
+
+  <p>Os 80% medidos pela Kynetec dizem respeito, sobretudo, ao bionematicida aplicado no tratamento industrial de sementes, um produto dentro de um leque bem maior. O sulco de plantio, onde máquinas equipadas com sistema de inoculação aplicam o biológico junto à semente no momento do plantio, é um canal à parte, usado inclusive quando há incompatibilidade entre produtos no tratamento de sementes, e ainda tem espaço para crescer, tanto em área quanto em variedade: biofungicidas, bioestimulantes e outros inoculantes ocupam hoje uma fração menor desse mesmo canal. Some-se a isso o controle de pragas foliares e de doenças da parte aérea, onde a adoção no algodão segue mais gradual do que em soja e milho segunda safra, que teve salto de 6% para os patamares atuais em poucos ciclos, puxado pela disseminação da cigarrinha.</p>
+  <p>Há também uma variável regulatória em andamento que toca diretamente esse mercado: o decreto que regulamenta a Lei dos Bioinsumos (15.070/2024) está com a minuta concluída na Casa Civil e deve ser assinado ainda este mês, segundo apuração da imprensa especializada. O texto separa definitivamente bioinsumos do regime de fertilizantes e cria regras próprias de registro, produção e fiscalização, um tema que deve aparecer nas conversas do CBA em Belo Horizonte.</p>
+
+  <h2>O que isso significa para quem decide o pacote de algodão</h2>
+  <p>A leitura direta é que o algodão do Cerrado não está apenas colhendo recorde de área e preço internacional favorável. Ele está colhendo em cima de uma base biológica já consolidada, especialmente no manejo de nematoide via tratamento de sementes, que se tornou parte da rotina, não diferencial competitivo.</p>
+  <p>Para quem monta o pacote da safra, o ponto de atenção não é mais "vale a pena usar biológico". É saber qual espécie de nematoide predomina na área, porque <em>Pratylenchus</em> e <em>Meloidogyne</em> pedem estratégias diferentes, e um produto eficaz contra um não entrega o mesmo resultado contra o outro. Essa distinção só aparece com amostragem de solo e raiz enviada a laboratório de nematologia, o mesmo ponto que fechou a <a href="../04-custo-margem-nematoide/">Ed. 04</a>.</p>
+  <p>O espaço de crescimento para o mercado de bioinsumos no algodão não se resume ao que já foi ocupado. Dentro do próprio sulco de plantio ainda há espaço para crescer, com mais produtos e mais área tratada além do nematicida. E fora dele, a proteção foliar e o manejo de doenças ao longo do ciclo seguem como frente aberta, num ponto em que soja e milho segunda safra ainda estão à frente do algodão na curva de adoção biológica.</p>
+</article>
+
+<div class="takeaway-wrap">
+  <div class="takeaway">
+    <span class="kicker">Racional</span>
+    <p>O algodão colocou dois municípios do Cerrado na liderança nacional de produção agrícola nesta semana, e fez isso apoiado numa base biológica que já trata mais de 80% da área contra nematoide, no tratamento de sementes. O espaço que resta para o mercado de bioinsumos crescer nessa cultura não é mais convencer o produtor a testar: é ampliar o leque de produtos dentro do próprio sulco de plantio e avançar também para o resto do ciclo.</p>
+  </div>
+</div>
+
+<footer>
+  <div class="sig">
+    <img src="../../assets/author.jpg" alt="Michael Viana">
+    <div>
+      <div class="name">Michael Viana</div>
+      <div class="role">Marketing Estratégico Cerrado · COGNY</div>
+    </div>
+    <span class="pub">AGROMV Semanal</span>
+  </div>
+  <div class="sources">
+    <strong>FONTES:</strong> IBGE, Produção Agrícola Municipal (PAM) 2025, divulgada em 17/09/2026 · Agência Brasil, mudança no mapa da produção agrícola, 17-18/09/2026 · Abrapa, 15º Congresso Brasileiro do Algodão, 22-24/09/2026 · AgFeed, adoção de biológicos em Sapezal/MT, 25/05/2026 · Kynetec via Forbes Agro, mercado de bioinsumos no Brasil, 19/08/2026 · CropData / CropLife Brasil, 2º Boletim Trimestral, mar/2026 · Abrapa, programa Algodão Brasileiro Responsável, 27/04/2026 · Embrapa e IMAmt, nematoides em algodão no Mato Grosso, safras 2011/12-2012/13 · Embrapa Algodão, incidência de nematoides na Bahia, safras 2016/17-2017/18 · AgFeed / Exame, decreto de regulamentação da Lei dos Bioinsumos, set/2026 </div>
+  <p style="margin-top:26px;font-size:14px;">
+    <a href="../../index.html" style="color:#1E6FA8;text-decoration:none;font-weight:600;">&larr; Ver todas as edições do AGROMV Semanal</a>
+  </p>
+
+</footer>
+<div class="legal-bar">
+  <div class="legal-inner">
+    <span>&copy; 2026 AGROMV Semanal</span>
+    <span class="sep">·</span>
+    <span>Michael Viana</span>
+    <span class="sep">·</span>
+    <a href="../../politica-de-privacidade/">Política de Privacidade</a>
+  </div>
+</div>
+
+
+<script>
+(function(){
+  var body=document.body,t=document.getElementById('navToggle'),o=document.getElementById('navOverlay'),
+      c=document.getElementById('navClose'),d=document.getElementById('navDrawer');
+  function open(){body.classList.add('nav-open');t.setAttribute('aria-expanded','true');d.setAttribute('aria-hidden','false');}
+  function close(){body.classList.remove('nav-open');t.setAttribute('aria-expanded','false');d.setAttribute('aria-hidden','true');}
+  t.addEventListener('click',function(){body.classList.contains('nav-open')?close():open();});
+  o.addEventListener('click',close); c.addEventListener('click',close);
+  d.querySelectorAll('nav a').forEach(function(a){a.addEventListener('click',close);});
+  document.addEventListener('keydown',function(e){if(e.key==='Escape')close();});
+})();
+</script>
+<script>
+(function(){
+  var faixa=document.getElementById('ticker'), trilho=document.getElementById('tickerTrack');
+  if(!faixa||!trilho) return;
+  function esc(t){return String(t).replace(/[&<>"]/g,function(c){
+    return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c];});}
+  function bloco(it){
+    var h='<div class="tk'+(it.atualizado===false?' velho':'')+'">';
+    h+='<span class="r">'+esc(it.rotulo)+'</span><span class="v">'+esc(it.valor)+'</span>';
+    if(it.variacao){h+='<span class="var '+esc(it.sentido||'estavel')+'">'+esc(it.variacao)+'</span>';}
+    if(it.atualizado===false){h+='<span class="selo">defasado</span>';}
+    return h+'</div>';
+  }
+  var req=new XMLHttpRequest();
+  req.open('GET','../../data/mercado.json?v='+Date.now(),true);
+  req.onreadystatechange=function(){
+    if(req.readyState!==4||req.status<200||req.status>=300) return;
+    try{
+      var d=JSON.parse(req.responseText);
+      var itens=(d.grupos&&d.grupos.precos)||{}, ks=Object.keys(itens);
+      if(!ks.length) return;
+      var html=''; for(var i=0;i<ks.length;i++){html+=bloco(itens[ks[i]]);}
+      if(d.atualizado_em){html+='<div class="tk"><span class="r">Atualizado</span><span class="v" style="font-size:12.5px;font-weight:500">'+esc(d.atualizado_em)+'</span></div>';}
+      trilho.innerHTML=html+html;
+      faixa.className='ticker';
+      var larg=trilho.scrollWidth/2;
+      trilho.style.animationDuration=Math.max(22,Math.round(larg/55))+'s';
+    }catch(e){}
+  };
+  req.send();
+})();
+</script>
+</body>
+</html>
