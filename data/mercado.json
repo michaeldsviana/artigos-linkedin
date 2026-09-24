@@ -1,16 +1,16 @@
 {
-  "atualizado_em": "23/09/2026 às 14:32",
+  "atualizado_em": "24/09/2026 às 14:37",
   "fontes": "CONAB (preços das culturas) · Banco Central do Brasil (câmbio) · IBGE/LSPA (safra) · Banco Mundial, Commodity Markets, CC BY 4.0 (fertilizantes)",
   "falhas": [],
   "grupos": {
     "precos": {
       "dolar": {
         "rotulo": "Dólar",
-        "valor": "R$ 5,1414",
-        "detalhe": "PTAX venda · 23/09/2026",
+        "valor": "R$ 5,1795",
+        "detalhe": "PTAX venda · 24/09/2026",
         "fonte": "bcb",
         "classe": "cambio",
-        "variacao": "+0,49%",
+        "variacao": "+0,74%",
         "sentido": "alta",
         "atualizado": true
       },
