@@ -1,7 +1,10 @@
 {
-  "atualizado_em": "02/10/2026 às 15:06",
+  "atualizado_em": "03/10/2026 às 13:50",
   "fontes": "CONAB (preços das culturas) · Banco Central do Brasil (câmbio) · IBGE/LSPA (safra) · Banco Mundial, Commodity Markets, CC BY 4.0 (fertilizantes)",
-  "falhas": [],
+  "falhas": [
+    "macro/selic",
+    "macro/ipca"
+  ],
   "grupos": {
     "precos": {
       "dolar": {
@@ -16,63 +19,63 @@
       },
       "Soja (int.)": {
         "rotulo": "Soja (int.)",
-        "valor": "US$ 28,92/sc",
-        "detalhe": "Por saca de 60 kg · média de 08/2026 · Banco Mundial (US$ 482,00/t)",
+        "valor": "US$ 31,44/sc",
+        "detalhe": "Por saca de 60 kg · média de 09/2026 · Banco Mundial (US$ 524,00/t)",
         "fonte": "banco-mundial",
         "classe": "cultura",
         "unidade": "mt",
-        "variacao": "+0,8%",
+        "variacao": "+8,7%",
         "sentido": "alta",
         "atualizado": true
       },
       "Milho (int.)": {
         "rotulo": "Milho (int.)",
-        "valor": "US$ 13,44/sc",
-        "detalhe": "Por saca de 60 kg · média de 08/2026 · Banco Mundial (US$ 224,00/t)",
+        "valor": "US$ 14,38/sc",
+        "detalhe": "Por saca de 60 kg · média de 09/2026 · Banco Mundial (US$ 239,60/t)",
         "fonte": "banco-mundial",
         "classe": "cultura",
         "unidade": "mt",
-        "variacao": "+5,0%",
+        "variacao": "+7,0%",
         "sentido": "alta",
         "atualizado": true
       },
       "Algodão (int.)": {
         "rotulo": "Algodão (int.)",
-        "valor": "US$ 31,65/@",
-        "detalhe": "Por arroba de 15 kg · média de 08/2026 · Banco Mundial (US$ 2,11/kg)",
+        "valor": "US$ 31,50/@",
+        "detalhe": "Por arroba de 15 kg · média de 09/2026 · Banco Mundial (US$ 2,10/kg)",
         "fonte": "banco-mundial",
         "classe": "cultura",
         "unidade": "kg",
-        "variacao": "+7,7%",
-        "sentido": "alta",
+        "variacao": "-0,5%",
+        "sentido": "baixa",
         "atualizado": true
       },
       "Ureia": {
         "rotulo": "Ureia",
-        "valor": "US$ 390,00/t",
-        "detalhe": "Por tonelada · média de 08/2026 · Banco Mundial",
+        "valor": "US$ 407,50/t",
+        "detalhe": "Por tonelada · média de 09/2026 · Banco Mundial",
         "fonte": "banco-mundial",
         "classe": "insumo",
         "unidade": "mt",
-        "variacao": "-2,5%",
-        "sentido": "baixa",
+        "variacao": "+4,5%",
+        "sentido": "alta",
         "atualizado": true
       },
       "DAP": {
         "rotulo": "DAP",
-        "valor": "US$ 793,50/t",
-        "detalhe": "Por tonelada · média de 08/2026 · Banco Mundial",
+        "valor": "US$ 800,60/t",
+        "detalhe": "Por tonelada · média de 09/2026 · Banco Mundial",
         "fonte": "banco-mundial",
         "classe": "insumo",
         "unidade": "mt",
-        "variacao": "+1,6%",
+        "variacao": "+0,9%",
         "sentido": "alta",
         "atualizado": true
       },
       "Fosfato (rocha)": {
         "rotulo": "Fosfato (rocha)",
         "valor": "US$ 170,00/t",
-        "detalhe": "Por tonelada · média de 08/2026 · Banco Mundial",
+        "detalhe": "Por tonelada · média de 09/2026 · Banco Mundial",
         "fonte": "banco-mundial",
         "classe": "insumo",
         "unidade": "mt",
@@ -82,12 +85,12 @@
       },
       "Potássio (KCl)": {
         "rotulo": "Potássio (KCl)",
-        "valor": "US$ 386,90/t",
-        "detalhe": "Por tonelada · média de 08/2026 · Banco Mundial",
+        "valor": "US$ 367,50/t",
+        "detalhe": "Por tonelada · média de 09/2026 · Banco Mundial",
         "fonte": "banco-mundial",
         "classe": "insumo",
         "unidade": "mt",
-        "variacao": "-2,4%",
+        "variacao": "-5,0%",
         "sentido": "baixa",
         "atualizado": true
       }
@@ -98,14 +101,14 @@
         "valor": "13,75% a.a.",
         "detalhe": "Meta definida pelo Copom · série até 04/11/2026",
         "classe": "macro",
-        "atualizado": true
+        "atualizado": false
       },
       "ipca": {
         "rotulo": "IPCA 12 meses",
         "valor": "4,22%",
         "detalhe": "Acumulado até agosto de 2026",
         "classe": "macro",
-        "atualizado": true
+        "atualizado": false
       }
     },
     "safra": {
