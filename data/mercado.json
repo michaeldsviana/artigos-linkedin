@@ -1,17 +1,17 @@
 {
-  "atualizado_em": "06/10/2026 às 15:40",
+  "atualizado_em": "07/10/2026 às 16:07",
   "fontes": "CONAB (preços das culturas) · Banco Central do Brasil (câmbio) · IBGE/LSPA (safra) · Banco Mundial, Commodity Markets, CC BY 4.0 (fertilizantes)",
   "falhas": [],
   "grupos": {
     "precos": {
       "dolar": {
         "rotulo": "Dólar",
-        "valor": "R$ 4,9698",
-        "detalhe": "PTAX venda · 06/10/2026",
+        "valor": "R$ 4,9935",
+        "detalhe": "PTAX venda · 07/10/2026",
         "fonte": "bcb",
         "classe": "cambio",
-        "variacao": "-0,32%",
-        "sentido": "baixa",
+        "variacao": "+0,48%",
+        "sentido": "alta",
         "atualizado": true
       },
       "Soja (int.)": {
