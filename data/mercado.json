@@ -1,13 +1,13 @@
 {
-  "atualizado_em": "04/11/2026 às 17:07",
+  "atualizado_em": "05/11/2026 às 17:22",
   "fontes": "CONAB (preços das culturas) · Banco Central do Brasil (câmbio) · IBGE/LSPA (safra) · Banco Mundial, Commodity Markets, CC BY 4.0 (fertilizantes)",
   "falhas": [],
   "grupos": {
     "precos": {
       "dolar": {
         "rotulo": "Dólar",
-        "valor": "R$ 5,4778",
-        "detalhe": "PTAX venda · 04/11/2026",
+        "valor": "R$ 5,4621",
+        "detalhe": "PTAX venda · 05/11/2026",
         "fonte": "bcb",
         "classe": "cambio",
         "variacao": "-0,29%",
@@ -96,7 +96,7 @@
       "selic": {
         "rotulo": "Selic (meta)",
         "valor": "13,75% a.a.",
-        "detalhe": "Meta definida pelo Copom · série até 04/11/2026",
+        "detalhe": "Meta definida pelo Copom · série até 09/12/2026",
         "classe": "macro",
         "atualizado": true
       },
