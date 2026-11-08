@@ -1,7 +1,9 @@
 {
-  "atualizado_em": "07/11/2026 às 14:53",
+  "atualizado_em": "08/11/2026 às 15:08",
   "fontes": "CONAB (preços das culturas) · Banco Central do Brasil (câmbio) · IBGE/LSPA (safra) · Banco Mundial, Commodity Markets, CC BY 4.0 (fertilizantes)",
-  "falhas": [],
+  "falhas": [
+    "macro/ipca"
+  ],
   "grupos": {
     "precos": {
       "dolar": {
@@ -105,7 +107,7 @@
         "valor": "4,58%",
         "detalhe": "Acumulado até setembro de 2026",
         "classe": "macro",
-        "atualizado": true
+        "atualizado": false
       }
     },
     "safra": {
