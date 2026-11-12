@@ -1,17 +1,17 @@
 {
-  "atualizado_em": "11/11/2026 às 16:55",
+  "atualizado_em": "12/11/2026 às 17:31",
   "fontes": "CONAB (preços das culturas) · Banco Central do Brasil (câmbio) · IBGE/LSPA (safra) · Banco Mundial, Commodity Markets, CC BY 4.0 (fertilizantes)",
   "falhas": [],
   "grupos": {
     "precos": {
       "dolar": {
         "rotulo": "Dólar",
-        "valor": "R$ 5,5606",
-        "detalhe": "PTAX venda · 11/11/2026",
+        "valor": "R$ 5,6143",
+        "detalhe": "PTAX venda · 12/11/2026",
         "fonte": "bcb",
         "classe": "cambio",
-        "variacao": "-0,42%",
-        "sentido": "baixa",
+        "variacao": "+0,97%",
+        "sentido": "alta",
         "atualizado": true
       },
       "Soja (int.)": {
@@ -102,8 +102,8 @@
       },
       "ipca": {
         "rotulo": "IPCA 12 meses",
-        "valor": "4,58%",
-        "detalhe": "Acumulado até setembro de 2026",
+        "valor": "4,63%",
+        "detalhe": "Acumulado até outubro de 2026",
         "classe": "macro",
         "atualizado": true
       }
