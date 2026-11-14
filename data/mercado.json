@@ -1,8 +1,8 @@
 {
-  "atualizado_em": "13/11/2026 às 17:08",
+  "atualizado_em": "14/11/2026 às 15:34",
   "fontes": "CONAB (preços das culturas) · Banco Central do Brasil (câmbio) · IBGE/LSPA (safra) · Banco Mundial, Commodity Markets, CC BY 4.0 (fertilizantes)",
   "falhas": [
-    "macro/ipca"
+    "macro/selic"
   ],
   "grupos": {
     "precos": {
@@ -100,14 +100,14 @@
         "valor": "13,75% a.a.",
         "detalhe": "Meta definida pelo Copom · série até 09/12/2026",
         "classe": "macro",
-        "atualizado": true
+        "atualizado": false
       },
       "ipca": {
         "rotulo": "IPCA 12 meses",
         "valor": "4,63%",
         "detalhe": "Acumulado até outubro de 2026",
         "classe": "macro",
-        "atualizado": false
+        "atualizado": true
       }
     },
     "safra": {
