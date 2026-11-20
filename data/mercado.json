@@ -1,7 +1,9 @@
 {
-  "atualizado_em": "19/11/2026 às 18:03",
+  "atualizado_em": "20/11/2026 às 17:49",
   "fontes": "CONAB (preços das culturas) · Banco Central do Brasil (câmbio) · IBGE/LSPA (safra) · Banco Mundial, Commodity Markets, CC BY 4.0 (fertilizantes)",
-  "falhas": [],
+  "falhas": [
+    "macro/selic"
+  ],
   "grupos": {
     "precos": {
       "dolar": {
@@ -98,7 +100,7 @@
         "valor": "13,75% a.a.",
         "detalhe": "Meta definida pelo Copom · série até 09/12/2026",
         "classe": "macro",
-        "atualizado": true
+        "atualizado": false
       },
       "ipca": {
         "rotulo": "IPCA 12 meses",
