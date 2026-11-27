@@ -1,16 +1,16 @@
 {
-  "atualizado_em": "26/11/2026 às 19:00",
+  "atualizado_em": "27/11/2026 às 18:43",
   "fontes": "CONAB (preços das culturas) · Banco Central do Brasil (câmbio) · IBGE/LSPA (safra) · Banco Mundial, Commodity Markets, CC BY 4.0 (fertilizantes)",
   "falhas": [],
   "grupos": {
     "precos": {
       "dolar": {
         "rotulo": "Dólar",
-        "valor": "R$ 5,7446",
-        "detalhe": "PTAX venda · 26/11/2026",
+        "valor": "R$ 5,5430",
+        "detalhe": "PTAX venda · 27/11/2026",
         "fonte": "bcb",
         "classe": "cambio",
-        "variacao": "-2,34%",
+        "variacao": "-3,51%",
         "sentido": "baixa",
         "atualizado": true
       },
